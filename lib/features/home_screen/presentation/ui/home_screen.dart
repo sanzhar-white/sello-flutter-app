@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sello/components/is_loading.dart';
-import 'package:sello/components/product_card.dart';
+import 'package:sello/components/utils.dart';
+import 'package:sello/core/enums.dart';
 import 'package:sello/core/theme/theme_provider.dart';
 import 'package:sello/features/auth/auth_provider/auth_provider.dart';
+import 'package:sello/features/calendar_screen/presentation/ui/feature.dart';
+import 'package:sello/features/empty_screens/empty_screen.dart';
+import 'package:sello/features/favorite_adverts_button/state/bloc/favorite_adverts_button_bloc.dart';
+import 'package:sello/features/favorite_batton/state/bloc/favorite_button_bloc.dart';
 import 'package:sello/features/home_screen/presentation/state/bloc/home_screen_bloc.dart';
-import 'package:sello/features/horse_screen/presentation/ui/components/product_detail_screen/presentation/ui/product_detail_screen.dart';
-import 'package:sello/core/constants.dart';
+import 'package:sello/features/home_screen/presentation/ui/components/event_card.dart';
+import 'package:sello/features/home_screen/presentation/ui/components/notification_screen.dart';
+import 'package:sello/features/home_screen/presentation/ui/components/product_type_card.dart';
+import 'package:sello/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:sello/features/horse_screen/presentation/ui/feature.dart';
+import 'package:sello/features/kokpar_screen.dart/presentation/ui/feature.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,316 +25,214 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController searchController = TextEditingController();
-
   @override
   void initState() {
-    super.initState();
     final authProvider = context.read<MyAuthProvider>();
-    context.read<HomeScreenBloc>().add(
-      GetAllProducts(phoneNumber: authProvider.userData?.phoneNumber ?? ''),
+
+    context.read<FavoriteButtonBloc>().add(
+      GetFavoritesEvents(
+        userPhoneNumber: authProvider.userData?.phoneNumber ?? '+77757777779',
+      ),
     );
+
+    context.read<FavoriteAdvertsButtonBloc>().add(
+      GetFavoritesAdvertsEvents(
+        userPhoneNumber: authProvider.userData?.phoneNumber ?? '+77757777779',
+      ),
+    );
+    context.read<HomeScreenBloc>().add(
+      GetAllKokparEvents(
+        phoneNumber: authProvider.userData?.phoneNumber ?? '+77757777779',
+      ),
+    );
+
+    super.initState();
   }
 
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
-  }
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    final authProvider = context.read<MyAuthProvider>();
     final theme = AppThemeProvider.of(context).themeMode;
 
-    return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Container(
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey[300]!),
-          ),
-          child: TextField(
-            controller: searchController,
-            decoration: InputDecoration(
-              hintText: 'Поиск в Алматы',
-              hintStyle: TextStyle(color: Colors.grey[600], fontSize: 14),
-              prefixIcon: Icon(Icons.search, color: Colors.grey[600], size: 20),
-              border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 10,
-              ),
-            ),
-          ),
-        ),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 16),
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey[300]!),
-            ),
-            child: IconButton(
-              icon: Icon(Icons.tune, color: Colors.grey[600], size: 20),
-              onPressed: () {},
-            ),
-          ),
-        ],
-      ),
-      body: RefreshIndicator(
-        color: Colors.green[700],
-        onRefresh: () async {
-          final authProvider = context.read<MyAuthProvider>();
-          context.read<HomeScreenBloc>().add(
-            GetAllProducts(
-              phoneNumber: authProvider.userData?.phoneNumber ?? '',
-            ),
-          );
-        },
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Баннер
-              Container(
-                width: double.infinity,
-                height: 160,
-                margin: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Colors.green[700]!, Colors.green[500]!],
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            leading: GestureDetector(
+              onTap:
+                  () => navigateTo(
+                    context: context,
+                    rootNavigator: true,
+                    screen: const CalendarScreenFeature(),
                   ),
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.green.withOpacity(0.2),
-                      blurRadius: 10,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      right: -20,
-                      bottom: -20,
-                      child: Icon(
-                        Icons.eco,
-                        size: 120,
-                        color: Colors.white.withOpacity(0.2),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'СЕМЕНА',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.2,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'по низким ценам',
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.9),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              'Подробнее',
-                              style: TextStyle(
-                                color: Colors.green[700],
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              child: const Icon(Icons.calendar_month_outlined, size: 32),
+            ),
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  navigateTo(
+                    context: context,
+                    rootNavigator: true,
+                    screen: NotificationScreen(),
+                  );
+                },
+                child: Icon(Icons.notifications_outlined, size: 32),
               ),
-
-              // Категории
-              Padding(
-                padding: const EdgeInsets.all(16),
+              SizedBox(width: 20),
+            ],
+          ),
+          body: RefreshIndicator(
+            color: theme.colors.primary,
+            onRefresh: () async {
+              context.read<HomeScreenBloc>().add(
+                GetAllKokparEvents(
+                  phoneNumber: authProvider.userData!.phoneNumber,
+                ),
+              );
+            },
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Категории',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    GridView.count(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16,
-                      childAspectRatio: 1.5,
-                      children: [
-                        _buildCategoryCard(
-                          'Спецтехника',
-                          Icons.agriculture,
-                          Colors.orange[700]!,
-                        ),
-                        _buildCategoryCard(
-                          'Работа',
-                          Icons.work,
-                          Colors.blue[700]!,
-                        ),
-                        _buildCategoryCard(
-                          'Сырье',
-                          Icons.inventory_2,
-                          Colors.brown[700]!,
-                        ),
-                        _buildCategoryCard(
-                          'Удобрения',
-                          Icons.eco,
-                          Colors.green[700]!,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
-              // Все объявления
-              BlocBuilder<HomeScreenBloc, HomeScreenState>(
-                builder: (context, state) {
-                  if (state is HomeScreenLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-
-                  if (state is HomeScreenData) {
-                    return Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    SizedBox(
+                      height: 76,
+                      child: GridView.count(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: width * 0.05,
+                        mainAxisSpacing: width * 0.4,
+                        physics: const NeverScrollableScrollPhysics(),
                         children: [
-                          const Text(
-                            'Все объявления',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.75,
-                                  crossAxisSpacing: 16,
-                                  mainAxisSpacing: 16,
+                          EventCard(
+                            text: 'Көкпар',
+                            labelInfo: '+ Жаңа',
+                            imageUrl: 'assets/svg_images/kokpar.svg',
+                            onTap:
+                                () => navigateTo(
+                                  context: context,
+                                  rootNavigator: true,
+                                  screen: const KokparScreenFeature(),
                                 ),
-                            itemCount: state.products.length,
-                            itemBuilder: (context, index) {
-                              final product = state.products[index];
-                              return ProductCard(
-                                product: product,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => ProductDetailScreen(
-                                            product: product,
-                                          ),
-                                    ),
-                                  );
-                                },
+                          ),
+                          EventCard(
+                            text: 'Жамбы ату',
+                            labelInfo: 'Жақында',
+                            imageUrl: 'assets/svg_images/jamby_atu.svg',
+                            onTap: () {
+                              navigateTo(
+                                context: context,
+                                rootNavigator: true,
+                                screen: EmptyScreen(jambyAtu: true),
                               );
                             },
                           ),
                         ],
                       ),
-                    );
-                  }
+                    ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      height: 76,
+                      child: GridView.count(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: width * 0.05,
+                        mainAxisSpacing: width * 0.4,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ProductTypeCard(
+                                text: 'Жылқы',
+                                imageUrl: 'assets/svg_images/jylky.svg',
+                                onTap:
+                                    () => navigateTo(
+                                      context: context,
+                                      rootNavigator: true,
+                                      screen: const HorseScreenFeature(
+                                        productType: ProductType.horse,
+                                      ),
+                                    ),
+                              ),
+                              ProductTypeCard(
+                                text: 'Экипировка',
+                                imageUrl: 'assets/svg_images/ekipirovka.svg',
+                                onTap:
+                                    () => navigateTo(
+                                      context: context,
+                                      rootNavigator: true,
+                                      screen: const HorseScreenFeature(
+                                        productType: ProductType.product,
+                                      ),
+                                    ),
+                              ),
+                            ],
+                          ),
+                          EventCard(
+                            text: 'Бәйге',
+                            labelInfo: 'Жақында',
+                            imageUrl: 'assets/svg_images/baige.svg',
+                            onTap: () {
+                              navigateTo(
+                                context: context,
+                                rootNavigator: true,
+                                screen: EmptyScreen(),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    BlocConsumer<HomeScreenBloc, HomeScreenState>(
+                      listener: (context, state) {
+                        // if (state is HomeScreenSuccess) {
+                        //   showTopSnackBar(
+                        //     context: context,
+                        //     title: 'Мероприятие добавлено в избранное',
+                        //     titleColor: AppColors.greenColor,
+                        //   );
+                        // }
+                      },
+                      buildWhen:
+                          (previous, current) =>
+                              current is HomeScreenData ||
+                              current is HomeScreenLoading,
+                      builder: (context, state) {
+                        if (state is HomeScreenLoading && state.isLoading) {
+                          return Column(
+                            children: [
+                              ...List.generate(
+                                5,
+                                (index) => KokparEventCard.placeholder(),
+                              ),
+                            ],
+                          );
+                        }
+                        if (state is HomeScreenData) {
+                          return Column(
+                            children: [
+                              ...List.generate(
+                                state.events.length,
+                                (index) => KokparEventCard(
+                                  kokparEventDto: state.events[index],
+                                ),
+                              ),
+                            ],
+                          );
+                        }
 
-                  return const SizedBox.shrink();
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCategoryCard(String title, IconData icon, Color color) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: color.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, size: 32, color: color),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey[800],
-                  ),
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
+        if (isLoading) const IsLoadingWidget(),
+      ],
     );
   }
 }
