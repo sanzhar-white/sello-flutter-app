@@ -1,3 +1,0 @@
-class lightTheme {}
-
-class darkTheme {}

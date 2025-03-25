@@ -1,4 +1,4 @@
-package com.example.tajvd
+package com.example.sello
 
 import io.flutter.embedding.android.FlutterActivity
 
