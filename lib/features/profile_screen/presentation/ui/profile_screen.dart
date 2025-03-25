@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       authProvider.userData != null
                   ? ClipOval(
                     child: CachedNetworkImage(
-                      imageUrl: authProvider.userData?.photo ?? '',
+                      imageUrl: authProvider.userData!.photo ?? '',
                       fit: BoxFit.cover,
                       width: 150,
                       height: 150,

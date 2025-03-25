@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:sello/components/custom_tab_bar.dart';
 import 'package:sello/core/theme/theme_provider.dart';
 import 'package:sello/features/favorite_adverts_button/data/favorite_adverts_button_repo.dart';
-import 'package:sello/features/favorite_adverts_button/state/bloc/favorite_adverts_button_bloc.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
+import 'package:sello/features/favorite_batton/data/favorite_button_repo.dart';
+import 'package:sello/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:sello/features/horse_screen/presentation/ui/components/product_card.dart';
 import 'package:sello/generated/l10n.dart';
-import 'package:sello/components/is_loading.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
@@ -40,154 +40,76 @@ class FavoritesScreen extends StatelessWidget {
   }
 }
 
-class FavoritesEvents extends StatefulWidget {
+class FavoritesEvents extends StatelessWidget {
   const FavoritesEvents({super.key});
 
   @override
-  State<FavoritesEvents> createState() => _FavoritesEventsState();
-}
-
-class _FavoritesEventsState extends State<FavoritesEvents> {
-  @override
   Widget build(BuildContext context) {
     final theme = AppThemeProvider.of(context).themeMode;
-    final repo = context.watch<FavoriteAdvertsButtonRepo>();
+
+    final repo = context.watch<FavoriteButtonRepo>();
     final allFavorites = repo.favorites;
 
-    if (allFavorites.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return allFavorites.isEmpty
+        ? Column(
           children: [
-            SvgPicture.asset(
-              'assets/svg_images/favorites_screen.svg',
-              width: 200,
-              height: 200,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'У вас пока нет избранных объявлений',
-              style: TextStyle(color: theme.colors.colorText2, fontSize: 16),
+            SvgPicture.asset('assets/svg_images/favorites_screen.svg'),
+            Expanded(
+              child: Text(
+                S.of(context).featuredEventsWillBeDisplayedHere,
+                style: TextStyle(color: theme.colors.colorText2, fontSize: 16),
+              ),
             ),
           ],
-        ),
-      );
-    }
-
-    return ListView.builder(
-      itemCount: allFavorites.length,
-      itemBuilder: (context, index) {
-        return _buildFavoriteCard(allFavorites[index]);
-      },
-    );
-  }
-
-  Widget _buildFavoriteCard(ProductDto product) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: ListTile(
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.network(
-            product.images.isNotEmpty ? product.images.first : '',
-            width: 60,
-            height: 60,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                width: 60,
-                height: 60,
-                color: Colors.grey[300],
-                child: Icon(Icons.image_not_supported),
-              );
-            },
-          ),
-        ),
-        title: Text(product.title),
-        subtitle: Text(product.price.toString() + ' ₸'),
-        trailing: IconButton(
-          icon: const Icon(Icons.favorite, color: Colors.red),
-          onPressed: () {
-            // TODO: Implement remove from favorites
+        )
+        : ListView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: allFavorites.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: KokparEventCard(kokparEventDto: allFavorites[index]),
+            );
           },
-        ),
-      ),
-    );
+        );
   }
 }
 
-class FavoritesAdvertsEvents extends StatefulWidget {
+class FavoritesAdvertsEvents extends StatelessWidget {
   const FavoritesAdvertsEvents({super.key});
 
   @override
-  State<FavoritesAdvertsEvents> createState() => _FavoritesAdvertsEventsState();
-}
-
-class _FavoritesAdvertsEventsState extends State<FavoritesAdvertsEvents> {
-  @override
   Widget build(BuildContext context) {
     final theme = AppThemeProvider.of(context).themeMode;
     final repo = context.watch<FavoriteAdvertsButtonRepo>();
     final allFavorites = repo.favorites;
 
-    if (allFavorites.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return allFavorites.isEmpty
+        ? Column(
           children: [
-            SvgPicture.asset(
-              'assets/svg_images/favorites_screen.svg',
-              width: 200,
-              height: 200,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'У вас пока нет избранных объявлений',
-              style: TextStyle(color: theme.colors.colorText2, fontSize: 16),
+            SvgPicture.asset('assets/svg_images/favorites_screen.svg'),
+            Expanded(
+              child: Text(
+                S.of(context).featuredAdsWillBeDisplayedHere,
+                style: TextStyle(color: theme.colors.colorText2, fontSize: 16),
+              ),
             ),
           ],
-        ),
-      );
-    }
-
-    return ListView.builder(
-      itemCount: allFavorites.length,
-      itemBuilder: (context, index) {
-        return _buildFavoriteCard(allFavorites[index]);
-      },
-    );
-  }
-
-  Widget _buildFavoriteCard(ProductDto product) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: ListTile(
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.network(
-            product.images.isNotEmpty ? product.images.first : '',
-            width: 60,
-            height: 60,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                width: 60,
-                height: 60,
-                color: Colors.grey[300],
-                child: Icon(Icons.image_not_supported),
-              );
-            },
+        )
+        : GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            mainAxisExtent: 260,
           ),
-        ),
-        title: Text(product.title),
-        subtitle: Text(product.price.toString() + ' ₸'),
-        trailing: IconButton(
-          icon: const Icon(Icons.favorite, color: Colors.red),
-          onPressed: () {
-            // TODO: Implement remove from favorites
+          padding: EdgeInsets.all(16),
+          itemCount: allFavorites.length,
+          itemBuilder: (context, index) {
+            final product = allFavorites[index];
+
+            return ProductCard(product: product);
           },
-        ),
-      ),
-    );
+        );
   }
 }

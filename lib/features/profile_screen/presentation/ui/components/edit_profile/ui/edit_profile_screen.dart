@@ -36,7 +36,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late final TextEditingController cityController;
 
   XFile? image;
-  String get userPhoto => widget.userData.photo ?? '';
 
   Category? city;
   Category? region;
@@ -130,7 +129,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                      if (image == null && userPhoto.isEmpty)
+                      if (image == null && widget.userData.photo == '')
                         CircleAvatar(
                           radius: 80,
                           backgroundColor: theme.colors.colorText3.withOpacity(
@@ -142,10 +141,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             color: theme.colors.colorText3,
                           ),
                         ),
-                      if (image == null && userPhoto.isNotEmpty)
+                      if (image == null && widget.userData.photo != '')
                         ClipOval(
                           child: CachedNetworkImage(
-                            imageUrl: userPhoto,
+                            imageUrl: widget.userData.photo ?? '',
                             fit: BoxFit.cover,
                             width: 160,
                             height: 160,
@@ -274,7 +273,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           context.read<EditProfileScreenBloc>().add(
                             DeleteAccount(
                               userData: authProvider.userData!,
-                              imageUrl: authProvider.userData?.photo ?? '',
+                              imageUrl: authProvider.userData!.photo ?? '',
                             ),
                           );
                         },

@@ -1,21 +1,25 @@
 part of 'home_screen_bloc.dart';
 
 @immutable
-abstract class HomeScreenState {}
+sealed class HomeScreenState {}
 
-class HomeScreenInitial extends HomeScreenState {}
+final class HomeScreenInitial extends HomeScreenState {}
 
-class HomeScreenLoading extends HomeScreenState {
+final class HomeScreenLoading extends HomeScreenState {
   final bool isLoading;
-  HomeScreenLoading({required this.isLoading});
+
+  HomeScreenLoading({this.isLoading = false});
 }
 
-class HomeScreenData extends HomeScreenState {
-  final List<dynamic> events;
-  HomeScreenData({required this.events});
+final class HomeScreenData extends HomeScreenState {
+  final List<KokparEventDto> events;
+
+  HomeScreenData({
+    required this.events,
+    required List<KokparEventDto> favoriteEvents,
+  });
 }
 
-class HomeScreenError extends HomeScreenState {
-  final String message;
-  HomeScreenError({required this.message});
-}
+final class HomeScreenSuccess extends HomeScreenState {}
+
+final class HomeScreenError extends HomeScreenState {}

@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:sello/components/big_button.dart';
 import 'package:sello/components/calendar.dart';
-import 'package:sello/components/product_card.dart';
 import 'package:sello/components/show_modal_bottom_sheet_wrap.dart';
 import 'package:sello/components/show_top_snack_bar.dart';
 import 'package:sello/components/text_field_fidget.dart';
@@ -561,7 +560,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     }
                     if (state is AdvertisementScreenSuccess) {
                       context.read<HomeScreenBloc>().add(
-                        GetAllProducts(phoneNumber: authProvider!.phoneNumber),
+                        GetAllKokparEvents(
+                          phoneNumber: authProvider!.phoneNumber,
+                        ),
                       );
                       showTopSnackBar(
                         context: context,
@@ -668,11 +669,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
                               ),
                             )
                             : context.read<AdvertisementScreenBloc>().add(
-                              AddAdvert(
+                              AddAdvertisement(
                                 images: images,
-                                product: productDto!,
+                                event: event,
                                 userPhoneNumber: authProvider.phoneNumber,
-                                productType: widget.productType!,
                               ),
                             );
                       },

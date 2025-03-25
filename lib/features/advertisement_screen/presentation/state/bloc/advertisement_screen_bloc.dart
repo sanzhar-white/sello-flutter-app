@@ -1,62 +1,82 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:sello/core/enums.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:sello/features/advertisement_screen/data/advertisement_repo.dart';
+import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
 import 'package:sello/features/home_screen/data/models/product_dto.dart';
 
-// Events
-abstract class AdvertisementScreenEvent {}
+part 'advertisement_screen_event.dart';
+part 'advertisement_screen_state.dart';
 
-class AddAdvert extends AdvertisementScreenEvent {
-  final List<XFile> images;
-  final ProductDto product;
-  final String userPhoneNumber;
-  final ProductType productType;
-
-  AddAdvert({
-    required this.images,
-    required this.product,
-    required this.userPhoneNumber,
-    required this.productType,
-  });
-}
-
-// States
-abstract class AdvertisementScreenState {}
-
-class AdvertisementScreenInitial extends AdvertisementScreenState {}
-
-class AdvertisementScreenLoading extends AdvertisementScreenState {}
-
-class AdvertisementScreenSuccess extends AdvertisementScreenState {}
-
-class AdvertisementScreenError extends AdvertisementScreenState {
-  final String errorMassage;
-  AdvertisementScreenError({required this.errorMassage});
-}
-
-// Bloc
 class AdvertisementScreenBloc
     extends Bloc<AdvertisementScreenEvent, AdvertisementScreenState> {
-  AdvertisementScreenBloc() : super(AdvertisementScreenInitial()) {
-    on<AddAdvert>(_addAdvert);
-  }
+  AdvertisementRepo repo;
+  AdvertisementScreenBloc(this.repo) : super(AdvertisementScreenInitial()) {
+    on<AddAdvertisement>((event, emit) async {
+      try {
+        emit(AdvertisementScreenLoading());
+        List<String> imageUrls = [];
+        String? imageUrl;
+        if (event.images.isNotEmpty) {
+          for (var element in event.images) {
+            final ref = FirebaseStorage.instance.ref().child(
+              "kokpar_events_images/${element.name}",
+            );
 
-  Future<void> _addAdvert(
-    AddAdvert event,
-    Emitter<AdvertisementScreenState> emit,
-  ) async {
-    try {
-      emit(AdvertisementScreenLoading());
-      // TODO: Implement add advert logic
-      emit(AdvertisementScreenSuccess());
-    } catch (e) {
-      emit(AdvertisementScreenError(errorMassage: e.toString()));
-    }
+            final uploadTask = ref.putFile(File(element.path));
+
+            final snapshot = await uploadTask.whenComplete(() => null);
+            imageUrl = await snapshot.ref.getDownloadURL();
+            imageUrls.add(imageUrl);
+          }
+        }
+        await repo.addKokparEvent(
+          event: event.event.copyWith(images: imageUrls),
+          userPhoneNumber: event.userPhoneNumber,
+        );
+
+        emit(AdvertisementScreenSuccess());
+      } catch (e) {
+        emit(AdvertisementScreenError(errorMassage: e.toString()));
+      }
+    });
+
+    on<AddAdvert>((event, emit) async {
+      try {
+        emit(AdvertisementScreenLoading());
+        List<String> imageUrls = [];
+        String? imageUrl;
+        if (event.images.isNotEmpty) {
+          for (var element in event.images) {
+            final ref = FirebaseStorage.instance.ref().child(
+              "product_images/${element.name}",
+            );
+
+            final uploadTask = ref.putFile(File(element.path));
+
+            final snapshot = await uploadTask.whenComplete(() => null);
+            imageUrl = await snapshot.ref.getDownloadURL();
+            imageUrls.add(imageUrl);
+          }
+        }
+        await repo.addAdvert(
+          event: event.product.copyWith(images: imageUrls),
+          userPhoneNumber: event.userPhoneNumber,
+          productType: event.productType,
+        );
+
+        emit(AdvertisementScreenSuccess());
+      } catch (e) {
+        print(e);
+        debugPrint(e.toString());
+        emit(AdvertisementScreenError(errorMassage: e.toString()));
+      }
+    });
   }
 }

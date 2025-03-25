@@ -1,47 +1,28 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
+import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
+import 'package:sello/features/home_screen/data/home_screen_repo.dart';
+import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
 
-// Events
-abstract class HomeScreenEvent {}
+part 'home_screen_event.dart';
+part 'home_screen_state.dart';
 
-class GetAllProducts extends HomeScreenEvent {
-  final String phoneNumber;
-  GetAllProducts({required this.phoneNumber});
-}
-
-// States
-abstract class HomeScreenState {}
-
-class HomeScreenInitial extends HomeScreenState {}
-
-class HomeScreenLoading extends HomeScreenState {}
-
-class HomeScreenData extends HomeScreenState {
-  final List<ProductDto> products;
-  HomeScreenData({required this.products});
-}
-
-class HomeScreenError extends HomeScreenState {
-  final String message;
-  HomeScreenError({required this.message});
-}
-
-// Bloc
 class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
-  HomeScreenBloc() : super(HomeScreenInitial()) {
-    on<GetAllProducts>(_getAllProducts);
-  }
+  final HomeScreenRepo repo;
+  HomeScreenBloc(this.repo) : super(HomeScreenInitial()) {
+    on<GetAllKokparEvents>((event, emit) async {
+      try {
+        emit(HomeScreenLoading(isLoading: true));
 
-  Future<void> _getAllProducts(
-    GetAllProducts event,
-    Emitter<HomeScreenState> emit,
-  ) async {
-    try {
-      emit(HomeScreenLoading());
-      // TODO: Implement get all products logic
-      emit(HomeScreenData(products: []));
-    } catch (e) {
-      emit(HomeScreenError(message: e.toString()));
-    }
+        final events = await repo.getAllKokparEvents();
+        final favoriteEvents = await repo.getFavoritesEvents(event.phoneNumber);
+        emit(HomeScreenLoading(isLoading: false));
+        emit(HomeScreenData(events: events, favoriteEvents: favoriteEvents));
+      } on Exception catch (e) {
+        debugPrint(e.toString());
+        emit(HomeScreenLoading(isLoading: false));
+        emit(HomeScreenError());
+      }
+    });
   }
 }

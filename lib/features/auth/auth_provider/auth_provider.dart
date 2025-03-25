@@ -38,6 +38,8 @@ class MyAuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // авторизация по номеру телефона
+
   Future<AuthStatus> verifyPhoneNumber(
     BuildContext context,
     String phoneNumber,
@@ -46,35 +48,28 @@ class MyAuthProvider extends ChangeNotifier {
       AuthStatus status = const AuthStatus(status: false, value: '');
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
-        verificationCompleted: (phoneAuthCredential) async {
-          try {
-            await FirebaseAuth.instance.signInWithCredential(
-              phoneAuthCredential,
-            );
-            status = AuthStatus(status: true, value: 'auto');
-          } catch (e) {
-            log('Auto verification failed: $e');
-          }
-        },
+        verificationCompleted: (phoneAuthCredential) {},
         verificationFailed: (error) {
-          log('Verification failed: ${error.toString()}');
+          log(error.toString());
           status = AuthStatus(status: false, value: error.toString());
         },
         codeSent: (verificationId, forceResendingToken) {
-          log('Code sent: $verificationId');
+          log(verificationId.toString());
+
           status = AuthStatus(status: true, value: verificationId);
+          return;
         },
-        codeAutoRetrievalTimeout: (verificationId) {
-          log('Auto retrieval timeout: $verificationId');
-        },
+        codeAutoRetrievalTimeout: (verificationId) {},
       );
 
       return status;
     } on Exception catch (e) {
-      log('Error in verifyPhoneNumber: $e');
+      print(e.toString());
       return const AuthStatus(status: false, value: '');
     }
   }
+
+  // Вход в приложение
 
   Future<bool> signInWithCredential({
     required String verificationId,
@@ -89,44 +84,39 @@ class MyAuthProvider extends ChangeNotifier {
         smsCode: smsCode,
       );
 
-      final userCredential = await FirebaseAuth.instance.signInWithCredential(
-        cred,
-      );
+      await FirebaseAuth.instance.signInWithCredential(cred);
 
-      if (userCredential.user != null) {
-        if (usr != null) {
-          await userRepo.create(usr);
-          await SharedPrefs.instance.setString('user', usr.toJson());
-        }
-        await updateUserData(phoneNumber: phoneNumber);
-        return true;
+      if (usr != null) {
+        await userRepo.create(usr);
+        await SharedPrefs.instance.setString('user', usr.toJson());
       }
-      return false;
-    } on FirebaseAuthException catch (e) {
-      log('Firebase Auth Error: ${e.message}');
-      return false;
+      await updateUserData(phoneNumber: phoneNumber);
+
+      return true;
     } on Exception catch (e) {
-      log('Error in signInWithCredential: $e');
+      print(e.toString());
       return false;
     }
   }
 
+  // Выход из приложения
+
   Future<void> logOut(BuildContext context) async {
     try {
-      await FirebaseAuth.instance.signOut();
+      await auth.signOut();
+
       await SharedPrefs.instance.remove('user');
       userData = null;
-      notifyListeners();
     } catch (e) {
-      log('Error in logOut: $e');
-      rethrow;
-    }
+      if (!context.mounted) return;
+      showTopSnackBar(context: context, title: e.toString());
+    } finally {}
   }
 }
 
 class AuthStatus {
+  const AuthStatus({required this.status, required this.value});
+
   final bool status;
   final String value;
-
-  const AuthStatus({required this.status, required this.value});
 }

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sello/core/theme/theme_provider.dart';
 import 'package:sello/features/auth/auth_provider/auth_provider.dart';
-import 'package:sello/components/product_card.dart';
+import 'package:sello/features/horse_screen/presentation/ui/components/product_card.dart';
 import 'package:sello/features/profile_screen/presentation/ui/components/my_adverts/presentation/state/bloc/my_adverts_screen_bloc.dart';
 import 'package:sello/generated/l10n.dart';
 
