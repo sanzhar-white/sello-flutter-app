@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sello/components/shimmer.dart';
 import 'package:sello/components/utils.dart';
@@ -10,12 +8,12 @@ import 'package:sello/core/theme/theme_provider.dart';
 import 'package:sello/features/auth/register_screen/data/models/region.dart';
 import 'package:sello/features/favorite_batton/ui/feature.dart';
 import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:sello/features/kokpar_screen.dart/presentation/ui/components/event_detail_screen.dart/presentation/ui/feature.dart';
 
 class KokparEventCard extends StatelessWidget {
   final KokparEventDto kokparEventDto;
   final double? width;
-
   final bool isPlaceholder;
 
   const KokparEventCard({
@@ -30,15 +28,14 @@ class KokparEventCard extends StatelessWidget {
       isPlaceholder: true,
       kokparEventDto: KokparEventDto(
         id: '',
-        title: 'Боз бала 12',
+        title: 'Длинное название объявления для проверки',
         authorPhoneNumber: '+77757777779',
-        subTitle: 'Атақты батыр, Наурызбай жарысы',
+        subTitle: 'Дополнительное описание',
         city: '2024-07-20 19:34:00.000',
         date: '2024-07-20 19:34:00.000',
         region: 'Зертас ауылы',
         prizeFund: 1500000,
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.',
+        description: 'Lorem ipsum dolor sit amet...',
         isFavorite: false,
         category: '',
         images: [],
@@ -71,135 +68,92 @@ class KokparEventCard extends StatelessWidget {
                 ),
               ),
           child: Container(
+            width: width ?? 170,
             margin: const EdgeInsets.symmetric(vertical: 4),
-            width: width ?? double.infinity,
-            height: 150,
             decoration: BoxDecoration(
-              color:
-                  isPlaceholder
-                      ? theme.colors.backgroundColorContainer
-                      : theme.colors.primary,
-              borderRadius: const BorderRadius.all(Radius.circular(12)),
+              color: theme.colors.backgroundBottomSheet,
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12).copyWith(right: 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ShimmerPlaceholder(
-                          isEnabled: isPlaceholder,
-                          child: Text(
-                            kokparEventDto.title,
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              overflow: TextOverflow.ellipsis,
-                              color: theme.colors.white,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        ShimmerPlaceholder(
-                          isEnabled: isPlaceholder,
-                          child: Text(
-                            kokparEventDto.subTitle,
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: theme.colors.white,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                        const Spacer(),
-                        ShimmerPlaceholder(
-                          isEnabled: isPlaceholder,
-                          child: _MetaData(
-                            iconUrl: 'assets/svg_icons/alarm.svg',
-                            text: dateHMFromString(
-                              context,
-                              kokparEventDto.date,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        ShimmerPlaceholder(
-                          isEnabled: isPlaceholder,
-                          child: _MetaData(
-                            iconUrl: 'assets/svg_icons/geo.svg',
-                            text: "${region?.name ?? ''}, ${city}",
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        ShimmerPlaceholder(
-                          isEnabled: isPlaceholder,
-                          child: _MetaData(
-                            iconUrl: 'assets/svg_icons/calendar_icon.svg',
-                            text: dateYMMMdFromString(
-                              context,
-                              kokparEventDto.date,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                kokparEventDto.images.isNotEmpty
-                    ? Flexible(
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.horizontal(
-                          right: Radius.circular(12),
-                        ),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: CachedNetworkImage(
+                // Image Section
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
+                  child:
+                      kokparEventDto.images.isNotEmpty
+                          ? CachedNetworkImage(
                             imageUrl: kokparEventDto.images.last,
+                            height: 120,
+                            width: double.infinity,
                             fit: BoxFit.cover,
                             placeholder:
                                 (context, url) => const Center(
                                   child: CircularProgressIndicator.adaptive(),
                                 ),
                             errorWidget:
-                                (context, url, error) => Container(
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.horizontal(
-                                      right: Radius.circular(12),
-                                    ),
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/png_images/recomd_image.png',
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                                (context, url, error) => Image.asset(
+                                  'assets/png_images/recomd_image.png',
+                                  height: 120,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
                                 ),
+                          )
+                          : Image.asset(
+                            'assets/png_images/recomd_image.png',
+                            height: 120,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                ),
+
+                // Details Section
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        kokparEventDto.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: theme.colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Text(
+                            "${city}\n${region?.name ?? ''}",
+                            style: TextStyle(
+                              color: theme.colors.black,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      ElevatedButton(
+                        onPressed:
+                            () => _launchPhoneDialer(
+                              kokparEventDto.authorPhoneNumber,
+                            ),
+                        child: const Text("Позвонить"),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(
+                            100,
+                            30,
+                          ), // Задайте нужный размер
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                       ),
-                    )
-                    : Flexible(
-                      child: ShimmerPlaceholder(
-                        isEnabled: isPlaceholder,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.horizontal(
-                              right: Radius.circular(12),
-                            ),
-                            image: DecorationImage(
-                              image: AssetImage(
-                                'assets/png_images/recomd_image.png',
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -207,7 +161,7 @@ class KokparEventCard extends StatelessWidget {
         if (!isPlaceholder)
           Positioned(
             right: 0,
-            top: 2,
+            top: 0,
             child: FavoriteButtonFeature(event: kokparEventDto),
           ),
       ],
@@ -215,28 +169,11 @@ class KokparEventCard extends StatelessWidget {
   }
 }
 
-class _MetaData extends StatelessWidget {
-  final String iconUrl;
-  final String text;
-  const _MetaData({required this.iconUrl, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SvgPicture.asset(iconUrl),
-        const SizedBox(width: 4),
-        Expanded(
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 10,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-      ],
-    );
+void _launchPhoneDialer(String phoneNumber) async {
+  final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
+  if (await canLaunchUrl(phoneUri)) {
+    await launchUrl(phoneUri);
+  } else {
+    print('Не удалось запустить приложение для звонка');
   }
 }

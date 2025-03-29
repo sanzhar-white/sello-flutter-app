@@ -61,6 +61,8 @@ flutter:
 
   assets:
     - assets/svg_icons/bottom_nav_bar/
+    - assets/banners/
+    - assets/categories/
     - assets/svg_icons/
     - assets/svg_images/
     - assets/png_images/

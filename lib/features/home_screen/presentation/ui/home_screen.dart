@@ -14,6 +14,7 @@ import 'package:sello/features/home_screen/presentation/ui/components/event_card
 import 'package:sello/features/home_screen/presentation/ui/components/notification_screen.dart';
 import 'package:sello/features/home_screen/presentation/ui/components/product_type_card.dart';
 import 'package:sello/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:sello/features/home_screen/presentation/ui/components/banners_widget.dart';
 import 'package:sello/features/horse_screen/presentation/ui/feature.dart';
 import 'package:sello/features/kokpar_screen.dart/presentation/ui/feature.dart';
 
@@ -93,140 +94,196 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
             child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 76,
-                      child: GridView.count(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: width * 0.05,
-                        mainAxisSpacing: width * 0.4,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: [
-                          EventCard(
-                            text: 'Көкпар',
-                            labelInfo: '+ Жаңа',
-                            imageUrl: 'assets/svg_images/kokpar.svg',
-                            onTap:
-                                () => navigateTo(
-                                  context: context,
-                                  rootNavigator: true,
-                                  screen: const KokparScreenFeature(),
-                                ),
-                          ),
-                          EventCard(
-                            text: 'Жамбы ату',
-                            labelInfo: 'Жақында',
-                            imageUrl: 'assets/svg_images/jamby_atu.svg',
-                            onTap: () {
-                              navigateTo(
-                                context: context,
-                                rootNavigator: true,
-                                screen: EmptyScreen(jambyAtu: true),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+                    child: BannersCarousel(
+                      banners: [
+                        BannerModel(imageUrl: 'assets/banners/banner1.png'),
+                        BannerModel(imageUrl: 'assets/banners/banner1.png'),
+                        BannerModel(imageUrl: 'assets/banners/banner1.png'),
+                      ],
                     ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      height: 76,
-                      child: GridView.count(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: width * 0.05,
-                        mainAxisSpacing: width * 0.4,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 40,
+                          width: double.infinity,
+                          child: Text(
+                            'Категории',
+                            style: TextStyle(
+                              color: theme.colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 76,
+                          child: GridView.count(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: width * 0.05,
+                            mainAxisSpacing: width * 0.4,
+                            physics: const NeverScrollableScrollPhysics(),
                             children: [
-                              ProductTypeCard(
-                                text: 'Жылқы',
-                                imageUrl: 'assets/svg_images/jylky.svg',
+                              EventCard(
+                                text: 'Спец-\nтехника',
+                                imageUrl: 'assets/categories/special_tech.png',
                                 onTap:
                                     () => navigateTo(
                                       context: context,
                                       rootNavigator: true,
-                                      screen: const HorseScreenFeature(
-                                        productType: ProductType.horse,
-                                      ),
+                                      screen: const KokparScreenFeature(),
                                     ),
                               ),
-                              ProductTypeCard(
-                                text: 'Экипировка',
-                                imageUrl: 'assets/svg_images/ekipirovka.svg',
-                                onTap:
-                                    () => navigateTo(
-                                      context: context,
-                                      rootNavigator: true,
-                                      screen: const HorseScreenFeature(
-                                        productType: ProductType.product,
-                                      ),
-                                    ),
+                              EventCard(
+                                text: 'Работа',
+                                imageUrl: 'assets/categories/work.png',
+                                onTap: () {
+                                  navigateTo(
+                                    context: context,
+                                    rootNavigator: true,
+                                    screen: EmptyScreen(jambyAtu: true),
+                                  );
+                                },
                               ),
                             ],
                           ),
-                          EventCard(
-                            text: 'Бәйге',
-                            labelInfo: 'Жақында',
-                            imageUrl: 'assets/svg_images/baige.svg',
-                            onTap: () {
-                              navigateTo(
-                                context: context,
-                                rootNavigator: true,
-                                screen: EmptyScreen(),
+                        ),
+                        const SizedBox(height: 8),
+                        SizedBox(
+                          height: 76,
+                          child: GridView.count(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: width * 0.05,
+                            mainAxisSpacing: width * 0.4,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: [
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     ProductTypeCard(
+                              //       text: 'Жылқы',
+                              //       imageUrl: 'assets/svg_images/jylky.svg',
+                              //       onTap:
+                              //           () => navigateTo(
+                              //             context: context,
+                              //             rootNavigator: true,
+                              //             screen: const HorseScreenFeature(
+                              //               productType: ProductType.horse,
+                              //             ),
+                              //           ),
+                              //     ),
+                              //     ProductTypeCard(
+                              //       text: 'Экипировка',
+                              //       imageUrl:
+                              //           'assets/svg_images/ekipirovka.svg',
+                              //       onTap:
+                              //           () => navigateTo(
+                              //             context: context,
+                              //             rootNavigator: true,
+                              //             screen: const HorseScreenFeature(
+                              //               productType: ProductType.product,
+                              //             ),
+                              //           ),
+                              //     ),
+                              //   ],
+                              // ),
+                              EventCard(
+                                text: 'Сырьё',
+                                imageUrl: 'assets/categories/raw.png',
+                                onTap: () {
+                                  navigateTo(
+                                    context: context,
+                                    rootNavigator: true,
+                                    screen: EmptyScreen(),
+                                  );
+                                },
+                              ),
+                              EventCard(
+                                text: 'Гербицид/\nУдобрение',
+                                imageUrl: 'assets/categories/fertiliser.png',
+                                onTap: () {
+                                  navigateTo(
+                                    context: context,
+                                    rootNavigator: true,
+                                    screen: EmptyScreen(),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 32),
+                        Container(
+                          child: Text(
+                            'Все объявления',
+                            style: TextStyle(
+                              color: theme.colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                            ),
+                          ),
+                          width: double.infinity,
+                        ),
+                        SizedBox(height: 10),
+                        BlocConsumer<HomeScreenBloc, HomeScreenState>(
+                          listener: (context, state) {},
+                          buildWhen:
+                              (previous, current) =>
+                                  current is HomeScreenData ||
+                                  current is HomeScreenLoading,
+                          builder: (context, state) {
+                            if (state is HomeScreenLoading && state.isLoading) {
+                              return GridView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      childAspectRatio:
+                                          0.8, // Adjust this for desired card size
+                                    ),
+                                itemCount: 6, // Number of placeholder items
+                                itemBuilder:
+                                    (context, index) =>
+                                        KokparEventCard.placeholder(),
                               );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    BlocConsumer<HomeScreenBloc, HomeScreenState>(
-                      listener: (context, state) {
-                        // if (state is HomeScreenSuccess) {
-                        //   showTopSnackBar(
-                        //     context: context,
-                        //     title: 'Мероприятие добавлено в избранное',
-                        //     titleColor: AppColors.greenColor,
-                        //   );
-                        // }
-                      },
-                      buildWhen:
-                          (previous, current) =>
-                              current is HomeScreenData ||
-                              current is HomeScreenLoading,
-                      builder: (context, state) {
-                        if (state is HomeScreenLoading && state.isLoading) {
-                          return Column(
-                            children: [
-                              ...List.generate(
-                                5,
-                                (index) => KokparEventCard.placeholder(),
-                              ),
-                            ],
-                          );
-                        }
-                        if (state is HomeScreenData) {
-                          return Column(
-                            children: [
-                              ...List.generate(
-                                state.events.length,
-                                (index) => KokparEventCard(
-                                  kokparEventDto: state.events[index],
-                                ),
-                              ),
-                            ],
-                          );
-                        }
+                            }
+                            if (state is HomeScreenData) {
+                              return GridView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      childAspectRatio:
+                                          0.8, // Adjust this for desired card size
+                                    ),
+                                itemCount: state.events.length,
+                                itemBuilder:
+                                    (context, index) => KokparEventCard(
+                                      kokparEventDto: state.events[index],
+                                    ),
+                              );
+                            }
 
-                        return const SizedBox.shrink();
-                      },
+                            return const SizedBox.shrink();
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

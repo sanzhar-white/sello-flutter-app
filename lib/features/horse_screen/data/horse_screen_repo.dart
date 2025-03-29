@@ -18,7 +18,7 @@ class HorseScreenRepo {
     }
 
     for (var element in eventsList) {
-      if (productType == ProductType.horse) {
+      if (productType == ProductType.machine) {
         events.addAll(element.productHorseList);
       } else {
         events.addAll(element.productList);

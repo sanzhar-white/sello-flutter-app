@@ -6,16 +6,9 @@ import 'package:sello/features/advertisement_screen/presentation/state/bloc/adve
 import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/add_event_screen.dart';
 
 class AddEventScreenFeature extends StatelessWidget {
-  final bool product;
   final ProductType? productType;
-  final bool horse;
 
-  const AddEventScreenFeature({
-    super.key,
-    this.product = false,
-    this.productType,
-    this.horse = false,
-  });
+  const AddEventScreenFeature({super.key, this.productType});
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +18,7 @@ class AddEventScreenFeature extends StatelessWidget {
         create:
             (context) =>
                 AdvertisementScreenBloc(context.read<AdvertisementRepo>()),
-        child: AddEventScreen(
-          product: product,
-          productType: productType,
-          hors: horse,
-        ),
+        child: AddEventScreen(productType: productType),
       ),
     );
   }

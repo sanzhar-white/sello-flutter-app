@@ -98,10 +98,10 @@ class FavoritesAdvertsEvents extends StatelessWidget {
         )
         : GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: 1, // Два элемента в строке
             mainAxisSpacing: 16,
             crossAxisSpacing: 16,
-            mainAxisExtent: 260,
+            childAspectRatio: 0.5, // Пропорция сторон (ширина к высоте)
           ),
           padding: EdgeInsets.all(16),
           itemCount: allFavorites.length,

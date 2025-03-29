@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
+import 'package:sello/core/enums.dart';
 import 'package:sello/generated/l10n.dart';
 
 class KokparEventCategoryConst {

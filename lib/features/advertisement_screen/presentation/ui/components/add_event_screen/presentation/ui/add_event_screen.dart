@@ -25,19 +25,42 @@ import 'package:sello/features/home_screen/data/models/product_dto.dart';
 import 'package:sello/features/home_screen/presentation/state/bloc/home_screen_bloc.dart';
 import 'package:sello/features/horse_screen/presentation/ui/components/product_detail_screen/presentation/ui/product_detail_screen.dart';
 import 'package:sello/generated/l10n.dart';
+import 'package:sello/core/theme/app_theme_provider.dart';
+import 'package:sello/core/utils/date_formatter.dart';
+import 'package:sello/core/utils/navigation.dart';
+import 'package:sello/core/widgets/big_button.dart';
+import 'package:sello/core/widgets/hint_text.dart';
+import 'package:sello/core/widgets/image_placeholder.dart';
+import 'package:sello/core/widgets/show_bottom_sheet_time_picker.dart';
+import 'package:sello/core/widgets/show_modal_bottom_sheet_wrap.dart';
+import 'package:sello/core/widgets/text_field_widget.dart';
+import 'package:sello/features/advertisement_screen/data/models/categories.dart'
+    as adv_categories;
+import 'package:sello/features/advertisement_screen/data/models/product_dto.dart'
+    as adv_product;
+import 'package:sello/features/advertisement_screen/data/models/product_type.dart'
+    as adv_type;
+import 'package:sello/features/advertisement_screen/presentation/bloc/advertisement_screen_bloc.dart'
+    as adv_bloc;
+import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/bloc/add_event_screen_bloc.dart';
+import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/calendar_widget.dart';
+import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/preview_screen.dart';
+import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/product_detail_screen.dart';
+import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/select_region.dart';
+import 'package:sello/features/home_screen/presentation/bloc/home_screen_bloc.dart';
+import 'package:sello/features/home_screen/presentation/bloc/home_screen_event.dart';
+import 'package:sello/features/my_auth/presentation/bloc/my_auth_provider.dart';
+import 'package:sello/features/my_auth/presentation/bloc/my_auth_state.dart';
+import 'package:sello/utils/constants.dart';
+import 'package:sello/utils/money_text_input_formatter.dart';
+import 'package:sello/utils/show_top_snack_bar.dart';
+import 'package:sello/utils/uuid.dart';
 // import 'package:uuid/uuid.dart';
 
 class AddEventScreen extends StatefulWidget {
-  final ProductType? productType;
-  final bool product;
-  final bool hors;
+  final adv_type.ProductType? productType;
 
-  const AddEventScreen({
-    super.key,
-    this.product = false,
-    required this.productType,
-    this.hors = false,
-  });
+  const AddEventScreen({super.key, required this.productType});
 
   @override
   State<AddEventScreen> createState() => _AddEventScreenState();
@@ -56,21 +79,21 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   List<XFile> images = [];
 
-  Category? region;
+  adv_categories.Category? region;
 
-  Category? city;
+  adv_categories.Category? city;
 
   DateTime dateTime = DateTime.now();
 
   bool canAgree = false;
 
-  ProductDto? productDto;
+  adv_product.ProductDto? productDto;
 
-  Category? productState;
+  adv_categories.Category? productState;
 
-  Category? category;
+  adv_categories.Category? category;
 
-  Category? subCategory;
+  adv_categories.Category? subCategory;
 
   @override
   void initState() {
@@ -169,84 +192,73 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   style: style,
                   keyboardType: TextInputType.text,
                 ),
-                if (widget.product) ...[
-                  const SizedBox(height: 20),
-                  HintText(text: S.of(context).category),
-                  const SizedBox(height: 8),
-                  TextFieldWidget(
-                    style: style,
-                    readOnly: true,
-                    hintColor: theme.colors.colorText2,
-                    validator: (value) {
-                      return null;
-                    },
-                    hintText: category?.name ?? S.of(context).selectCategories,
-                    onTap: () async {
-                      subCategory = null;
-                      await showModalBottomSheetWrap(
-                        context: context,
-                        child: _SelectCategory(
-                          horse: widget.hors,
-                          productCategory: widget.product && !widget.hors,
-                          kokparEventCategory: !widget.product,
-                          changeCategory: (value) {
-                            category = value;
-                          },
-                        ),
-                      );
-                      setState(() {});
-                    },
-                    suffixIcon: Icon(
-                      Icons.keyboard_arrow_down,
-                      color: theme.colors.colorText3,
-                    ),
-                  ),
-                ],
-                if (widget.product && !widget.hors) ...[
-                  const SizedBox(height: 20),
-                  const HintText(text: 'Подкатегория'),
-                  const SizedBox(height: 8),
-                  TextFieldWidget(
-                    style: style,
-                    readOnly: true,
-                    hintColor: theme.colors.colorText2,
-                    validator: (value) {
-                      return null;
-                    },
-                    hintText:
-                        subCategory?.name ?? S.of(context).selectSubCategories,
-                    onTap: () async {
-                      if (category == null) {
-                        showTopSnackBar(
-                          context: context,
-                          title: S.of(context).selectCategories,
-                        );
-                        return;
-                      }
-                      await showModalBottomSheetWrap(
-                        context: context,
-                        child: _SelectCategory(
-                          subCategories: category!.subCategories,
-                          changeCategory: (value) {
-                            subCategory = value;
-                          },
-                        ),
-                      );
-                      setState(() {});
-                    },
-                    suffixIcon: Icon(
-                      Icons.keyboard_arrow_down,
-                      color: theme.colors.colorText3,
-                    ),
-                  ),
-                ],
                 const SizedBox(height: 20),
-                HintText(
-                  text:
-                      widget.product
-                          ? '${S.of(context).price} (тг.)'
-                          : '${S.of(context).prizeFund} (тг.)',
+                HintText(text: S.of(context).category),
+                const SizedBox(height: 8),
+                TextFieldWidget(
+                  style: style,
+                  readOnly: true,
+                  hintColor: theme.colors.colorText2,
+                  validator: (value) {
+                    return null;
+                  },
+                  hintText: category?.name ?? S.of(context).selectCategories,
+                  onTap: () async {
+                    subCategory = null;
+                    await showModalBottomSheetWrap(
+                      context: context,
+                      child: _SelectCategory(
+                        productType: widget.productType,
+                        changeCategory: (value) {
+                          category = value;
+                        },
+                      ),
+                    );
+                    setState(() {});
+                  },
+                  suffixIcon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: theme.colors.colorText3,
+                  ),
                 ),
+                const SizedBox(height: 20),
+                const HintText(text: 'Подкатегория'),
+                const SizedBox(height: 8),
+                TextFieldWidget(
+                  style: style,
+                  readOnly: true,
+                  hintColor: theme.colors.colorText2,
+                  validator: (value) {
+                    return null;
+                  },
+                  hintText:
+                      subCategory?.name ?? S.of(context).selectSubCategories,
+                  onTap: () async {
+                    if (category == null) {
+                      showTopSnackBar(
+                        context: context,
+                        title: S.of(context).selectCategories,
+                      );
+                      return;
+                    }
+                    await showModalBottomSheetWrap(
+                      context: context,
+                      child: _SelectCategory(
+                        subCategories: category!.subCategories,
+                        changeCategory: (value) {
+                          subCategory = value;
+                        },
+                      ),
+                    );
+                    setState(() {});
+                  },
+                  suffixIcon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: theme.colors.colorText3,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                HintText(text: '${S.of(context).price} (тг.)'),
                 const SizedBox(height: 8),
                 TextFieldWidget(
                   style: style,
@@ -256,63 +268,59 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   ),
                   inputFormatters: [MoneyTextInputFormatter()],
                 ),
-                if (widget.product && !widget.hors) ...[
-                  const SizedBox(height: 20),
-                  HintText(text: S.of(context).condition),
-                  const SizedBox(height: 8),
-                  TextFieldWidget(
-                    style: style,
-                    readOnly: true,
-                    hintColor: theme.colors.colorText2,
-                    validator: (value) {
-                      return null;
-                    },
-                    hintText: productState?.name ?? S.of(context).condition,
-                    onTap: () async {
-                      await showModalBottomSheetWrap(
-                        context: context,
-                        child: _SelectCategory(
-                          state: true,
-                          changeCategory: (value) {
-                            productState = value;
-                          },
-                        ),
-                      );
-                      setState(() {});
-                    },
-                    suffixIcon: Icon(
-                      Icons.keyboard_arrow_down,
-                      color: theme.colors.colorText3,
-                    ),
-                  ),
-                ],
-                if (widget.product) ...[
-                  const SizedBox(height: 20),
-                  TextFieldWidget(
-                    style: style,
-                    keyboardType: TextInputType.text,
-                    readOnly: true,
-                    hintText: S.of(context).negotiable,
-                    validator: (value) {
-                      return null;
-                    },
-                    suffixIcon: SizedBox(
-                      width: 10,
-                      height: 10,
-                      child: Icon(
-                        canAgree
-                            ? Icons.radio_button_checked
-                            : Icons.radio_button_unchecked,
-                        color: theme.colors.primary,
+                const SizedBox(height: 20),
+                HintText(text: S.of(context).condition),
+                const SizedBox(height: 8),
+                TextFieldWidget(
+                  style: style,
+                  readOnly: true,
+                  hintColor: theme.colors.colorText2,
+                  validator: (value) {
+                    return null;
+                  },
+                  hintText: productState?.name ?? S.of(context).condition,
+                  onTap: () async {
+                    await showModalBottomSheetWrap(
+                      context: context,
+                      child: _SelectCategory(
+                        state: true,
+                        changeCategory: (value) {
+                          productState = value;
+                        },
                       ),
-                    ),
-                    onTap: () {
-                      setState(() {
-                        canAgree = !canAgree;
-                      });
-                    },
+                    );
+                    setState(() {});
+                  },
+                  suffixIcon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: theme.colors.colorText3,
                   ),
-                ],
+                ),
+                const SizedBox(height: 20),
+                TextFieldWidget(
+                  style: style,
+                  keyboardType: TextInputType.text,
+                  readOnly: true,
+                  hintText: S.of(context).negotiable,
+                  validator: (value) {
+                    return null;
+                  },
+                  suffixIcon: SizedBox(
+                    width: 10,
+                    height: 10,
+                    child: Icon(
+                      canAgree
+                          ? Icons.radio_button_checked
+                          : Icons.radio_button_unchecked,
+                      color: theme.colors.primary,
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      canAgree = !canAgree;
+                    });
+                  },
+                ),
                 const SizedBox(height: 20),
                 HintText(text: S.of(context).description),
                 const SizedBox(height: 8),
@@ -322,88 +330,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   style: style,
                   keyboardType: TextInputType.text,
                 ),
-                if (!widget.product) ...[
-                  const SizedBox(height: 20),
-                  HintText(text: S.of(context).eventDate),
-                  const SizedBox(height: 8),
-                  TextFieldWidget(
-                    hintColor: theme.colors.colorText2,
-                    readOnly: true,
-                    hintText: dateFormatYMMMd(dateTime),
-                    validator: (value) {
-                      return null;
-                    },
-                    suffixIcon: SizedBox(
-                      width: 10,
-                      height: 10,
-                      child: Icon(
-                        Icons.calendar_month_outlined,
-                        color: theme.colors.colorText3.withOpacity(0.7),
-                      ),
-                    ),
-                    onTap: () {
-                      showModalBottomSheetWrap(
-                        context: context,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 12,
-                          ),
-                          child: CalendarWidget(
-                            calendarFormat: CalendarFormat.month,
-                            headerVisible: true,
-                            currentDay: DateTime.now(),
-                            chosenDayCallBack: (value) {
-                              setState(() {
-                                dateTime = value;
-                              });
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  const HintText(text: 'Время проведения'),
-                  const SizedBox(height: 8),
-                  TextFieldWidget(
-                    hintText: dateFormatHMd(dateTime),
-                    hintColor: theme.colors.colorText2,
-                    readOnly: true,
-                    validator: (value) {
-                      return null;
-                    },
-                    suffixIcon: Icon(
-                      Icons.alarm,
-                      color: theme.colors.colorText3.withOpacity(0.7),
-                    ),
-                    onTap: () async {
-                      await showModalBottomSheetWrap(
-                        context: context,
-                        child: ShowBottomSheetTimePicker(
-                          onDateTimeChanged: (DateTime date) {
-                            dateTime = DateTime(
-                              dateTime.year,
-                              dateTime.month,
-                              dateTime.day,
-                              date.hour,
-                              date.minute,
-                            );
-                          },
-                        ),
-                      );
-                      setState(() {});
-                    },
-                  ),
-                ],
                 const SizedBox(height: 20),
-                HintText(
-                  text:
-                      widget.product
-                          ? S.of(context).settlement
-                          : S.of(context).eventLocation,
-                ),
+                HintText(text: S.of(context).settlement),
                 const SizedBox(height: 8),
                 TextFieldWidget(
                   style: style,
@@ -474,91 +402,62 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     }
                     if (!_formKey.currentState!.validate() ||
                         city == null ||
-                        region == null) {
-                      if (widget.product && widget.hors && category == null) {
-                        showTopSnackBar(
-                          context: context,
-                          title: 'Необходимо заполнить все пол',
-                        );
-                        return;
-                      } else {
-                        showTopSnackBar(
-                          context: context,
-                          title: 'Необходимо заполнить все поля',
-                        );
-                        return;
-                      }
+                        region == null ||
+                        category == null ||
+                        subCategory == null ||
+                        productState == null) {
+                      showTopSnackBar(
+                        context: context,
+                        title: 'Необходимо заполнить все поля',
+                      );
+                      return;
                     }
 
-                    final event = KokparEventDto(
+                    productDto = adv_product.ProductDto(
                       id: id.toString(),
                       title: titleController.text.trim(),
                       authorPhoneNumber: authProvider!.phoneNumber,
                       subTitle: subtitleController.text.trim(),
                       city: city?.id ?? '',
-                      date: dateTime.toString(),
+                      createdDate: DateTime.now().toString(),
                       region: region?.id ?? "",
-                      prizeFund: prizeFoundController.text.trim().toDouble(),
+                      price: prizeFoundController.text.trim().toDouble(),
                       description: descriptionController.text.trim(),
                       isFavorite: false,
-                      category: category?.id ?? '',
+                      categoryId: category?.id ?? '',
+                      subCategoryId: subCategory?.id ?? '',
                       images: [],
+                      canAgree: canAgree,
+                      state: productState?.id ?? '',
                     );
 
-                    if (widget.product) {
-                      productDto = ProductDto(
-                        id: id.toString(),
-                        title: titleController.text.trim(),
-                        authorPhoneNumber: authProvider.phoneNumber,
-                        subTitle: subtitleController.text.trim(),
-                        city: city?.id ?? '',
-                        createdDate: dateTime.toString(),
-                        region: region?.id ?? "",
-                        price: prizeFoundController.text.trim().toDouble(),
-                        description: descriptionController.text.trim(),
-                        isFavorite: false,
-                        categoryId: category?.id ?? '',
-                        subCategoryId: subCategory?.id ?? '',
-                        images: [],
-                        canAgree: canAgree,
-                        state: productState?.id ?? '',
-                      );
-                    }
-
-                    widget.product
-                        ? navigateTo(
-                          context: context,
-                          fullScreenDialog: true,
-                          rootNavigator: true,
-                          screen: ProductDetailScreen(
-                            product: productDto!,
-                            images: images,
-                          ),
-                        )
-                        : navigateTo(
-                          context: context,
-                          fullScreenDialog: true,
-                          rootNavigator: true,
-                          screen: PreviewScreen(
-                            kokparEventDto: event,
-                            images: images,
-                          ),
-                        );
+                    navigateTo(
+                      context: context,
+                      fullScreenDialog: true,
+                      rootNavigator: true,
+                      screen: ProductDetailScreen(
+                        product: productDto!,
+                        images: images,
+                      ),
+                    );
                   },
                   label: S.of(context).preview,
                   isActive: false,
                 ),
                 const SizedBox(height: 12),
-                BlocConsumer<AdvertisementScreenBloc, AdvertisementScreenState>(
+                BlocConsumer<
+                  adv_bloc.AdvertisementScreenBloc,
+                  adv_bloc.AdvertisementScreenState
+                >(
                   listener: (context, state) async {
-                    if (state is AdvertisementScreenError) {
+                    if (state is adv_bloc.AdvertisementScreenError) {
                       showTopSnackBar(
                         context: context,
                         title: 'Произошла ошибка',
                         message: state.errorMassage,
                       );
                     }
-                    if (state is AdvertisementScreenSuccess) {
+                    if (state is adv_bloc.AdvertisementScreenSuccess) {
                       context.read<HomeScreenBloc>().add(
                         GetAllKokparEvents(
                           phoneNumber: authProvider!.phoneNumber,
@@ -566,7 +465,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       );
                       showTopSnackBar(
                         context: context,
-                        title: 'Мероприятие успешно создан',
+                        title: 'Объявление успешно создано',
                         titleColor: theme.colors.green,
                       );
 
@@ -576,7 +475,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     }
                   },
                   builder: (context, state) {
-                    if (state is AdvertisementScreenLoading) {
+                    if (state is adv_bloc.AdvertisementScreenLoading) {
                       return Stack(
                         children: [
                           BigButton(
@@ -606,75 +505,43 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         }
                         if (!_formKey.currentState!.validate() ||
                             city == null ||
-                            region == null) {
-                          if (widget.product &&
-                              widget.hors &&
-                              category == null) {
-                            showTopSnackBar(
-                              context: context,
-                              title: 'Необходимо заполнить все пол',
-                            );
-                            return;
-                          } else {
-                            showTopSnackBar(
-                              context: context,
-                              title: 'Необходимо заполнить все поля',
-                            );
-                            return;
-                          }
+                            region == null ||
+                            category == null ||
+                            subCategory == null ||
+                            productState == null) {
+                          showTopSnackBar(
+                            context: context,
+                            title: 'Необходимо заполнить все поля',
+                          );
+                          return;
                         }
-                        final event = KokparEventDto(
+
+                        productDto = adv_product.ProductDto(
                           id: id.toString(),
                           title: titleController.text.trim(),
                           authorPhoneNumber: authProvider!.phoneNumber,
                           subTitle: subtitleController.text.trim(),
                           city: city?.id ?? '',
-                          date: dateTime.toString(),
+                          createdDate: DateTime.now().toString(),
                           region: region?.id ?? "",
-                          prizeFund:
-                              prizeFoundController.text.trim().toDouble(),
+                          price: prizeFoundController.text.trim().toDouble(),
                           description: descriptionController.text.trim(),
                           isFavorite: false,
-                          category: category?.id ?? '',
+                          categoryId: category?.id ?? '',
+                          subCategoryId: subCategory?.id ?? '',
                           images: [],
+                          canAgree: canAgree,
+                          state: productState?.id ?? '',
                         );
 
-                        if (widget.product) {
-                          productDto = ProductDto(
-                            id: id.toString(),
-                            title: titleController.text.trim(),
-                            authorPhoneNumber: authProvider.phoneNumber,
-                            subTitle: subtitleController.text.trim(),
-                            city: city?.id ?? '',
-                            createdDate: dateTime.toString(),
-                            region: region?.id ?? "",
-                            price: prizeFoundController.text.trim().toDouble(),
-                            description: descriptionController.text.trim(),
-                            isFavorite: false,
-                            categoryId: category?.id ?? '',
-                            subCategoryId: subCategory?.id ?? '',
-                            images: [],
-                            canAgree: canAgree,
-                            state: productState?.id ?? '',
-                          );
-                        }
-
-                        widget.product
-                            ? context.read<AdvertisementScreenBloc>().add(
-                              AddAdvert(
-                                images: images,
-                                product: productDto!,
-                                userPhoneNumber: authProvider.phoneNumber,
-                                productType: widget.productType!,
-                              ),
-                            )
-                            : context.read<AdvertisementScreenBloc>().add(
-                              AddAdvertisement(
-                                images: images,
-                                event: event,
-                                userPhoneNumber: authProvider.phoneNumber,
-                              ),
-                            );
+                        context.read<adv_bloc.AdvertisementScreenBloc>().add(
+                          adv_bloc.AddAdvert(
+                            images: images,
+                            product: productDto!,
+                            userPhoneNumber: authProvider.phoneNumber,
+                            productType: widget.productType!,
+                          ),
+                        );
                       },
                       label: S.of(context).publish,
                     );
@@ -691,20 +558,16 @@ class _AddEventScreenState extends State<AddEventScreen> {
 }
 
 class _SelectCategory extends StatelessWidget {
-  final Function(Category) changeCategory;
-  final List<Category>? subCategories;
-  final bool kokparEventCategory;
+  final Function(adv_categories.Category) changeCategory;
+  final List<adv_categories.Category>? subCategories;
   final bool state;
-  final bool productCategory;
-  final bool horse;
+  final adv_type.ProductType? productType;
 
   const _SelectCategory({
     required this.changeCategory,
     this.subCategories,
-    this.kokparEventCategory = false,
     this.state = false,
-    this.productCategory = false,
-    this.horse = false,
+    this.productType,
   });
 
   @override
@@ -716,31 +579,40 @@ class _SelectCategory extends StatelessWidget {
           ...subCategories!.map(
             (e) => _ChangeCategory(category: e, changeCategory: changeCategory),
           ),
-        if (productCategory)
-          ...productCategories(context).map(
-            (e) => _ChangeCategory(category: e, changeCategory: changeCategory),
-          ),
-        if (kokparEventCategory)
-          ...kokparEventCategories(context).map(
-            (e) => _ChangeCategory(category: e, changeCategory: changeCategory),
-          ),
         if (state)
-          ...productState.map(
+          ...adv_categories.productState.map(
             (e) => _ChangeCategory(category: e, changeCategory: changeCategory),
           ),
-        if (horse)
-          ...horseCategories.map(
+        if (productType != null)
+          ..._getCategoriesForProductType(productType!).map(
             (e) => _ChangeCategory(category: e, changeCategory: changeCategory),
           ),
         const SizedBox(height: 20),
       ],
     );
   }
+
+  List<adv_categories.Category> _getCategoriesForProductType(
+    adv_type.ProductType type,
+  ) {
+    switch (type) {
+      case adv_type.ProductType.machine:
+        return adv_categories.machineCategories;
+      case adv_type.ProductType.raw_material:
+        return adv_categories.rawMaterialCategories;
+      case adv_type.ProductType.work:
+        return adv_categories.workCategories;
+      case adv_type.ProductType.fertiliser:
+        return adv_categories.fertiliserCategories;
+      default:
+        return [];
+    }
+  }
 }
 
 class _ChangeCategory extends StatelessWidget {
-  final Function(Category) changeCategory;
-  final Category category;
+  final Function(adv_categories.Category) changeCategory;
+  final adv_categories.Category category;
 
   const _ChangeCategory({required this.changeCategory, required this.category});
 

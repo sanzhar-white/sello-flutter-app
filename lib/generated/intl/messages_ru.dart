@@ -109,7 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "state": MessageLookupByLibrary.simpleMessage("Республиканский"),
     "stirrup": MessageLookupByLibrary.simpleMessage("Стремя"),
-    "submitAd": MessageLookupByLibrary.simpleMessage("Подать объявление"),
+    "submitAd": MessageLookupByLibrary.simpleMessage("Новое Объявление"),
     "typesAdvertisements": MessageLookupByLibrary.simpleMessage(
       "Типы объявлений",
     ),

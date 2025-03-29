@@ -71,7 +71,7 @@ class FavoriteButton extends StatelessWidget {
         child: Icon(
           like != null ? Icons.favorite : Icons.favorite_outline,
           size: 20,
-          color: like != null ? theme.colors.red : theme.colors.colorText1,
+          color: like != null ? theme.colors.redLight : theme.colors.colorText1,
         ),
       ),
     );

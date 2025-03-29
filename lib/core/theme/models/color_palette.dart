@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ColorPalette {
-  static Color get primary => const Color(0xFF990000);
+  static Color get primary => const Color(0xFF2B654D);
 
   static Color get secondary => const Color(0xFF33c9ff);
 
@@ -11,11 +11,11 @@ class ColorPalette {
 
   static Color get accent => const Color(0xFFEB702D);
 
-  static Color get redColor => const Color(0xffe60000);
+  static Color get redColor => const Color(0xffFFFFFF);
 
-  static Color get redColorD => const Color(0xffbf4040);
+  static Color get redColorD => const Color(0xff2B654D);
 
-  static Color get paleRed => const Color(0xFFFF6464);
+  static Color get paleRed => const Color(0xFFFFFFFF);
 
   static Color get greenColor => const Color(0xFF40bf40);
 
@@ -25,9 +25,9 @@ class ColorPalette {
 
   static Color get orangeD => const Color(0xFFb36b00);
 
-  static Color get redLight => const Color(0xffff8566);
+  static Color get redLight => const Color(0xff2B654D);
 
-  static Color get redLightD => const Color(0xff732626);
+  static Color get redLightD => const Color(0xff2B654D);
 
   static Color get greenLight => const Color(0xff66cc66);
 

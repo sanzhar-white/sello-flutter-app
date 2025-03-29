@@ -1,124 +1,74 @@
 import 'dart:convert';
-
-class ProductList {
-  final List<ProductDto> productList;
-  final List<ProductDto> productHorseList;
-
-  ProductList({
-    required this.productList,
-    required this.productHorseList,
-  });
-
-  ProductList copyWith({
-    List<ProductDto>? productList,
-    List<ProductDto>? productHorseList,
-  }) {
-    return ProductList(
-      productList: productList ?? this.productList,
-      productHorseList: productHorseList ?? this.productHorseList,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'productList': productList.map((x) => x.toMap()).toList(),
-      'productHorseList': productHorseList.map((x) => x.toMap()).toList(),
-    };
-  }
-
-  factory ProductList.fromMap(Map<String, dynamic> map) {
-    return ProductList(
-      productList: List<ProductDto>.from(
-        (map['productList'] as List<dynamic>).map<ProductDto>(
-          (x) => ProductDto.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      productHorseList: List<ProductDto>.from(
-        (map['productHorseList'] as List<dynamic>).map<ProductDto>(
-          (x) => ProductDto.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory ProductList.fromJson(String source) =>
-      ProductList.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() =>
-      'ProductList(productList: $productList, productHorseList: productHorseList)';
-}
+import 'package:flutter/foundation.dart';
 
 class ProductDto {
   final String id;
   final String title;
+  final String authorPhoneNumber;
   final String subTitle;
+  final String city;
+  final String createdDate;
+  final String region;
+  final double price;
   final String description;
-  final num price;
+  final bool isFavorite;
   final String categoryId;
   final String subCategoryId;
-  final String state;
-  final String region;
-  final String city;
-  final String authorPhoneNumber;
-  final String createdDate;
-  final bool canAgree;
-  final bool isFavorite;
   final List<String> images;
+  final bool canAgree;
+  final String state;
 
   ProductDto({
     required this.id,
     required this.title,
+    required this.authorPhoneNumber,
     required this.subTitle,
-    required this.description,
+    required this.city,
+    required this.createdDate,
+    required this.region,
     required this.price,
+    required this.description,
+    required this.isFavorite,
     required this.categoryId,
     required this.subCategoryId,
-    required this.state,
-    required this.region,
-    required this.city,
-    required this.authorPhoneNumber,
-    required this.createdDate,
-    required this.canAgree,
-    required this.isFavorite,
     required this.images,
+    required this.canAgree,
+    required this.state,
   });
 
   ProductDto copyWith({
     String? id,
     String? title,
+    String? authorPhoneNumber,
     String? subTitle,
-    String? description,
+    String? city,
+    String? createdDate,
+    String? region,
     double? price,
+    String? description,
+    bool? isFavorite,
     String? categoryId,
     String? subCategoryId,
-    String? state,
-    String? region,
-    String? city,
-    String? authorPhoneNumber,
-    String? createdDate,
-    bool? canAgree,
-    bool? isFavorite,
     List<String>? images,
+    bool? canAgree,
+    String? state,
   }) {
     return ProductDto(
       id: id ?? this.id,
       title: title ?? this.title,
+      authorPhoneNumber: authorPhoneNumber ?? this.authorPhoneNumber,
       subTitle: subTitle ?? this.subTitle,
-      description: description ?? this.description,
+      city: city ?? this.city,
+      createdDate: createdDate ?? this.createdDate,
+      region: region ?? this.region,
       price: price ?? this.price,
+      description: description ?? this.description,
+      isFavorite: isFavorite ?? this.isFavorite,
       categoryId: categoryId ?? this.categoryId,
       subCategoryId: subCategoryId ?? this.subCategoryId,
-      state: state ?? this.state,
-      region: region ?? this.region,
-      city: city ?? this.city,
-      authorPhoneNumber: authorPhoneNumber ?? this.authorPhoneNumber,
-      createdDate: createdDate ?? this.createdDate,
-      canAgree: canAgree ?? this.canAgree,
-      isFavorite: isFavorite ?? this.isFavorite,
       images: images ?? this.images,
+      canAgree: canAgree ?? this.canAgree,
+      state: state ?? this.state,
     );
   }
 
@@ -126,19 +76,19 @@ class ProductDto {
     return <String, dynamic>{
       'id': id,
       'title': title,
-      'subTitle': subTitle,
-      'description': description,
-      'price': price,
-      'category': categoryId,
-      'subCategoryId': subCategoryId,
-      'state': state,
-      'region': region,
-      'city': city,
       'authorPhoneNumber': authorPhoneNumber,
+      'subTitle': subTitle,
+      'city': city,
       'createdDate': createdDate,
-      'canAgree': canAgree,
+      'region': region,
+      'price': price,
+      'description': description,
       'isFavorite': isFavorite,
+      'categoryId': categoryId,
+      'subCategoryId': subCategoryId,
       'images': images,
+      'canAgree': canAgree,
+      'state': state,
     };
   }
 
@@ -146,21 +96,19 @@ class ProductDto {
     return ProductDto(
       id: map['id'] as String,
       title: map['title'] as String,
-      subTitle: map['subTitle'] as String,
-      description: map['description'] as String,
-      price: map['price'] as num,
-      categoryId: map['category'] as String,
-      subCategoryId: map['subCategoryId'] as String,
-      state: map['state'] as String,
-      region: map['region'] as String,
-      city: map['city'] as String,
       authorPhoneNumber: map['authorPhoneNumber'] as String,
+      subTitle: map['subTitle'] as String,
+      city: map['city'] as String,
       createdDate: map['createdDate'] as String,
-      canAgree: map['canAgree'] as bool,
+      region: map['region'] as String,
+      price: map['price'] as double,
+      description: map['description'] as String,
       isFavorite: map['isFavorite'] as bool,
-      images: List<String>.from(
-        (map['images'] as List<dynamic>),
-      ),
+      categoryId: map['categoryId'] as String,
+      subCategoryId: map['subCategoryId'] as String,
+      images: List<String>.from(map['images'] as List<dynamic>),
+      canAgree: map['canAgree'] as bool,
+      state: map['state'] as String,
     );
   }
 
@@ -170,72 +118,45 @@ class ProductDto {
       ProductDto.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() {
-    return 'ProductDto(id: $id, title: $title, subTitle: $subTitle, description: $description, price: $price, category: $categoryId, state: $state, region: $region, city: $city, authorPhoneNumber: $authorPhoneNumber, createdDate: $createdDate, canAgree: $canAgree, isFavorite: $isFavorite, images: $images)';
-  }
-}
-
-class Category {
-  final String id;
-  final String name;
-  final List<Category>? subCategories;
-
-  Category({
-    required this.id,
-    required this.name,
-    this.subCategories,
-  });
-
-  Category copyWith({
-    String? id,
-    String? name,
-    List<Category>? subCategories,
-  }) {
-    return Category(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      subCategories: subCategories ?? this.subCategories,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'name': name,
-      'subCategories': subCategories?.map((x) => x.toMap()).toList(),
-    };
-  }
-
-  factory Category.fromMap(Map<String, dynamic> map) {
-    return Category(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      subCategories: map['subCategories'] != null
-          ? List<Category>.from(
-              (map['subCategories'] as List<int>).map<Category?>(
-                (x) => Category.fromMap(x as Map<String, dynamic>),
-              ),
-            )
-          : null,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Category.fromJson(String source) =>
-      Category.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
   String toString() =>
-      'Category(id: $id, name: $name, subCategories: $subCategories)';
+      'ProductDto(id: $id, title: $title, authorPhoneNumber: $authorPhoneNumber, subTitle: $subTitle, city: $city, createdDate: $createdDate, region: $region, price: $price, description: $description, isFavorite: $isFavorite, categoryId: $categoryId, subCategoryId: $subCategoryId, images: $images, canAgree: $canAgree, state: $state)';
 
   @override
-  bool operator ==(covariant Category other) {
+  bool operator ==(covariant ProductDto other) {
     if (identical(this, other)) return true;
 
-    return other.id == id;
+    return other.id == id &&
+        other.title == title &&
+        other.authorPhoneNumber == authorPhoneNumber &&
+        other.subTitle == subTitle &&
+        other.city == city &&
+        other.createdDate == createdDate &&
+        other.region == region &&
+        other.price == price &&
+        other.description == description &&
+        other.isFavorite == isFavorite &&
+        other.categoryId == categoryId &&
+        other.subCategoryId == subCategoryId &&
+        listEquals(other.images, images) &&
+        other.canAgree == canAgree &&
+        other.state == state;
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ subCategories.hashCode;
+  int get hashCode =>
+      id.hashCode ^
+      title.hashCode ^
+      authorPhoneNumber.hashCode ^
+      subTitle.hashCode ^
+      city.hashCode ^
+      createdDate.hashCode ^
+      region.hashCode ^
+      price.hashCode ^
+      description.hashCode ^
+      isFavorite.hashCode ^
+      categoryId.hashCode ^
+      subCategoryId.hashCode ^
+      images.hashCode ^
+      canAgree.hashCode ^
+      state.hashCode;
 }

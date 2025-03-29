@@ -26,7 +26,7 @@ class AppColors {
   static const colorIconBNBD = Color(0xff404040);
   static const colorIconBNB = Color(0xffbabdc4);
   static const colorIcon = Color(0xffB69797);
-  static const redColor = Color(0xffff5533);
-  static const redColorD = Color(0xffbf4040);
+  static const redColor = Color(0xff2B654D);
+  static const redColorD = Color(0xff2B654D);
   static const darkContainerColor = Color(0xff262626);
 }

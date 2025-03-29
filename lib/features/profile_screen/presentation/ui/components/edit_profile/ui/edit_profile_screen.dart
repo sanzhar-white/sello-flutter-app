@@ -114,7 +114,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         return Stack(
           children: [
             Scaffold(
-              appBar: AppBar(title: const Text('Профиль')),
+              appBar: AppBar(
+                title: Text(
+                  'Настройки Личной Информации',
+                  style: TextStyle(
+                    color: theme.colors.colorText1,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),
+                ),
+                centerTitle: true,
+              ),
               body: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(24),
@@ -181,24 +191,37 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      TextFieldWidget(
-                        controller: nameController,
-                        keyboardType: TextInputType.text,
-                      ),
-                      const SizedBox(height: 16),
-                      TextFieldWidget(
+                      _buildTextField(
                         controller: lastNameController,
-                        keyboardType: TextInputType.text,
+                        hint: 'Иссабаев',
+                        letter: 'Ф',
+                        iconColor: Colors.purple,
                       ),
-                      const SizedBox(height: 12),
-                      TextFieldWidget(
+                      const SizedBox(height: 8),
+                      _buildTextField(
+                        controller: nameController,
+                        hint: 'Нуржан',
+                        letter: 'И',
+                        iconColor: Colors.green,
+                      ),
+                      const SizedBox(height: 8),
+                      _buildTextField(
+                        controller: TextEditingController(),
+                        hint: 'Нурланович',
+                        letter: 'О',
+                        iconColor: Colors.orange,
+                      ),
+                      const SizedBox(height: 8),
+                      _buildTextField(
                         controller: phoneController,
+                        hint: '+7 777 031 81 94',
                         readOnly: true,
-                        style: TextStyle(color: theme.colors.colorText3),
+                        isPhone: true,
                       ),
-                      const SizedBox(height: 12),
-                      TextFieldWidget(
-                        hintText: region?.name ?? S.of(context).region,
+                      const SizedBox(height: 8),
+                      _buildTextField(
+                        controller: regionController,
+                        hint: 'Область',
                         readOnly: true,
                         onTap: () async {
                           city = null;
@@ -207,20 +230,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             child: SelectRegion(
                               onChangedRegion: (value) {
                                 region = value;
+                                setState(() {});
                               },
                               regions: kzRegions,
                             ),
                           );
-                          setState(() {});
                         },
-                        suffixIcon: Icon(
-                          Icons.keyboard_arrow_down,
-                          color: theme.colors.colorText3,
-                        ),
+                        suffixIcon: const Icon(Icons.keyboard_arrow_down),
                       ),
-                      const SizedBox(height: 12),
-                      TextFieldWidget(
-                        hintText: city?.name ?? S.of(context).city,
+                      const SizedBox(height: 8),
+                      _buildTextField(
+                        controller: cityController,
+                        hint: 'Город',
                         readOnly: true,
                         onTap: () {
                           if (region == null) {
@@ -241,12 +262,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                           );
                         },
-                        suffixIcon: Icon(
-                          Icons.keyboard_arrow_down,
-                          color: theme.colors.colorText3,
-                        ),
+                        suffixIcon: const Icon(Icons.keyboard_arrow_down),
                       ),
-                      const SizedBox(height: 36),
+                      const SizedBox(height: 24),
                       BigButton(
                         onPressed: () {
                           context.read<EditProfileScreenBloc>().add(
@@ -264,7 +282,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                           );
                         },
-                        label: S.of(context).save,
+                        label: 'Сохранить',
                         padding: const EdgeInsets.all(0),
                       ),
                       const SizedBox(height: 36),
@@ -301,6 +319,75 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hint,
+    bool readOnly = false,
+    VoidCallback? onTap,
+    Widget? suffixIcon,
+    Color? iconColor,
+    String? letter,
+    bool isPhone = false,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xffF2F2F7),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Row(
+        children: [
+          if (letter != null)
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: iconColor ?? Colors.purple,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text(
+                  letter,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          if (isPhone)
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.phone, color: Colors.black54, size: 20),
+            ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: TextField(
+              controller: controller,
+              readOnly: readOnly,
+              onTap: onTap,
+              decoration: InputDecoration(
+                hintText: hint,
+                hintStyle: TextStyle(color: Colors.grey[600], fontSize: 16),
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
+                suffixIcon: suffixIcon,
+              ),
+              style: const TextStyle(fontSize: 16, color: Colors.black),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

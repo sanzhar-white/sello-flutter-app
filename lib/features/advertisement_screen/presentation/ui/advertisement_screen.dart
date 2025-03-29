@@ -13,59 +13,71 @@ class AdvertisementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = AppThemeProvider.of(context).themeMode;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          S.of(context).submitAd,
-          style: TextStyle(color: theme.colors.colorText1),
+      body: Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 100),
+            Text(
+              S.of(context).submitAd,
+              style: TextStyle(
+                color: theme.colors.colorText1,
+                fontWeight: FontWeight.w700,
+                fontSize: 22,
+              ),
+            ),
+            const SizedBox(height: 16),
+            _AdvertisementCategoryCard(
+              title: S.of(context).event,
+              iconUrl: 'assets/categoties/special_tech.png',
+              onTap:
+                  () => navigateTo(
+                    context: context,
+                    rootNavigator: true,
+                    screen: const AddEventScreenFeature(
+                      productType: ProductType.machine,
+                    ),
+                  ),
+            ),
+            _AdvertisementCategoryCard(
+              title: S.of(context).equipment,
+              iconUrl: 'assets/categoties/raw.png',
+              onTap:
+                  () => navigateTo(
+                    context: context,
+                    rootNavigator: true,
+                    screen: AddEventScreenFeature(
+                      productType: ProductType.raw_material,
+                    ),
+                  ),
+            ),
+            _AdvertisementCategoryCard(
+              title: S.of(context).horse,
+              iconUrl: 'assets/categoties/work.png',
+              onTap:
+                  () => navigateTo(
+                    context: context,
+                    rootNavigator: true,
+                    screen: AddEventScreenFeature(
+                      productType: ProductType.work,
+                    ),
+                  ),
+            ),
+            _AdvertisementCategoryCard(
+              title: S.of(context).event,
+              iconUrl: 'assets/categoties/fertiliser.png',
+              onTap:
+                  () => navigateTo(
+                    context: context,
+                    rootNavigator: true,
+                    screen: const AddEventScreenFeature(
+                      productType: ProductType.fertiliser,
+                    ),
+                  ),
+            ),
+          ],
         ),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 16),
-          Padding(
-            padding: EdgeInsets.only(left: 16.0),
-            child: Text(S.of(context).typesAdvertisements),
-          ),
-          const SizedBox(height: 16),
-          _AdvertisementCategoryCard(
-            title: S.of(context).event,
-            iconUrl: 'assets/svg_images/kokpar.svg',
-            onTap:
-                () => navigateTo(
-                  context: context,
-                  rootNavigator: true,
-                  screen: const AddEventScreenFeature(),
-                ),
-          ),
-          _AdvertisementCategoryCard(
-            title: S.of(context).equipment,
-            iconUrl: 'assets/svg_images/ekipirovka.svg',
-            onTap:
-                () => navigateTo(
-                  context: context,
-                  rootNavigator: true,
-                  screen: AddEventScreenFeature(
-                    product: true,
-                    productType: ProductType.product,
-                  ),
-                ),
-          ),
-          _AdvertisementCategoryCard(
-            title: S.of(context).horse,
-            iconUrl: 'assets/svg_images/jylky.svg',
-            onTap:
-                () => navigateTo(
-                  context: context,
-                  rootNavigator: true,
-                  screen: AddEventScreenFeature(
-                    horse: true,
-                    product: true,
-                    productType: ProductType.horse,
-                  ),
-                ),
-          ),
-        ],
       ),
     );
   }
@@ -88,7 +100,7 @@ class _AdvertisementCategoryCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        margin: const EdgeInsets.symmetric(vertical: 4),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           color: theme.colors.colorText3.withOpacity(0.13),
