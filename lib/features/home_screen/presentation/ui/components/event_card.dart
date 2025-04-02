@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sello/core/theme/theme_provider.dart';
+import 'package:selo/core/theme/theme_provider.dart';
 
 class EventCard extends StatelessWidget {
   final String text;

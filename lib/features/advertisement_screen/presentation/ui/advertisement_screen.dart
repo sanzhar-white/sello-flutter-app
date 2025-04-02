@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sello/components/utils.dart';
-import 'package:sello/core/enums.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/feature.dart';
-import 'package:sello/generated/l10n.dart';
+import 'package:selo/components/utils.dart';
+import 'package:selo/core/enums.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/feature.dart';
+import 'package:selo/generated/l10n.dart';
 
 class AdvertisementScreen extends StatelessWidget {
   const AdvertisementScreen({super.key});
@@ -30,7 +30,7 @@ class AdvertisementScreen extends StatelessWidget {
             const SizedBox(height: 16),
             _AdvertisementCategoryCard(
               title: S.of(context).event,
-              iconUrl: 'assets/categoties/special_tech.png',
+              iconUrl: 'assets/categories/special_tech.png',
               onTap:
                   () => navigateTo(
                     context: context,
@@ -42,7 +42,7 @@ class AdvertisementScreen extends StatelessWidget {
             ),
             _AdvertisementCategoryCard(
               title: S.of(context).equipment,
-              iconUrl: 'assets/categoties/raw.png',
+              iconUrl: 'assets/categories/raw.png',
               onTap:
                   () => navigateTo(
                     context: context,
@@ -54,7 +54,7 @@ class AdvertisementScreen extends StatelessWidget {
             ),
             _AdvertisementCategoryCard(
               title: S.of(context).horse,
-              iconUrl: 'assets/categoties/work.png',
+              iconUrl: 'assets/categories/work.png',
               onTap:
                   () => navigateTo(
                     context: context,
@@ -66,7 +66,7 @@ class AdvertisementScreen extends StatelessWidget {
             ),
             _AdvertisementCategoryCard(
               title: S.of(context).event,
-              iconUrl: 'assets/categoties/fertiliser.png',
+              iconUrl: 'assets/categories/fertiliser.png',
               onTap:
                   () => navigateTo(
                     context: context,
@@ -99,17 +99,31 @@ class _AdvertisementCategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        margin: const EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           color: theme.colors.colorText3.withOpacity(0.13),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(title, style: TextStyle(color: theme.colors.colorText1)),
-            SvgPicture.asset(iconUrl),
+            CircleAvatar(
+              child: Image.asset(iconUrl),
+              radius: 30,
+              backgroundColor: theme.colors.greyLight,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: theme.colors.colorText1,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            const Icon(Icons.chevron_right),
           ],
         ),
       ),

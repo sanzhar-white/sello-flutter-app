@@ -4,12 +4,11 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:meta/meta.dart';
-import 'package:sello/core/enums.dart';
+import 'package:selo/core/enums.dart';
 
-import 'package:sello/features/advertisement_screen/data/advertisement_repo.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
+import 'package:selo/features/advertisement_screen/data/advertisement_repo.dart';
+import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 part 'advertisement_screen_event.dart';
 part 'advertisement_screen_state.dart';
@@ -36,10 +35,6 @@ class AdvertisementScreenBloc
             imageUrls.add(imageUrl);
           }
         }
-        await repo.addKokparEvent(
-          event: event.event.copyWith(images: imageUrls),
-          userPhoneNumber: event.userPhoneNumber,
-        );
 
         emit(AdvertisementScreenSuccess());
       } catch (e) {

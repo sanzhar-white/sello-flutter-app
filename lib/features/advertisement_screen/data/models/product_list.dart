@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
-import 'product_dto.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 class ProductList {
   final List<ProductDto> machineList;

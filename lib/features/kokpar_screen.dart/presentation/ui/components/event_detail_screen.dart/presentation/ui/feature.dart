@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
-import 'package:sello/features/kokpar_screen.dart/presentation/ui/components/event_detail_screen.dart/presentation/ui/event_detail_screen.dart';
+import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/kokpar_screen.dart/presentation/ui/components/event_detail_screen.dart/presentation/ui/event_detail_screen.dart';
 
 class EventDetailScreenFeature extends StatelessWidget {
   final KokparEventDto kokparEventDto;

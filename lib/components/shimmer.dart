@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:sello/core/theme/theme_provider.dart';
+import 'package:selo/core/theme/theme_provider.dart';
 
 class ShimmerPlaceholder extends StatelessWidget {
   final Widget child;

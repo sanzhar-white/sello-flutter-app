@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
-import 'package:sello/features/profile_screen/presentation/ui/components/my_adverts/data/my_adverts_repo.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
+import 'package:selo/features/profile_screen/presentation/ui/components/my_adverts/data/my_adverts_repo.dart';
 
 part 'my_adverts_screen_event.dart';
 part 'my_adverts_screen_state.dart';

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:sello/components/custom_tab_bar.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/favorite_adverts_button/data/favorite_adverts_button_repo.dart';
-import 'package:sello/features/favorite_batton/data/favorite_button_repo.dart';
-import 'package:sello/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
-import 'package:sello/features/horse_screen/presentation/ui/components/product_card.dart';
-import 'package:sello/generated/l10n.dart';
+import 'package:selo/components/custom_tab_bar.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/favorite_adverts_button/data/favorite_adverts_button_repo.dart';
+import 'package:selo/features/favorite_batton/data/favorite_button_repo.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:selo/components/product_card.dart';
+import 'package:selo/generated/l10n.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});

@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sello/components/show_top_snack_bar.dart';
-import 'package:sello/core/shared_prefs_utils.dart';
-import 'package:sello/repository/user_repo.dart';
+import 'package:selo/components/show_top_snack_bar.dart';
+import 'package:selo/core/shared_prefs_utils.dart';
+import 'package:selo/repository/user_repo.dart';
 
 class MyAuthProvider extends ChangeNotifier {
   final UserRepo userRepo;

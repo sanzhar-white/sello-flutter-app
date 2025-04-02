@@ -1,6 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:sello/core/theme/app_colors.dart';
+import 'package:selo/core/theme/app_colors.dart';
 
 showTopSnackBar({
   required BuildContext context,

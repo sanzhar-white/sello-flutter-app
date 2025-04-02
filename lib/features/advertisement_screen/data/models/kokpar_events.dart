@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
 
 class KokparEventsList {
   final List<KokparEventDto> kokparEventsList;

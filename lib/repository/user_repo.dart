@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sello/core/constants.dart';
-import 'package:sello/core/shared_prefs_utils.dart';
+import 'package:selo/core/constants.dart';
+import 'package:selo/core/shared_prefs_utils.dart';
 
 class UserRepo {
   final fire = FirebaseFirestore.instance;

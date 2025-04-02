@@ -3,8 +3,8 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
-import 'package:sello/core/shared_prefs_utils.dart';
-import 'package:sello/repository/user_repo.dart';
+import 'package:selo/core/shared_prefs_utils.dart';
+import 'package:selo/repository/user_repo.dart';
 part 'edit_profile_screen_event.dart';
 part 'edit_profile_screen_state.dart';
 

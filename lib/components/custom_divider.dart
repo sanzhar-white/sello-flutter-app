@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sello/core/theme/theme_provider.dart';
+import 'package:selo/core/theme/theme_provider.dart';
 
 class CustomDivider extends StatelessWidget {
   const CustomDivider({super.key});

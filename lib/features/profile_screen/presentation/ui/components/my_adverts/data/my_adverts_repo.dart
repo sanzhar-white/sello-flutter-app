@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sello/core/constants.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
 import 'package:collection/collection.dart';
+import 'package:selo/core/constants.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 class MyAdvertsRepo {
   final fire = FirebaseFirestore.instance;
@@ -16,7 +16,12 @@ class MyAdvertsRepo {
 
     final data = ProductList.fromMap(ref.data() ?? {});
 
-    events = [...data.productHorseList, ...data.productList];
+    events = [
+      ...data.machineList,
+      ...data.rawMaterialList,
+      ...data.workList,
+      ...data.fertiliserList,
+    ];
 
     return events;
   }
@@ -32,20 +37,34 @@ class MyAdvertsRepo {
 
     final data = ProductList.fromMap(getData.data() ?? {});
 
-    final productList = data.productList;
-    final productHorseList = data.productHorseList;
+    final machineList = data.machineList;
+    final rawMaterialList = data.rawMaterialList;
+    final workList = data.workList;
+    final fertiliserList = data.fertiliserList;
 
-    final ProductDto? element = productList.firstWhereOrNull(
+    final ProductDto? machineElement = machineList.firstWhereOrNull(
       (element) => element.id == id,
     );
 
-    productList.remove(element);
+    machineList.remove(machineElement);
 
-    final ProductDto? element2 = productHorseList.firstWhereOrNull(
+    final ProductDto? rawElement = rawMaterialList.firstWhereOrNull(
       (element) => element.id == id,
     );
 
-    productHorseList.remove(element2);
+    rawMaterialList.remove(rawElement);
+
+    final ProductDto? workElement = workList.firstWhereOrNull(
+      (element) => element.id == id,
+    );
+
+    workList.remove(workElement);
+
+    final ProductDto? fertiliserElement = fertiliserList.firstWhereOrNull(
+      (element) => element.id == id,
+    );
+
+    fertiliserList.remove(fertiliserElement);
 
     ref.set(data.toMap());
   }

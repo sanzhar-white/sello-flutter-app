@@ -6,16 +6,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'package:sello/components/show_modal_bottom_sheet_wrap.dart';
-import 'package:sello/components/show_top_snack_bar.dart';
-import 'package:sello/components/utils.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/auth/auth_provider/auth_provider.dart';
-import 'package:sello/features/auth/register_screen/presentation/ui/auth_screen.dart';
-import 'package:sello/features/main_screen/presentation/view_model/main_screen_vm.dart';
-import 'package:sello/features/profile_screen/presentation/ui/components/edit_profile/ui/feature.dart';
-import 'package:sello/features/profile_screen/presentation/ui/components/my_adverts/presentation/ui/feature.dart';
-import 'package:sello/generated/l10n.dart';
+import 'package:selo/components/show_modal_bottom_sheet_wrap.dart';
+import 'package:selo/components/show_top_snack_bar.dart';
+import 'package:selo/components/utils.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/auth/auth_provider/auth_provider.dart';
+import 'package:selo/features/auth/register_screen/presentation/ui/auth_screen.dart';
+import 'package:selo/features/main_screen/presentation/view_model/main_screen_vm.dart';
+import 'package:selo/features/profile_screen/presentation/ui/components/edit_profile/ui/feature.dart';
+import 'package:selo/features/profile_screen/presentation/ui/components/my_adverts/presentation/ui/feature.dart';
+import 'package:selo/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -135,10 +135,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () {
                   Platform.isAndroid
                       ? Share.share(
-                        'https://play.google.com/store/apps/details?id=com.application.sello',
+                        'https://play.google.com/store/apps/details?id=com.application.selo',
                       )
                       : Share.share(
-                        'https://play.google.com/store/apps/details?id=com.application.sello',
+                        'https://play.google.com/store/apps/details?id=com.application.selo',
                       );
                 },
                 iconData: Icons.share,
@@ -147,7 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               MyListTile(
                 onTap:
                     () => launchUrl(
-                      Uri.parse('mailto:application.sello@gmail.com'),
+                      Uri.parse('mailto:application.selo@gmail.com'),
                       mode: LaunchMode.externalApplication,
                     ),
                 iconData: Icons.email_outlined,
@@ -159,13 +159,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Platform.isIOS
                       ? launchUrl(
                         Uri.parse(
-                          'https://play.google.com/store/apps/details?id=com.application.sello',
+                          'https://play.google.com/store/apps/details?id=com.application.selo',
                         ),
                         mode: LaunchMode.externalApplication,
                       )
                       : launchUrl(
                         Uri.parse(
-                          'https://play.google.com/store/apps/details?id=com.application.sello',
+                          'https://play.google.com/store/apps/details?id=com.application.selo',
                         ),
                         mode: LaunchMode.externalApplication,
                       );

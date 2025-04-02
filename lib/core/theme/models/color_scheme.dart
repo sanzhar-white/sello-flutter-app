@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sello/core/theme/models/color_palette.dart';
+import 'package:selo/core/theme/models/color_palette.dart';
 
 abstract class AppColorScheme {
   Color get primary;

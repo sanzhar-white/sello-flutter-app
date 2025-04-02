@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
-import 'package:sello/core/theme/theme_provider.dart';
+import 'package:selo/core/theme/theme_provider.dart';
 
 class PhoneFieldWidget extends StatelessWidget {
   final Function(PhoneNumber) onChanged;

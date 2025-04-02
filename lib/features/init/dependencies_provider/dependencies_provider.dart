@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sello/features/init/dependencies_provider/providers/blocs_provider.dart';
-import 'package:sello/features/init/dependencies_provider/providers/repos_provider.dart';
-import 'package:sello/features/init/dependencies_provider/providers/vms_provider.dart';
+import 'package:selo/features/init/dependencies_provider/providers/blocs_provider.dart';
+import 'package:selo/features/init/dependencies_provider/providers/repos_provider.dart';
+import 'package:selo/features/init/dependencies_provider/providers/vms_provider.dart';
 
 class DependenciesProvider extends StatelessWidget {
   const DependenciesProvider({Key? key, required this.builder})

@@ -2,15 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sello/components/big_button.dart';
-import 'package:sello/components/phone_field.dart';
-import 'package:sello/components/show_top_snack_bar.dart';
-import 'package:sello/components/utils.dart';
-import 'package:sello/core/constants.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/auth/register_screen/presentation/ui/OTP_screen.dart';
-import 'package:sello/features/auth/register_screen/presentation/ui/login/presentation/state/bloc/login_screen_bloc.dart';
-import 'package:sello/generated/l10n.dart';
+import 'package:selo/components/big_button.dart';
+import 'package:selo/components/phone_field.dart';
+import 'package:selo/components/show_top_snack_bar.dart';
+import 'package:selo/components/utils.dart';
+import 'package:selo/core/constants.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/auth/register_screen/presentation/ui/OTP_screen.dart';
+import 'package:selo/features/auth/register_screen/presentation/ui/login/presentation/state/bloc/login_screen_bloc.dart';
+import 'package:selo/generated/l10n.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

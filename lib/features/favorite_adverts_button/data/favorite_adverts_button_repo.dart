@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:sello/core/constants.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
+import 'package:selo/core/constants.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 class FavoriteAdvertsButtonRepo extends ChangeNotifier {
   final fire = FirebaseFirestore.instance;

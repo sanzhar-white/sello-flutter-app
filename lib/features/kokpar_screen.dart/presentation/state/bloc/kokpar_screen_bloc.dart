@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
-import 'package:sello/features/kokpar_screen.dart/data/kokpar_screen_repo.dart';
+import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/kokpar_screen.dart/data/kokpar_screen_repo.dart';
 
 part 'kokpar_screen_event.dart';
 part 'kokpar_screen_state.dart';

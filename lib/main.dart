@@ -1,17 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sello/core/shared_prefs_utils.dart';
-import 'package:sello/core/theme/theme.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/main_screen/presentation/view_model/main_screen_vm.dart';
-import 'package:sello/features/init/dependencies_provider/dependencies_provider.dart';
-import 'package:sello/features/init/splash_screen/presentation/ui/splash_screen.dart';
-import 'package:sello/firebase_options.dart';
+import 'package:selo/core/shared_prefs_utils.dart';
+import 'package:selo/core/theme/theme.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/main_screen/presentation/view_model/main_screen_vm.dart';
+import 'package:selo/features/init/dependencies_provider/dependencies_provider.dart';
+import 'package:selo/features/init/splash_screen/presentation/ui/splash_screen.dart';
+import 'package:selo/firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:sello/generated/l10n.dart';
-import 'package:sello/services/notifications.dart';
+import 'package:selo/generated/l10n.dart';
+import 'package:selo/services/notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:firebase_app_check/firebase_app_check.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -22,6 +23,11 @@ void main() async {
   tz.initializeTimeZones();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseAppCheck.instance.activate(
+    webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+    androidProvider: AndroidProvider.debug,
+    appleProvider: AppleProvider.appAttest,
+  );
 
   runApp(const MyApp());
 }

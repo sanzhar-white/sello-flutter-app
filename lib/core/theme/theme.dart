@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sello/core/theme/app_colors.dart';
+import 'package:selo/core/theme/app_colors.dart';
 
 // Color changeColorLightness(Color color) =>
 //     HSLColor.fromColor(color).withLightness(0.975).toColor(); //977

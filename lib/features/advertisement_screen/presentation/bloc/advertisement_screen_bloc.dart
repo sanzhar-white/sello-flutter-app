@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../data/models/product_dto.dart' as adv_product;
-import '../../data/models/product_type.dart' as adv_type;
+import 'package:selo/core/enums.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 import '../../data/repository/advertisement_repo.dart';
 
 // События
@@ -9,9 +9,9 @@ abstract class AdvertisementScreenEvent {}
 
 class AddAdvert extends AdvertisementScreenEvent {
   final List<XFile> images;
-  final adv_product.ProductDto product;
+  final ProductDto product;
   final String userPhoneNumber;
-  final adv_type.ProductType productType;
+  final ProductType productType;
 
   AddAdvert({
     required this.images,
@@ -54,8 +54,7 @@ class AdvertisementScreenBloc
     try {
       emit(AdvertisementScreenLoading());
       await _repository.addAdvert(
-        images: event.images,
-        product: event.product,
+        event: event.product,
         userPhoneNumber: event.userPhoneNumber,
         productType: event.productType,
       );

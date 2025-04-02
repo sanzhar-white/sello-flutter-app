@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/auth/auth_provider/auth_provider.dart';
-import 'package:sello/features/favorite_batton/data/favorite_button_repo.dart';
-import 'package:sello/features/favorite_batton/state/bloc/favorite_button_bloc.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/auth/auth_provider/auth_provider.dart';
+import 'package:selo/features/favorite_batton/data/favorite_button_repo.dart';
+import 'package:selo/features/favorite_batton/state/bloc/favorite_button_bloc.dart';
+import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
 import 'package:collection/collection.dart';
-import 'package:sello/services/notifications.dart';
+import 'package:selo/services/notifications.dart';
 
 class FavoriteButton extends StatelessWidget {
   final KokparEventDto event;
@@ -37,7 +37,7 @@ class FavoriteButton extends StatelessWidget {
                 {
                   NotificationService.scheduleNotification(
                     int.parse(event.id),
-                    "sello",
+                    "selo",
                     event.title,
                     // DateTime.now().add(Duration(seconds: 5))
                     DateTime(

@@ -1,16 +1,4 @@
-import 'package:flutter/material.dart';
-
-class Category {
-  final String id;
-  final String name;
-  final List<Category> subCategories;
-
-  Category({
-    required this.id,
-    required this.name,
-    this.subCategories = const [],
-  });
-}
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 // Категории для спецтехники
 final List<Category> machineCategories = [

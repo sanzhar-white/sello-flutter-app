@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sello/core/enums.dart';
-import 'package:sello/generated/l10n.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
+import 'package:selo/generated/l10n.dart';
 
 class KokparEventCategoryConst {
   static const String international = "International";
@@ -10,11 +10,11 @@ class KokparEventCategoryConst {
 }
 
 class FireCollections {
-  static const String users = 'users';
-  static const String kokparEvents = 'kokparEvents';
-  static const String userEventFavorites = 'userEventFavorites';
-  static const String userAdvertFavorites = 'userAdvertFavorites';
-  static const String products = 'products';
+  static const String kokparEvents = "kokpar_events";
+  static const String users = "users";
+  static const String userEventFavorites = "user_event_favorites";
+  static const String userAdvertFavorites = "user_advert_favorites";
+  static const String products = "products";
 }
 
 List<Category> horseCategories = [

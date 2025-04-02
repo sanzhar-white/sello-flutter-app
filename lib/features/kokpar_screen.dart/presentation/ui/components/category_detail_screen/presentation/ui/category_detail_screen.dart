@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
-import 'package:sello/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
 
 class CategoryDetailScreen extends StatelessWidget {
   const CategoryDetailScreen({super.key});

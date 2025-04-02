@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sello/components/big_button.dart';
-import 'package:sello/components/utils.dart';
-import 'package:sello/features/auth/register_screen/presentation/ui/login/presentation/ui/feature.dart';
-import 'package:sello/features/auth/register_screen/presentation/ui/register_screen.dart';
-import 'package:sello/generated/l10n.dart';
+import 'package:selo/components/big_button.dart';
+import 'package:selo/components/utils.dart';
+import 'package:selo/features/auth/register_screen/presentation/ui/login/presentation/ui/feature.dart';
+import 'package:selo/features/auth/register_screen/presentation/ui/register_screen.dart';
+import 'package:selo/generated/l10n.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});

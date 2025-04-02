@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:sello/core/theme/app_colors.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/main_screen/presentation/view_model/main_screen_vm.dart';
+import 'package:selo/core/theme/app_colors.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/main_screen/presentation/view_model/main_screen_vm.dart';
 
 class MainAppBottomBar extends StatefulWidget {
   const MainAppBottomBar({super.key});

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sello/core/constants.dart';
-import 'package:sello/features/advertisement_screen/data/models/kokpar_events.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/core/constants.dart';
+import 'package:selo/features/advertisement_screen/data/models/kokpar_events.dart';
+import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
 
 class CalendarScreenRepo {
   final fire = FirebaseFirestore.instance;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/auth/auth_provider/auth_provider.dart';
-import 'package:sello/features/favorite_adverts_button/data/favorite_adverts_button_repo.dart';
-import 'package:sello/features/favorite_adverts_button/state/bloc/favorite_adverts_button_bloc.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/auth/auth_provider/auth_provider.dart';
+import 'package:selo/features/favorite_adverts_button/data/favorite_adverts_button_repo.dart';
+import 'package:selo/features/favorite_adverts_button/state/bloc/favorite_adverts_button_bloc.dart';
 import 'package:collection/collection.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 class FavoriteAdvertsButton extends StatefulWidget {
   final ProductDto product;

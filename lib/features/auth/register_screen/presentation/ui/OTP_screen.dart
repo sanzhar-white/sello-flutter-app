@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
-import 'package:sello/components/big_button.dart';
-import 'package:sello/components/show_top_snack_bar.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/auth/auth_provider/auth_provider.dart';
-import 'package:sello/features/main_screen/presentation/ui/feature.dart';
-import 'package:sello/generated/l10n.dart';
-import 'package:sello/repository/user_repo.dart';
+import 'package:selo/components/big_button.dart';
+import 'package:selo/components/show_top_snack_bar.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/auth/auth_provider/auth_provider.dart';
+import 'package:selo/features/main_screen/presentation/ui/feature.dart';
+import 'package:selo/generated/l10n.dart';
+import 'package:selo/repository/user_repo.dart';
 
 class OTPScreen extends StatefulWidget {
   final String verificationId;

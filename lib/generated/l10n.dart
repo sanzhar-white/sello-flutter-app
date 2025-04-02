@@ -122,7 +122,7 @@ class S {
 
   /// `Description`
   String get description {
-    return Intl.message('Описание', name: 'description');
+    return Intl.message('Description', name: 'description', desc: '', args: []);
   }
 
   /// `Event Date`
@@ -518,11 +518,6 @@ class S {
       desc: '',
       args: [],
     );
-  }
-
-  /// `Contact Seller`
-  String get contactSeller {
-    return Intl.message('Связаться с продавцом', name: 'contactSeller');
   }
 }
 

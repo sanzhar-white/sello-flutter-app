@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductDto product;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sello/core/theme/app_theme_data.dart';
-import 'package:sello/core/shared_prefs_utils.dart';
+import 'package:selo/core/theme/app_theme_data.dart';
+import 'package:selo/core/shared_prefs_utils.dart';
 
 class MainScreenViewModel extends ChangeNotifier {
   int activeIndex = 0;

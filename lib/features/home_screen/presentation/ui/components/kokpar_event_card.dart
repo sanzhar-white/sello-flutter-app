@@ -1,15 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sello/components/shimmer.dart';
-import 'package:sello/components/utils.dart';
+import 'package:selo/components/utils.dart';
 import 'package:collection/collection.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/auth/register_screen/data/models/region.dart';
-import 'package:sello/features/favorite_batton/ui/feature.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/auth/register_screen/data/models/region.dart';
+import 'package:selo/features/favorite_batton/ui/feature.dart';
+import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:sello/features/kokpar_screen.dart/presentation/ui/components/event_detail_screen.dart/presentation/ui/feature.dart';
+import 'package:selo/features/kokpar_screen.dart/presentation/ui/components/event_detail_screen.dart/presentation/ui/feature.dart';
 
 class KokparEventCard extends StatelessWidget {
   final KokparEventDto kokparEventDto;
@@ -69,6 +67,7 @@ class KokparEventCard extends StatelessWidget {
               ),
           child: Container(
             width: width ?? 170,
+            height: 250,
             margin: const EdgeInsets.symmetric(vertical: 4),
             decoration: BoxDecoration(
               color: theme.colors.backgroundBottomSheet,
@@ -80,78 +79,75 @@ class KokparEventCard extends StatelessWidget {
                 // Image Section
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  child:
-                      kokparEventDto.images.isNotEmpty
-                          ? CachedNetworkImage(
-                            imageUrl: kokparEventDto.images.last,
-                            height: 120,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                            placeholder:
-                                (context, url) => const Center(
-                                  child: CircularProgressIndicator.adaptive(),
-                                ),
-                            errorWidget:
-                                (context, url, error) => Image.asset(
-                                  'assets/png_images/recomd_image.png',
-                                  height: 120,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
-                          )
-                          : Image.asset(
-                            'assets/png_images/recomd_image.png',
-                            height: 120,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
+                  child: SizedBox(
+                    height: 120,
+                    width: double.infinity,
+                    child:
+                        kokparEventDto.images.isNotEmpty
+                            ? CachedNetworkImage(
+                              imageUrl: kokparEventDto.images.last,
+                              fit: BoxFit.cover,
+                              placeholder:
+                                  (context, url) => const Center(
+                                    child: CircularProgressIndicator.adaptive(),
+                                  ),
+                              errorWidget:
+                                  (context, url, error) => Image.asset(
+                                    'assets/png_images/recomd_image.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                            )
+                            : Image.asset(
+                              'assets/png_images/recomd_image.png',
+                              fit: BoxFit.cover,
+                            ),
+                  ),
                 ),
 
                 // Details Section
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        kokparEventDto.title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: theme.colors.black,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Text(
-                            "${city}\n${region?.name ?? ''}",
-                            style: TextStyle(
-                              color: theme.colors.black,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                      ElevatedButton(
-                        onPressed:
-                            () => _launchPhoneDialer(
-                              kokparEventDto.authorPhoneNumber,
-                            ),
-                        child: const Text("Позвонить"),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(
-                            100,
-                            30,
-                          ), // Задайте нужный размер
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          kokparEventDto.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: theme.colors.black,
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        Text(
+                          "${city}\n${region?.name ?? ''}",
+                          style: TextStyle(
+                            color: theme.colors.black,
+                            fontSize: 12,
+                          ),
+                        ),
+                        const Spacer(),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed:
+                                () => _launchPhoneDialer(
+                                  kokparEventDto.authorPhoneNumber,
+                                ),
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(double.infinity, 30),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: const Text("Позвонить"),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

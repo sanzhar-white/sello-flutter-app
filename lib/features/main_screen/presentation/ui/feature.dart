@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sello/features/main_screen/presentation/ui/main_screen.dart';
+import 'package:selo/features/main_screen/presentation/ui/main_screen.dart';
 
 class MainScreenFeature extends StatelessWidget {
   const MainScreenFeature({super.key});

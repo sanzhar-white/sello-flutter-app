@@ -1,15 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sello/components/custom_divider.dart';
-import 'package:sello/components/utils.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/auth/register_screen/data/models/region.dart';
-import 'package:sello/features/favorite_batton/ui/feature.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
-import 'package:sello/generated/l10n.dart';
+import 'package:selo/components/custom_divider.dart';
+import 'package:selo/components/utils.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/auth/register_screen/data/models/region.dart';
+import 'package:selo/features/favorite_batton/ui/feature.dart';
+import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/generated/l10n.dart';
 import 'package:collection/collection.dart';
 
 class EventDetailScreen extends StatelessWidget {

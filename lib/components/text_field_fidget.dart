@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/generated/l10n.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/generated/l10n.dart';
 
 class TextFieldWidget extends StatefulWidget {
   final TextEditingController? controller;
@@ -26,6 +26,7 @@ class TextFieldWidget extends StatefulWidget {
   final FocusNode? focusNode;
   final TextInputAction? textInputAction;
   final int? minLines;
+  final int? maxLines;
   final String? Function(String?)? validator;
 
   const TextFieldWidget({
@@ -50,8 +51,9 @@ class TextFieldWidget extends StatefulWidget {
     this.focusNode,
     this.textInputAction,
     this.minLines,
-    this.hintText,
+    this.maxLines,
     this.validator,
+    this.hintText,
     this.hintColor,
   });
 
@@ -89,7 +91,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       autofocus: widget.autofocus,
       cursorColor: theme.colors.primary,
       minLines: widget.minLines ?? 1,
-      maxLines: 3,
+      maxLines: widget.maxLines ?? 3,
       textInputAction: widget.textInputAction,
       enabled: widget.enabled,
       maxLength: widget.maxLength,

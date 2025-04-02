@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sello/core/theme/models/color_scheme.dart';
-import 'package:sello/core/theme/models/typography_sheme.dart';
-import 'package:sello/core/theme/theme_provider.dart';
+import 'package:selo/core/theme/models/color_scheme.dart';
+import 'package:selo/core/theme/models/typography_sheme.dart';
+import 'package:selo/core/theme/theme_provider.dart';
 
 enum AppThemeMode {
   light(

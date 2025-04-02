@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sello/components/is_loading.dart';
-import 'package:sello/components/utils.dart';
-import 'package:sello/core/enums.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/auth/auth_provider/auth_provider.dart';
-import 'package:sello/features/calendar_screen/presentation/ui/feature.dart';
-import 'package:sello/features/empty_screens/empty_screen.dart';
-import 'package:sello/features/favorite_adverts_button/state/bloc/favorite_adverts_button_bloc.dart';
-import 'package:sello/features/favorite_batton/state/bloc/favorite_button_bloc.dart';
-import 'package:sello/features/home_screen/presentation/state/bloc/home_screen_bloc.dart';
-import 'package:sello/features/home_screen/presentation/ui/components/event_card.dart';
-import 'package:sello/features/home_screen/presentation/ui/components/notification_screen.dart';
-import 'package:sello/features/home_screen/presentation/ui/components/product_type_card.dart';
-import 'package:sello/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
-import 'package:sello/features/home_screen/presentation/ui/components/banners_widget.dart';
-import 'package:sello/features/horse_screen/presentation/ui/feature.dart';
-import 'package:sello/features/kokpar_screen.dart/presentation/ui/feature.dart';
+import 'package:selo/components/is_loading.dart';
+import 'package:selo/components/utils.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/auth/auth_provider/auth_provider.dart';
+import 'package:selo/features/calendar_screen/presentation/ui/feature.dart';
+import 'package:selo/features/empty_screens/empty_screen.dart';
+import 'package:selo/features/favorite_adverts_button/state/bloc/favorite_adverts_button_bloc.dart';
+import 'package:selo/features/favorite_batton/state/bloc/favorite_button_bloc.dart';
+import 'package:selo/features/filter_screen/presentation/ui/filter_screen.dart';
+import 'package:selo/features/home_screen/presentation/state/bloc/home_screen_bloc.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/event_card.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/notification_screen.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/banners_widget.dart';
+import 'package:selo/features/kokpar_screen.dart/presentation/ui/feature.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,6 +24,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController searchController = TextEditingController();
+
   @override
   void initState() {
     final authProvider = context.read<MyAuthProvider>();
@@ -50,6 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -61,28 +67,77 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Scaffold(
           appBar: AppBar(
-            leading: GestureDetector(
-              onTap:
-                  () => navigateTo(
-                    context: context,
-                    rootNavigator: true,
-                    screen: const CalendarScreenFeature(),
-                  ),
-              child: const Icon(Icons.calendar_month_outlined, size: 32),
+            toolbarHeight: 120,
+            title: Column(
+              children: [
+                // Row(
+                //   children: [
+                //     GestureDetector(
+                //       onTap:
+                //           () => navigateTo(
+                //             context: context,
+                //             rootNavigator: true,
+                //             screen: const CalendarScreenFeature(),
+                //           ),
+                //       child: const Icon(
+                //         Icons.calendar_month_outlined,
+                //         size: 32,
+                //       ),
+                //     ),
+                //     Spacer(),
+                //     GestureDetector(
+                //       onTap: () {
+                //         navigateTo(
+                //           context: context,
+                //           rootNavigator: true,
+                //           screen: NotificationScreen(),
+                //         );
+                //       },
+                //       child: Icon(Icons.notifications_outlined, size: 32),
+                //     ),
+                //     SizedBox(width: 20),
+                //   ],
+                // ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          hintText: 'Поиск в Алматы',
+                          prefixIcon: Icon(Icons.search),
+                          filled: true,
+                          fillColor: theme.colors.colorText3.withOpacity(0.1),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FilterScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: theme.colors.colorText3.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(Icons.tune),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            actions: [
-              GestureDetector(
-                onTap: () {
-                  navigateTo(
-                    context: context,
-                    rootNavigator: true,
-                    screen: NotificationScreen(),
-                  );
-                },
-                child: Icon(Icons.notifications_outlined, size: 32),
-              ),
-              SizedBox(width: 20),
-            ],
           ),
           body: RefreshIndicator(
             color: theme.colors.primary,

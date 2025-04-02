@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
-import 'package:sello/features/favorite_adverts_button/data/favorite_adverts_button_repo.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
+import 'package:selo/features/favorite_adverts_button/data/favorite_adverts_button_repo.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 part 'favorite_adverts_button_event.dart';
 part 'favorite_adverts_button_state.dart';

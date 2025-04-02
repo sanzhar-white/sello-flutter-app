@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sello/core/theme/theme_provider.dart';
+import 'package:selo/core/theme/theme_provider.dart';
 
 class ShowBottomSheetTimePicker extends StatelessWidget {
   final Function(DateTime date) onDateTimeChanged;

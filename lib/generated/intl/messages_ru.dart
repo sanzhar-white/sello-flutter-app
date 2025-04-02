@@ -44,8 +44,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "editProfile": MessageLookupByLibrary.simpleMessage(
       "Редактировать профиль",
     ),
-    "equipment": MessageLookupByLibrary.simpleMessage("Экипировка"),
-    "event": MessageLookupByLibrary.simpleMessage("Мероприятие"),
     "eventDate": MessageLookupByLibrary.simpleMessage("Дата проведения"),
     "eventLocation": MessageLookupByLibrary.simpleMessage("Место проведения"),
     "events": MessageLookupByLibrary.simpleMessage("События"),
@@ -61,7 +59,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "forRider": MessageLookupByLibrary.simpleMessage("Для скакунов"),
     "halter": MessageLookupByLibrary.simpleMessage("Недоуздок"),
     "headgear": MessageLookupByLibrary.simpleMessage("Головной убор"),
-    "horse": MessageLookupByLibrary.simpleMessage("Лошадь"),
     "horseCare": MessageLookupByLibrary.simpleMessage("Уход за лошадью"),
     "horseHarness": MessageLookupByLibrary.simpleMessage("Конская упряжь"),
     "horseshoe": MessageLookupByLibrary.simpleMessage("Подкова"),

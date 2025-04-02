@@ -3,16 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:sello/components/calendar.dart';
-import 'package:sello/components/is_loading.dart';
-import 'package:sello/components/show_top_snack_bar.dart';
-import 'package:sello/components/utils.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/calendar_screen/data/calendar_screen_repo.dart';
-import 'package:sello/features/calendar_screen/presentation/state/bloc/calendar_screen_bloc.dart';
-import 'package:sello/features/calendar_screen/presentation/ui/calendar_screen_vm.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
-import 'package:sello/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:selo/components/calendar.dart';
+import 'package:selo/components/is_loading.dart';
+import 'package:selo/components/show_top_snack_bar.dart';
+import 'package:selo/components/utils.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/calendar_screen/data/calendar_screen_repo.dart';
+import 'package:selo/features/calendar_screen/presentation/state/bloc/calendar_screen_bloc.dart';
+import 'package:selo/features/calendar_screen/presentation/ui/calendar_screen_vm.dart';
+import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});

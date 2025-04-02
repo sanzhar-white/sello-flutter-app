@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDzLojnHPVft52m4ZV4S-Hzirn5keMTBU0',
-    appId: '1:1007242542755:android:4b80084658c691a4d80916',
+    appId: '1:1007242542755:android:a654a91392ce379ad80916',
     messagingSenderId: '1007242542755',
     projectId: 'selloa',
     storageBucket: 'selloa.firebasestorage.app',
@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDF3vs52taaORusg5c5wvciGXoPtjz98Dk',
-    appId: '1:1007242542755:ios:bd0760dbcde6e181d80916',
+    appId: '1:1007242542755:ios:73f88d8c6ee33faad80916',
     messagingSenderId: '1007242542755',
     projectId: 'selloa',
     storageBucket: 'selloa.firebasestorage.app',
-    iosBundleId: 'com.example.sello',
+    iosBundleId: 'com.example.selo',
   );
+
 }

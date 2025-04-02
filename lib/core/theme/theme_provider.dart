@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sello/core/theme/app_theme_data.dart';
+import 'package:selo/core/theme/app_theme_data.dart';
 
 class AppThemeProvider extends InheritedWidget {
   const AppThemeProvider({

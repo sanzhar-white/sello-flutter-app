@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
-import 'package:sello/repository/user_repo.dart';
+import 'package:selo/repository/user_repo.dart';
 
 part 'login_screen_event.dart';
 part 'login_screen_state.dart';

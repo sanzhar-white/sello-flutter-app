@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sello/core/enums.dart';
-import 'package:sello/features/advertisement_screen/data/advertisement_repo.dart';
-import 'package:sello/features/advertisement_screen/presentation/state/bloc/advertisement_screen_bloc.dart';
-import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/add_event_screen.dart';
+import 'package:selo/core/enums.dart';
+import 'package:selo/features/advertisement_screen/data/advertisement_repo.dart';
+import 'package:selo/features/advertisement_screen/presentation/state/bloc/advertisement_screen_bloc.dart';
+import 'package:selo/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/add_event_screen.dart';
 
 class AddEventScreenFeature extends StatelessWidget {
   final ProductType? productType;
@@ -18,7 +18,7 @@ class AddEventScreenFeature extends StatelessWidget {
         create:
             (context) =>
                 AdvertisementScreenBloc(context.read<AdvertisementRepo>()),
-        child: AddEventScreen(productType: productType),
+        child: CreateAdvertisementScreen(productType: productType),
       ),
     );
   }

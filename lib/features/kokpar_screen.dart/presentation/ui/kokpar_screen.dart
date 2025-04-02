@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
-import 'package:sello/features/kokpar_screen.dart/presentation/state/bloc/kokpar_screen_bloc.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:selo/features/kokpar_screen.dart/presentation/state/bloc/kokpar_screen_bloc.dart';
 
 class KokparScreen extends StatefulWidget {
   const KokparScreen({super.key});

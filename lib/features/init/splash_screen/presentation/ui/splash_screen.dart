@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sello/features/auth/auth_provider/auth_provider.dart';
-import 'package:sello/features/auth/register_screen/presentation/ui/auth_screen.dart';
-import 'package:sello/features/main_screen/presentation/ui/feature.dart';
-import 'package:sello/features/init/splash_screen/presentation/state/splash_screen_bloc.dart';
+import 'package:selo/features/auth/auth_provider/auth_provider.dart';
+import 'package:selo/features/auth/register_screen/presentation/ui/auth_screen.dart';
+import 'package:selo/features/main_screen/presentation/ui/feature.dart';
+import 'package:selo/features/init/splash_screen/presentation/state/splash_screen_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

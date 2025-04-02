@@ -1,4 +1,4 @@
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 List<Category> kzRegions = [
   Category(

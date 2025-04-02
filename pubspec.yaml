@@ -1,4 +1,4 @@
-name: sello
+name: selo
 description: "A new Flutter project."
 publish_to: 'none'
 version: 1.0.0+1
@@ -14,7 +14,6 @@ flutter_icons:
   remove_alpha_ios: true
   adaptive_icon_foreground: assets/app_logo_for.png
   adaptive_icon_background: "#ffffff"
-  flutter_lints: ^5.0.0
 
 dependencies:
   flutter:
@@ -49,11 +48,13 @@ dependencies:
   timezone: ^0.10.0
   flutter_screenutil: ^5.9.0
   google_fonts: ^6.1.0
+  firebase_app_check: ^0.3.2+5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.14.3
+  intl_utils: ^2.8.10
 
 flutter:
   uses-material-design: true
@@ -67,3 +68,4 @@ flutter:
     - assets/svg_images/
     - assets/png_images/
     - assets/app_logo.png
+    - assets/to_add/

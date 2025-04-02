@@ -2,639 +2,430 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:sello/components/big_button.dart';
-import 'package:sello/components/calendar.dart';
-import 'package:sello/components/show_modal_bottom_sheet_wrap.dart';
-import 'package:sello/components/show_top_snack_bar.dart';
-import 'package:sello/components/text_field_fidget.dart';
-import 'package:sello/components/utils.dart';
-import 'package:sello/core/constants.dart';
-import 'package:sello/core/enums.dart';
-import 'package:sello/core/extensions.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/advertisement_screen/presentation/state/bloc/advertisement_screen_bloc.dart';
-import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/components/image_placeholder.dart';
-import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/components/preview_screen.dart';
-import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/components/time_picker.dart';
-import 'package:sello/features/auth/auth_provider/auth_provider.dart';
-import 'package:sello/features/auth/register_screen/data/models/region.dart';
-import 'package:sello/features/auth/register_screen/presentation/ui/register_screen.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
-import 'package:sello/features/home_screen/presentation/state/bloc/home_screen_bloc.dart';
-import 'package:sello/features/horse_screen/presentation/ui/components/product_detail_screen/presentation/ui/product_detail_screen.dart';
-import 'package:sello/generated/l10n.dart';
-import 'package:sello/core/theme/app_theme_provider.dart';
-import 'package:sello/core/utils/date_formatter.dart';
-import 'package:sello/core/utils/navigation.dart';
-import 'package:sello/core/widgets/big_button.dart';
-import 'package:sello/core/widgets/hint_text.dart';
-import 'package:sello/core/widgets/image_placeholder.dart';
-import 'package:sello/core/widgets/show_bottom_sheet_time_picker.dart';
-import 'package:sello/core/widgets/show_modal_bottom_sheet_wrap.dart';
-import 'package:sello/core/widgets/text_field_widget.dart';
-import 'package:sello/features/advertisement_screen/data/models/categories.dart'
-    as adv_categories;
-import 'package:sello/features/advertisement_screen/data/models/product_dto.dart'
-    as adv_product;
-import 'package:sello/features/advertisement_screen/data/models/product_type.dart'
-    as adv_type;
-import 'package:sello/features/advertisement_screen/presentation/bloc/advertisement_screen_bloc.dart'
-    as adv_bloc;
-import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/bloc/add_event_screen_bloc.dart';
-import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/calendar_widget.dart';
-import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/preview_screen.dart';
-import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/product_detail_screen.dart';
-import 'package:sello/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/select_region.dart';
-import 'package:sello/features/home_screen/presentation/bloc/home_screen_bloc.dart';
-import 'package:sello/features/home_screen/presentation/bloc/home_screen_event.dart';
-import 'package:sello/features/my_auth/presentation/bloc/my_auth_provider.dart';
-import 'package:sello/features/my_auth/presentation/bloc/my_auth_state.dart';
-import 'package:sello/utils/constants.dart';
-import 'package:sello/utils/money_text_input_formatter.dart';
-import 'package:sello/utils/show_top_snack_bar.dart';
-import 'package:sello/utils/uuid.dart';
+import 'package:selo/components/show_top_snack_bar.dart';
+import 'package:selo/components/product_detail_screen.dart';
+import 'package:selo/components/utils.dart';
+import 'package:selo/core/enums.dart';
+import 'package:selo/core/extensions.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/advertisement_screen/data/models/categories.dart';
+import 'package:selo/features/advertisement_screen/presentation/state/bloc/advertisement_screen_bloc.dart';
+import 'package:selo/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/components/image_placeholder.dart';
+import 'package:selo/features/auth/auth_provider/auth_provider.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
+import 'job_form.dart';
+import 'machine_form.dart';
+import 'material_form.dart';
+import 'package:selo/generated/l10n.dart';
 // import 'package:uuid/uuid.dart';
 
-class AddEventScreen extends StatefulWidget {
-  final adv_type.ProductType? productType;
+// Константы для стилей
 
-  const AddEventScreen({super.key, required this.productType});
+// Константы для отступов
+const EdgeInsets kScreenPadding = EdgeInsets.symmetric(horizontal: 30.0);
+const EdgeInsets kFormPadding = EdgeInsets.all(20.0);
+
+class CreateAdvertisementScreen extends StatefulWidget {
+  final ProductType? productType;
+
+  const CreateAdvertisementScreen({super.key, required this.productType});
 
   @override
-  State<AddEventScreen> createState() => _AddEventScreenState();
+  State<CreateAdvertisementScreen> createState() =>
+      _CreateAdvertisementScreenState();
 }
 
-class _AddEventScreenState extends State<AddEventScreen> {
-  late TextEditingController titleController;
-  late TextEditingController subtitleController;
-  late TextEditingController prizeFoundController;
-  late TextEditingController descriptionController;
-  late TextEditingController stateController;
+class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
+  // Контроллеры для полей ввода
+  late final TextEditingController titleController;
+  late final TextEditingController priceController;
+  late final TextEditingController descriptionController;
+  late final TextEditingController stateController;
+  late final TextEditingController contactFace;
+  late final TextEditingController phoneNumber;
+  late final TextEditingController amountController;
+  late final TextEditingController maxPriceController;
+  late final TextEditingController nameCompany;
 
-  final id = generateId();
+  // Идентификатор объявления
+  final int id = generateId();
 
+  // Ключ для валидации формы
   final GlobalKey<FormState> _formKey = GlobalKey();
 
+  // Состояние формы
+  int selectedYear = 2000;
   List<XFile> images = [];
-
-  adv_categories.Category? region;
-
-  adv_categories.Category? city;
-
+  Category? region;
+  Category? city;
   DateTime dateTime = DateTime.now();
-
   bool canAgree = false;
-
-  adv_product.ProductDto? productDto;
-
-  adv_categories.Category? productState;
-
-  adv_categories.Category? category;
-
-  adv_categories.Category? subCategory;
+  bool isNewState = true;
+  bool isKilogrammAmount = true;
+  bool isKilogrammPrice = true;
+  bool isHerbicide = false;
+  bool isMachine = true;
+  ProductDto? productDto;
+  Category? productState;
+  Category? category;
+  Category? subCategory;
 
   @override
   void initState() {
+    _initializeControllers();
+    super.initState();
+  }
+
+  void _initializeControllers() {
     titleController = TextEditingController();
-    subtitleController = TextEditingController();
-    prizeFoundController = TextEditingController();
+
+    priceController = TextEditingController();
+    priceController.addListener(() {
+      final text = priceController.text;
+      if (text.isNotEmpty && !RegExp(r'^\d+$').hasMatch(text)) {
+        priceController.text = text.replaceAll(RegExp(r'[^\d]'), '');
+        priceController.selection = TextSelection.fromPosition(
+          TextPosition(offset: priceController.text.length),
+        );
+      }
+    });
+
+    amountController = TextEditingController();
+    amountController.addListener(() {
+      final text = amountController.text;
+      if (text.isNotEmpty && !RegExp(r'^\d+$').hasMatch(text)) {
+        amountController.text = text.replaceAll(RegExp(r'[^\d]'), '');
+        amountController.selection = TextSelection.fromPosition(
+          TextPosition(offset: amountController.text.length),
+        );
+      }
+    });
+
+    phoneNumber = TextEditingController();
+    phoneNumber.addListener(() {
+      final text = phoneNumber.text;
+      if (text.isNotEmpty && !RegExp(r'^\d+$').hasMatch(text)) {
+        phoneNumber.text = text.replaceAll(RegExp(r'[^\d]'), '');
+        phoneNumber.selection = TextSelection.fromPosition(
+          TextPosition(offset: phoneNumber.text.length),
+        );
+      }
+    });
+
+    maxPriceController = TextEditingController();
+    maxPriceController.addListener(() {
+      final text = maxPriceController.text;
+      if (text.isNotEmpty && !RegExp(r'^\d+$').hasMatch(text)) {
+        maxPriceController.text = text.replaceAll(RegExp(r'[^\d]'), '');
+        maxPriceController.selection = TextSelection.fromPosition(
+          TextPosition(offset: maxPriceController.text.length),
+        );
+      }
+    });
+
     descriptionController = TextEditingController();
     stateController = TextEditingController();
-
-    super.initState();
+    contactFace = TextEditingController();
+    nameCompany = TextEditingController();
   }
 
   @override
   void dispose() {
-    titleController.dispose();
-    subtitleController.dispose();
-    prizeFoundController.dispose();
-    descriptionController.dispose();
-    stateController.dispose();
-
+    _disposeControllers();
     super.dispose();
   }
 
+  void _disposeControllers() {
+    titleController.dispose();
+    priceController.dispose();
+    contactFace.dispose();
+    descriptionController.dispose();
+    stateController.dispose();
+    phoneNumber.dispose();
+    amountController.dispose();
+    maxPriceController.dispose();
+    nameCompany.dispose();
+  }
+
+  bool _validateForm(List<String?> checkList) {
+    bool hasEmptyField = checkList.any(
+      (field) => field?.trim().isEmpty ?? true,
+    );
+
+    if (hasEmptyField ||
+        region == null ||
+        city == null ||
+        !_formKey.currentState!.validate()) {
+      showTopSnackBar(context: context, title: 'Необходимо заполнить все поля');
+      return false;
+    }
+    return true;
+  }
+
+  ProductDto _createProductDto(dynamic authProvider) {
+    final baseDto = ProductDto(
+      productType: widget.productType ?? ProductType.machine,
+      id: id.toString(),
+      title: titleController.text.trim(),
+      price: double.tryParse(priceController.text.trim()) ?? 0.0,
+      city: city?.id ?? '',
+      createdDate: DateTime.now().toString(),
+      region: region?.id ?? "",
+      contact: contactFace.text.trim(),
+      authorPhoneNumber:
+          phoneNumber.text.isEmpty
+              ? authProvider!.phoneNumber
+              : phoneNumber.text,
+      isFavorite: false,
+      images: [],
+      canAgree: canAgree,
+      description: descriptionController.text.trim(),
+    );
+
+    switch (widget.productType) {
+      case ProductType.machine:
+        return baseDto.copyWith(
+          year: selectedYear,
+          isNewState: isNewState,
+          isMachine: isMachine,
+          type_price: isKilogrammPrice,
+          type_amount: isKilogrammAmount,
+          amount: int.tryParse(amountController.text.trim()) ?? 0,
+        );
+      case ProductType.fertiliser:
+        return baseDto.copyWith(
+          type_price: isKilogrammPrice,
+          type_amount: isKilogrammAmount,
+          amount: int.tryParse(amountController.text.trim()) ?? 0,
+        );
+      case ProductType.raw_material:
+        return baseDto.copyWith(
+          type_price: isKilogrammPrice,
+          type_amount: isKilogrammAmount,
+          amount: int.tryParse(amountController.text.trim()) ?? 0,
+        );
+      case ProductType.work:
+        return baseDto.copyWith(
+          subTitle: nameCompany.text.trim(),
+          price: double.tryParse(priceController.text.trim()) ?? 0.0,
+          maxPrice: double.tryParse(maxPriceController.text.trim()) ?? 0.0,
+        );
+      default:
+        return baseDto;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final theme = AppThemeProvider.of(context).themeMode;
+    final theme = Theme.of(context);
     final authProvider = context.read<MyAuthProvider>().userData;
-    double width = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
+    final style = TextStyle(fontSize: 16, color: theme.colorScheme.onSurface);
 
-    final style = TextStyle(fontSize: 16, color: theme.colors.colorText2);
+    switch (widget.productType) {
+      case ProductType.machine:
+        return MachineForm(
+          theme: theme,
+          authProvider: authProvider,
+          width: width,
+          style: style,
+          formKey: _formKey,
+          titleController: titleController,
+          descriptionController: descriptionController,
+          amountController: amountController,
+          priceController: priceController,
+          contactFace: contactFace,
+          phoneNumber: phoneNumber,
+          images: images,
+          region: region,
+          city: city,
+          isMachine: isMachine,
+          isNewState: isNewState,
+          selectedYear: selectedYear,
+          isKilogrammAmount: isKilogrammAmount,
+          onKilogrammAmountChanged:
+              (value) => setState(() => isKilogrammAmount = value),
+          onRegionChanged: (value) => setState(() => region = value),
+          onCityChanged: (value) => setState(() => city = value),
+          onImageAdded: (image) => setState(() => images.add(image)),
+          onPreviewPressed: _onPreviewPressed,
+          onPublishPressed: _onPublishPressed,
+        );
+      case ProductType.fertiliser:
+        return MaterialForm(
+          theme: theme,
+          authProvider: authProvider,
+          width: width,
+          style: style,
+          formKey: _formKey,
+          titleController: titleController,
+          amountController: amountController,
+          priceController: priceController,
+          contactFace: contactFace,
+          phoneNumber: phoneNumber,
+          images: images,
+          region: region,
+          city: city,
+          isKilogrammAmount: isKilogrammAmount,
+          isKilogrammPrice: isKilogrammPrice,
+          onKilogrammAmountChanged:
+              (value) => setState(() => isKilogrammAmount = value),
+          onKilogrammPriceChanged:
+              (value) => setState(() => isKilogrammPrice = value),
+          onRegionChanged: (value) => setState(() => region = value),
+          onCityChanged: (value) => setState(() => city = value),
+          onImageAdded: (image) => setState(() => images.add(image)),
+          onPreviewPressed: _onPreviewPressed,
+          onPublishPressed: _onPublishPressed,
+        );
+      case ProductType.raw_material:
+        return MaterialForm(
+          theme: theme,
+          authProvider: authProvider,
+          width: width,
+          style: style,
+          formKey: _formKey,
+          titleController: titleController,
+          amountController: amountController,
+          priceController: priceController,
+          contactFace: contactFace,
+          phoneNumber: phoneNumber,
+          images: images,
+          region: region,
+          city: city,
+          isKilogrammAmount: isKilogrammAmount,
+          isKilogrammPrice: isKilogrammPrice,
+          onKilogrammAmountChanged:
+              (value) => setState(() => isKilogrammAmount = value),
+          onKilogrammPriceChanged:
+              (value) => setState(() => isKilogrammPrice = value),
+          onRegionChanged: (value) => setState(() => region = value),
+          onCityChanged: (value) => setState(() => city = value),
+          onImageAdded: (image) => setState(() => images.add(image)),
+          onPreviewPressed: _onPreviewPressed,
+          onPublishPressed: _onPublishPressed,
+        );
+      case ProductType.work:
+        return JobForm(
+          theme: theme,
+          authProvider: authProvider,
+          width: width,
+          style: style,
+          formKey: _formKey,
+          titleController: titleController,
+          descriptionController: descriptionController,
+          priceController: priceController,
+          maxPriceController: maxPriceController,
+          nameCompany: nameCompany,
+          contactFace: contactFace,
+          phoneNumber: phoneNumber,
+          images: images,
+          region: region,
+          city: city,
+          onRegionChanged: (value) => setState(() => region = value),
+          onCityChanged: (value) => setState(() => city = value),
+          onImageAdded: (image) => setState(() => images.add(image)),
+          onPreviewPressed: _onPreviewPressed,
+          onPublishPressed: _onPublishPressed,
+        );
+      default:
+        return Scaffold(appBar: AppBar(title: Text('Error')));
+    }
+  }
 
-    return Scaffold(
-      appBar: AppBar(title: Text(S.of(context).newAd)),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                HintText(text: S.of(context).addPhoto),
-                const SizedBox(height: 8),
-                SizedBox(
-                  height: 95,
-                  child: GridView.count(
-                    crossAxisCount: 4,
-                    crossAxisSpacing: width * 0.03,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      ...List.generate(
-                        images.length,
-                        (index) => ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(16),
-                          ),
-                          child: Image.file(
-                            File(images[index].path),
-                            width: 90,
-                            height: 90,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      ...List.generate(
-                        4 - images.length,
-                        (index) => ImagePlaceholder(
-                          onTap: () async {
-                            final picture = await ImagePicker().pickImage(
-                              source: ImageSource.gallery,
-                            );
+  void _onPreviewPressed() {
+    if (images.isEmpty) {
+      showTopSnackBar(context: context, title: 'Выберите фото');
+      return;
+    }
 
-                            if (picture != null) {
-                              images.add(picture);
-                              setState(() {});
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                HintText(text: S.of(context).adName),
-                const SizedBox(height: 8),
-                TextFieldWidget(
-                  controller: titleController,
-                  style: style,
-                  keyboardType: TextInputType.text,
-                ),
-                const SizedBox(height: 20),
-                HintText(text: S.of(context).shortDescription),
-                const SizedBox(height: 8),
-                TextFieldWidget(
-                  controller: subtitleController,
-                  style: style,
-                  keyboardType: TextInputType.text,
-                ),
-                const SizedBox(height: 20),
-                HintText(text: S.of(context).category),
-                const SizedBox(height: 8),
-                TextFieldWidget(
-                  style: style,
-                  readOnly: true,
-                  hintColor: theme.colors.colorText2,
-                  validator: (value) {
-                    return null;
-                  },
-                  hintText: category?.name ?? S.of(context).selectCategories,
-                  onTap: () async {
-                    subCategory = null;
-                    await showModalBottomSheetWrap(
-                      context: context,
-                      child: _SelectCategory(
-                        productType: widget.productType,
-                        changeCategory: (value) {
-                          category = value;
-                        },
-                      ),
-                    );
-                    setState(() {});
-                  },
-                  suffixIcon: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: theme.colors.colorText3,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                const HintText(text: 'Подкатегория'),
-                const SizedBox(height: 8),
-                TextFieldWidget(
-                  style: style,
-                  readOnly: true,
-                  hintColor: theme.colors.colorText2,
-                  validator: (value) {
-                    return null;
-                  },
-                  hintText:
-                      subCategory?.name ?? S.of(context).selectSubCategories,
-                  onTap: () async {
-                    if (category == null) {
-                      showTopSnackBar(
-                        context: context,
-                        title: S.of(context).selectCategories,
-                      );
-                      return;
-                    }
-                    await showModalBottomSheetWrap(
-                      context: context,
-                      child: _SelectCategory(
-                        subCategories: category!.subCategories,
-                        changeCategory: (value) {
-                          subCategory = value;
-                        },
-                      ),
-                    );
-                    setState(() {});
-                  },
-                  suffixIcon: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: theme.colors.colorText3,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                HintText(text: '${S.of(context).price} (тг.)'),
-                const SizedBox(height: 8),
-                TextFieldWidget(
-                  style: style,
-                  controller: prizeFoundController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  inputFormatters: [MoneyTextInputFormatter()],
-                ),
-                const SizedBox(height: 20),
-                HintText(text: S.of(context).condition),
-                const SizedBox(height: 8),
-                TextFieldWidget(
-                  style: style,
-                  readOnly: true,
-                  hintColor: theme.colors.colorText2,
-                  validator: (value) {
-                    return null;
-                  },
-                  hintText: productState?.name ?? S.of(context).condition,
-                  onTap: () async {
-                    await showModalBottomSheetWrap(
-                      context: context,
-                      child: _SelectCategory(
-                        state: true,
-                        changeCategory: (value) {
-                          productState = value;
-                        },
-                      ),
-                    );
-                    setState(() {});
-                  },
-                  suffixIcon: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: theme.colors.colorText3,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextFieldWidget(
-                  style: style,
-                  keyboardType: TextInputType.text,
-                  readOnly: true,
-                  hintText: S.of(context).negotiable,
-                  validator: (value) {
-                    return null;
-                  },
-                  suffixIcon: SizedBox(
-                    width: 10,
-                    height: 10,
-                    child: Icon(
-                      canAgree
-                          ? Icons.radio_button_checked
-                          : Icons.radio_button_unchecked,
-                      color: theme.colors.primary,
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      canAgree = !canAgree;
-                    });
-                  },
-                ),
-                const SizedBox(height: 20),
-                HintText(text: S.of(context).description),
-                const SizedBox(height: 8),
-                TextFieldWidget(
-                  controller: descriptionController,
-                  minLines: 3,
-                  style: style,
-                  keyboardType: TextInputType.text,
-                ),
-                const SizedBox(height: 20),
-                HintText(text: S.of(context).settlement),
-                const SizedBox(height: 8),
-                TextFieldWidget(
-                  style: style,
-                  hintText: region?.name ?? S.of(context).region,
-                  readOnly: true,
-                  hintColor: theme.colors.colorText2,
-                  validator: (value) {
-                    return null;
-                  },
-                  onTap: () async {
-                    city = null;
-                    await showModalBottomSheetWrap(
-                      context: context,
-                      child: SelectRegion(
-                        onChangedRegion: (value) {
-                          region = value;
-                        },
-                        regions: kzRegions,
-                      ),
-                    );
-                    setState(() {});
-                  },
-                  suffixIcon: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: theme.colors.colorText3,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextFieldWidget(
-                  hintText: city?.name ?? S.of(context).settlement,
-                  style: style,
-                  readOnly: true,
-                  validator: (value) {
-                    return null;
-                  },
-                  hintColor: theme.colors.colorText2,
-                  onTap: () {
-                    if (region == null) {
-                      showTopSnackBar(
-                        context: context,
-                        title: 'Выберите пожалуйста область',
-                      );
-                      return;
-                    }
-                    showModalBottomSheetWrap(
-                      context: context,
-                      child: SelectRegion(
-                        onChangedCity: (value) {
-                          city = value;
-                          setState(() {});
-                        },
-                        cities: region!.subCategories,
-                      ),
-                    );
-                  },
-                  suffixIcon: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: theme.colors.colorText3,
-                  ),
-                ),
-                const SizedBox(height: 30),
-                BigButton(
-                  padding: const EdgeInsets.all(0),
-                  onPressed: () {
-                    if (images.isEmpty) {
-                      showTopSnackBar(context: context, title: 'Выберите фото');
-                      return;
-                    }
-                    if (!_formKey.currentState!.validate() ||
-                        city == null ||
-                        region == null ||
-                        category == null ||
-                        subCategory == null ||
-                        productState == null) {
-                      showTopSnackBar(
-                        context: context,
-                        title: 'Необходимо заполнить все поля',
-                      );
-                      return;
-                    }
+    if (!_formKey.currentState!.validate()) {
+      showTopSnackBar(
+        context: context,
+        title: 'Проверьте правильность заполнения полей',
+      );
+      return;
+    }
 
-                    productDto = adv_product.ProductDto(
-                      id: id.toString(),
-                      title: titleController.text.trim(),
-                      authorPhoneNumber: authProvider!.phoneNumber,
-                      subTitle: subtitleController.text.trim(),
-                      city: city?.id ?? '',
-                      createdDate: DateTime.now().toString(),
-                      region: region?.id ?? "",
-                      price: prizeFoundController.text.trim().toDouble(),
-                      description: descriptionController.text.trim(),
-                      isFavorite: false,
-                      categoryId: category?.id ?? '',
-                      subCategoryId: subCategory?.id ?? '',
-                      images: [],
-                      canAgree: canAgree,
-                      state: productState?.id ?? '',
-                    );
+    if (region == null || city == null) {
+      showTopSnackBar(context: context, title: 'Выберите регион и город');
+      return;
+    }
 
-                    navigateTo(
-                      context: context,
-                      fullScreenDialog: true,
-                      rootNavigator: true,
-                      screen: ProductDetailScreen(
-                        product: productDto!,
-                        images: images,
-                      ),
-                    );
-                  },
-                  label: S.of(context).preview,
-                  isActive: false,
-                ),
-                const SizedBox(height: 12),
-                BlocConsumer<
-                  adv_bloc.AdvertisementScreenBloc,
-                  adv_bloc.AdvertisementScreenState
-                >(
-                  listener: (context, state) async {
-                    if (state is adv_bloc.AdvertisementScreenError) {
-                      showTopSnackBar(
-                        context: context,
-                        title: 'Произошла ошибка',
-                        message: state.errorMassage,
-                      );
-                    }
-                    if (state is adv_bloc.AdvertisementScreenSuccess) {
-                      context.read<HomeScreenBloc>().add(
-                        GetAllKokparEvents(
-                          phoneNumber: authProvider!.phoneNumber,
-                        ),
-                      );
-                      showTopSnackBar(
-                        context: context,
-                        title: 'Объявление успешно создано',
-                        titleColor: theme.colors.green,
-                      );
+    productDto = _createProductDto(context.read<MyAuthProvider>().userData);
+    navigateTo(
+      context: context,
+      fullScreenDialog: true,
+      rootNavigator: true,
+      screen: ProductDetailScreen(product: productDto!, images: images),
+    );
+  }
 
-                      await Future.delayed(const Duration(seconds: 2), () {
-                        Navigator.of(context).pop();
-                      });
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is adv_bloc.AdvertisementScreenLoading) {
-                      return Stack(
-                        children: [
-                          BigButton(
-                            padding: const EdgeInsets.all(0),
-                            onPressed: () {},
-                            label: "",
-                          ),
-                          const Positioned.fill(
-                            child: Center(
-                              child: CircularProgressIndicator.adaptive(
-                                backgroundColor: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-                    return BigButton(
-                      padding: const EdgeInsets.all(0),
-                      onPressed: () {
-                        if (images.isEmpty) {
-                          showTopSnackBar(
-                            context: context,
-                            title: 'Выберите фото',
-                          );
-                          return;
-                        }
-                        if (!_formKey.currentState!.validate() ||
-                            city == null ||
-                            region == null ||
-                            category == null ||
-                            subCategory == null ||
-                            productState == null) {
-                          showTopSnackBar(
-                            context: context,
-                            title: 'Необходимо заполнить все поля',
-                          );
-                          return;
-                        }
+  void _onPublishPressed() {
+    if (images.isEmpty) {
+      showTopSnackBar(context: context, title: 'Выберите фото');
+      return;
+    }
 
-                        productDto = adv_product.ProductDto(
-                          id: id.toString(),
-                          title: titleController.text.trim(),
-                          authorPhoneNumber: authProvider!.phoneNumber,
-                          subTitle: subtitleController.text.trim(),
-                          city: city?.id ?? '',
-                          createdDate: DateTime.now().toString(),
-                          region: region?.id ?? "",
-                          price: prizeFoundController.text.trim().toDouble(),
-                          description: descriptionController.text.trim(),
-                          isFavorite: false,
-                          categoryId: category?.id ?? '',
-                          subCategoryId: subCategory?.id ?? '',
-                          images: [],
-                          canAgree: canAgree,
-                          state: productState?.id ?? '',
-                        );
+    if (!_formKey.currentState!.validate()) {
+      showTopSnackBar(
+        context: context,
+        title: 'Проверьте правильность заполнения полей',
+      );
+      return;
+    }
 
-                        context.read<adv_bloc.AdvertisementScreenBloc>().add(
-                          adv_bloc.AddAdvert(
-                            images: images,
-                            product: productDto!,
-                            userPhoneNumber: authProvider.phoneNumber,
-                            productType: widget.productType!,
-                          ),
-                        );
-                      },
-                      label: S.of(context).publish,
-                    );
-                  },
-                ),
-                const SizedBox(height: 60),
-              ],
-            ),
-          ),
-        ),
+    if (region == null || city == null) {
+      showTopSnackBar(context: context, title: 'Выберите регион и город');
+      return;
+    }
+
+    productDto = _createProductDto(context.read<MyAuthProvider>().userData);
+    context.read<AdvertisementScreenBloc>().add(
+      AddAdvert(
+        images: images,
+        product: productDto!,
+        userPhoneNumber:
+            phoneNumber.text.isEmpty
+                ? context.read<MyAuthProvider>().userData!.phoneNumber
+                : phoneNumber.text,
+        productType: widget.productType!,
       ),
     );
   }
-}
 
-class _SelectCategory extends StatelessWidget {
-  final Function(adv_categories.Category) changeCategory;
-  final List<adv_categories.Category>? subCategories;
-  final bool state;
-  final adv_type.ProductType? productType;
-
-  const _SelectCategory({
-    required this.changeCategory,
-    this.subCategories,
-    this.state = false,
-    this.productType,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 20),
-        if (subCategories != null)
-          ...subCategories!.map(
-            (e) => _ChangeCategory(category: e, changeCategory: changeCategory),
-          ),
-        if (state)
-          ...adv_categories.productState.map(
-            (e) => _ChangeCategory(category: e, changeCategory: changeCategory),
-          ),
-        if (productType != null)
-          ..._getCategoriesForProductType(productType!).map(
-            (e) => _ChangeCategory(category: e, changeCategory: changeCategory),
-          ),
-        const SizedBox(height: 20),
-      ],
-    );
-  }
-
-  List<adv_categories.Category> _getCategoriesForProductType(
-    adv_type.ProductType type,
-  ) {
-    switch (type) {
-      case adv_type.ProductType.machine:
-        return adv_categories.machineCategories;
-      case adv_type.ProductType.raw_material:
-        return adv_categories.rawMaterialCategories;
-      case adv_type.ProductType.work:
-        return adv_categories.workCategories;
-      case adv_type.ProductType.fertiliser:
-        return adv_categories.fertiliserCategories;
+  List<String> _getCheckList() {
+    switch (widget.productType) {
+      case ProductType.machine:
+        return [
+          titleController.text,
+          priceController.text,
+          descriptionController.text,
+          contactFace.text,
+          phoneNumber.text,
+          amountController.text,
+        ];
+      case ProductType.fertiliser:
+      case ProductType.raw_material:
+        return [
+          titleController.text,
+          amountController.text,
+          priceController.text,
+          contactFace.text,
+          phoneNumber.text,
+        ];
+      case ProductType.work:
+        return [
+          titleController.text,
+          descriptionController.text,
+          priceController.text,
+          maxPriceController.text,
+          nameCompany.text,
+          contactFace.text,
+          phoneNumber.text,
+        ];
       default:
         return [];
     }
-  }
-}
-
-class _ChangeCategory extends StatelessWidget {
-  final Function(adv_categories.Category) changeCategory;
-  final adv_categories.Category category;
-
-  const _ChangeCategory({required this.changeCategory, required this.category});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = AppThemeProvider.of(context).themeMode;
-    final style = TextStyle(
-      color: theme.colors.colorText2,
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-    );
-    return GestureDetector(
-      onTap: () {
-        changeCategory(category);
-        Navigator.of(context).pop();
-      },
-      child: Column(
-        children: [
-          Text(category.name, style: style),
-          Divider(color: theme.colors.colorText3, height: 24),
-        ],
-      ),
-    );
   }
 }

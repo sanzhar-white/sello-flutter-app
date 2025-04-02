@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:sello/components/big_button.dart';
-import 'package:sello/components/show_modal_bottom_sheet_wrap.dart';
-import 'package:sello/components/show_top_snack_bar.dart';
-import 'package:sello/components/text_field_fidget.dart';
-import 'package:sello/components/utils.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/auth/register_screen/data/models/region.dart';
-import 'package:sello/features/auth/register_screen/presentation/ui/phone_number_screen.dart';
-import 'package:sello/features/home_screen/data/models/product_dto.dart';
-import 'package:sello/generated/l10n.dart';
-import 'package:sello/repository/user_repo.dart';
+import 'package:selo/components/big_button.dart';
+import 'package:selo/components/show_modal_bottom_sheet_wrap.dart';
+import 'package:selo/components/show_top_snack_bar.dart';
+import 'package:selo/components/text_field_fidget.dart';
+import 'package:selo/components/utils.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/auth/register_screen/data/models/region.dart';
+import 'package:selo/features/auth/register_screen/presentation/ui/phone_number_screen.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
+import 'package:selo/generated/l10n.dart';
+import 'package:selo/repository/user_repo.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sello/features/home_screen/presentation/state/bloc/home_screen_bloc.dart';
-import 'package:sello/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:selo/features/home_screen/presentation/state/bloc/home_screen_bloc.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});

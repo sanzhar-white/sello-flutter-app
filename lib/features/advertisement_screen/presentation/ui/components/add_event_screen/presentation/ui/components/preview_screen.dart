@@ -2,13 +2,12 @@ import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sello/components/custom_divider.dart';
-import 'package:sello/components/utils.dart';
-import 'package:sello/core/theme/theme_provider.dart';
-import 'package:sello/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/components/custom_divider.dart';
+import 'package:selo/components/utils.dart';
+import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
 
 class PreviewScreen extends StatelessWidget {
   final KokparEventDto kokparEventDto;

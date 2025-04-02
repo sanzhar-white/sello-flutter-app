@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sello/features/auth/auth_provider/auth_provider.dart';
-import 'package:sello/features/main_screen/presentation/view_model/main_screen_vm.dart';
-import 'package:sello/repository/user_repo.dart';
+import 'package:selo/features/auth/auth_provider/auth_provider.dart';
+import 'package:selo/features/main_screen/presentation/view_model/main_screen_vm.dart';
+import 'package:selo/repository/user_repo.dart';
 
 class VMsProvider extends StatelessWidget {
   const VMsProvider({super.key, required this.child});

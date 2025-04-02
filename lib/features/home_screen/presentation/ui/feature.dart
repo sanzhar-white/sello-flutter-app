@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sello/features/home_screen/presentation/ui/home_screen.dart';
+import 'package:selo/features/home_screen/presentation/ui/home_screen.dart';
 
 CupertinoPageRoute homeScreenRoute(RouteSettings route) {
   return CupertinoPageRoute(
