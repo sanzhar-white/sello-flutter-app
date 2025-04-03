@@ -35,7 +35,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(title: Text(S.of(context).profile)),
+          appBar: AppBar(
+            title: Text(S.of(context).profile),
+            backgroundColor: theme.colors.white,
+          ),
           body: Padding(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -43,24 +46,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Container(
-                      child: ListTile(
-                        leading: Image.asset(
-                          'assets/profile/language.png',
-                          fit: BoxFit.cover,
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheetWrap(
+                          context: context,
+                          child: _SelectLanguage(),
+                        );
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 40,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
                         ),
-                        title: Text("РУС"),
-                        onTap: () {
-                          showModalBottomSheetWrap(
-                            context: context,
-                            child: _SelectLanguage(),
-                          );
-                        },
-                      ),
-                      decoration: BoxDecoration(
-                        color: theme.colors.backgroundWidget,
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10),
+                        decoration: BoxDecoration(
+                          color: theme.colors.backgroundWidget,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Row(
+                          mainAxisAlignment:
+                              MainAxisAlignment
+                                  .spaceEvenly, // Центрируем содержимое
+                          children: [
+                            Image.asset(
+                              'assets/profile/language.png',
+                              fit: BoxFit.cover,
+                              width: 32, // Ограничиваем размер изображения
+                              height: 24,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ), // Отступ между иконкой и текстом
+                            Text(
+                              "РУС",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -89,7 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     )
                     : CircleAvatar(
                       radius: 80,
-                      backgroundColor: theme.colors.black.withOpacity(0.3),
+                      backgroundColor: theme.colors.backgroundWidget,
                       child: Icon(
                         Icons.person,
                         size: 64,
@@ -151,8 +176,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: _SelectLanguage(),
                     );
                   },
-                  iconUrl: 'assets/profile/language.png',
-                  text: S.of(context).language,
+                  iconUrl: 'assets/profile/public.svg',
+                  text: "Публичная Оферта",
                 ),
                 MyListTile(
                   text: S.of(context).logout,
@@ -267,15 +292,17 @@ class MyListTile extends StatelessWidget {
           height: 32,
           width: 32,
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(const Radius.circular(8)),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
             color: theme.colors.backgroundWidget,
           ),
           child:
               iconUrl != null
-                  ? Image.asset(iconUrl!, fit: BoxFit.cover)
-                  : iconData != null
-                  ? Icon(iconData, color: theme.colors.black)
-                  : const SizedBox(),
+                  ? (iconUrl!.endsWith('.svg')
+                      ? SvgPicture.asset(iconUrl!, fit: BoxFit.cover)
+                      : Image.asset(iconUrl!, fit: BoxFit.cover))
+                  : (iconData != null
+                      ? Icon(iconData, color: theme.colors.black)
+                      : const SizedBox()), // Пустой виджет, если нет иконки
         ),
         onTap: onTap,
         title: Text(

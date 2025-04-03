@@ -55,7 +55,7 @@ class _FavoriteAdvertsButtonState extends State<FavoriteAdvertsButton> {
         child: Icon(
           like != null ? Icons.favorite : Icons.favorite_outline,
           size: 20,
-          color: like != null ? theme.colors.red : theme.colors.black,
+          color: like != null ? theme.colors.green : theme.colors.black,
         ),
       ),
     );

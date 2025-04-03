@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:selo/core/enums.dart';
 import 'package:selo/core/theme/theme_provider.dart';
 import 'package:selo/features/filter_screen/presentation/state/bloc/filter_screen_bloc.dart';
 import 'package:selo/features/filter_screen/presentation/ui/filter_screen.dart';
@@ -86,6 +87,7 @@ class FilteredResultsScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return ProductCard(
                         product: ProductDto(
+                          productType: ProductType.machine,
                           id: '1',
                           title: 'Трактор Mini Lux',
                           subTitle: 'Трактор Mini Lux в отличном состоянии',

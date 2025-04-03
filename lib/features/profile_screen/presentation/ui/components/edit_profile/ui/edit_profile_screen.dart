@@ -122,6 +122,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     fontSize: 18,
                   ),
                 ),
+                backgroundColor: theme.colors.white,
                 centerTitle: true,
               ),
               body: SingleChildScrollView(
@@ -141,7 +142,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       if (image == null && widget.userData.photo == '')
                         CircleAvatar(
                           radius: 80,
-                          backgroundColor: theme.colors.black.withOpacity(0.3),
+                          backgroundColor: theme.colors.backgroundWidget,
                           child: Icon(
                             Icons.person,
                             size: 80,
@@ -200,13 +201,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         hint: 'Нуржан',
                         letter: 'И',
                         iconColor: Colors.green,
-                      ),
-                      const SizedBox(height: 8),
-                      _buildTextField(
-                        controller: TextEditingController(),
-                        hint: 'Нурланович',
-                        letter: 'О',
-                        iconColor: Colors.orange,
                       ),
                       const SizedBox(height: 8),
                       _buildTextField(
