@@ -48,7 +48,7 @@ class _KokparScreenState extends State<KokparScreen> {
                 //   child: Text(
                 //     'Категория',
                 //     style: TextStyle(
-                //       color: theme.colors.colorText1,
+                //       color: theme.colors.black,
                 //       fontSize: 16,
                 //       fontWeight: FontWeight.w700,
                 //     ),
@@ -80,7 +80,7 @@ class _KokparScreenState extends State<KokparScreen> {
                 // const SizedBox(height: 24),
                 // Divider(
                 //   thickness: 8,
-                //   color: theme.colors.colorText3.withOpacity(0.2),
+                //   color: theme.colors.black.withOpacity(0.2),
                 // ),
                 // const SizedBox(height: 24),
                 // Padding(
@@ -88,7 +88,7 @@ class _KokparScreenState extends State<KokparScreen> {
                 //   child: Text(
                 //     'Сізге ұсынылады',
                 //     style: TextStyle(
-                //       color: theme.colors.colorText1,
+                //       color: theme.colors.black,
                 //       fontSize: 16,
                 //       fontWeight: FontWeight.w700,
                 //     ),
@@ -147,7 +147,7 @@ class CategoryCard extends StatelessWidget {
         width: 110,
         height: 70,
         decoration: BoxDecoration(
-          color: theme.colors.colorText3.withOpacity(0.1),
+          color: theme.colors.black.withOpacity(0.1),
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         child: Column(
@@ -158,7 +158,7 @@ class CategoryCard extends StatelessWidget {
               child: Text(
                 text,
                 style: TextStyle(
-                  color: theme.colors.colorText2,
+                  color: theme.colors.black,
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),

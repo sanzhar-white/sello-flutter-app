@@ -49,7 +49,7 @@ class EventDetailScreen extends StatelessWidget {
                   Text(
                     kokparEventDto.title,
                     style: TextStyle(
-                      color: theme.colors.primary,
+                      color: theme.colors.green,
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
                     ),
@@ -57,12 +57,9 @@ class EventDetailScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     kokparEventDto.subTitle,
-                    style: TextStyle(
-                      color: theme.colors.colorText1,
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(color: theme.colors.black, fontSize: 16),
                   ),
-                  Divider(height: 20, color: theme.colors.colorText1),
+                  Divider(height: 20, color: theme.colors.black),
                   _MetaData(
                     iconUrl: 'assets/svg_icons/tenge_icon.svg',
                     text: currencyFormat(context, kokparEventDto.prizeFund),
@@ -83,7 +80,7 @@ class EventDetailScreen extends StatelessWidget {
                   Text(
                     S.of(context).description.toUpperCase(),
                     style: TextStyle(
-                      color: theme.colors.colorText1,
+                      color: theme.colors.black,
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
@@ -91,21 +88,18 @@ class EventDetailScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   Text(
                     kokparEventDto.description,
-                    style: TextStyle(color: theme.colors.colorText2),
+                    style: TextStyle(color: theme.colors.black),
                   ),
                   const SizedBox(height: 12),
                   Text(
                     'Организатор:',
-                    style: TextStyle(
-                      color: theme.colors.colorText2,
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(color: theme.colors.black, fontSize: 16),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     kokparEventDto.authorPhoneNumber,
                     style: TextStyle(
-                      color: theme.colors.colorText2,
+                      color: theme.colors.black,
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                     ),
@@ -138,17 +132,14 @@ class _MetaData extends StatelessWidget {
             width: 20,
             height: 20,
             iconUrl,
-            colorFilter: ColorFilter.mode(
-              theme.colors.colorText2,
-              BlendMode.srcIn,
-            ),
+            colorFilter: ColorFilter.mode(theme.colors.black, BlendMode.srcIn),
           ),
           const SizedBox(width: 4),
           Expanded(
             child: Text(
               text,
               style: TextStyle(
-                color: theme.colors.colorText2,
+                color: theme.colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
@@ -233,7 +224,7 @@ class _ImageSliderDemoState extends State<ImageSliderDemo> {
                           ),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: theme.colors.primary.withOpacity(
+                            color: theme.colors.green.withOpacity(
                               _current == entry.key ? 0.9 : 0.4,
                             ),
                           ),
@@ -250,7 +241,7 @@ class _ImageSliderDemoState extends State<ImageSliderDemo> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: theme.colors.colorText2,
+                    color: theme.colors.black,
                   ),
                 ),
               ),

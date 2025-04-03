@@ -24,7 +24,7 @@ class EventCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.only(left: 10, top: 8),
         decoration: BoxDecoration(
-          color: theme.colors.colorText3.withOpacity(0.1),
+          color: theme.colors.black.withOpacity(0.1),
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         child: Stack(
@@ -35,7 +35,7 @@ class EventCard extends StatelessWidget {
                 Text(
                   text,
                   style: TextStyle(
-                    color: theme.colors.colorText2,
+                    color: theme.colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
@@ -153,7 +153,7 @@ class MyChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
       decoration: BoxDecoration(
-        color: theme.colors.primary,
+        color: theme.colors.green,
         borderRadius: const BorderRadius.all(Radius.circular(30)),
       ),
       child: Text(

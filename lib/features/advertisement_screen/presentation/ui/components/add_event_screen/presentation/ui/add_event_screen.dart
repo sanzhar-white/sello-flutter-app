@@ -217,15 +217,26 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = AppThemeProvider.of(context).themeMode;
     final authProvider = context.read<MyAuthProvider>().userData;
     final width = MediaQuery.of(context).size.width;
-    final style = TextStyle(fontSize: 16, color: theme.colorScheme.onSurface);
+    final style = TextStyle(fontSize: 16, color: theme.colors.black);
 
     switch (widget.productType) {
       case ProductType.machine:
         return MachineForm(
-          theme: theme,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: theme.colors.green,
+              primary: theme.colors.green,
+              secondary: theme.colors.green,
+            ),
+            scaffoldBackgroundColor: theme.colors.black,
+            appBarTheme: AppBarTheme(
+              backgroundColor: theme.colors.white,
+              foregroundColor: theme.colors.black,
+            ),
+          ),
           authProvider: authProvider,
           width: width,
           style: style,
@@ -253,7 +264,18 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
         );
       case ProductType.fertiliser:
         return MaterialForm(
-          theme: theme,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: theme.colors.green,
+              primary: theme.colors.green,
+              secondary: theme.colors.green,
+            ),
+            scaffoldBackgroundColor: theme.colors.white,
+            appBarTheme: AppBarTheme(
+              backgroundColor: theme.colors.white,
+              foregroundColor: theme.colors.black,
+            ),
+          ),
           authProvider: authProvider,
           width: width,
           style: style,
@@ -280,7 +302,18 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
         );
       case ProductType.raw_material:
         return MaterialForm(
-          theme: theme,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: theme.colors.green,
+              primary: theme.colors.green,
+              secondary: theme.colors.green,
+            ),
+            scaffoldBackgroundColor: theme.colors.white,
+            appBarTheme: AppBarTheme(
+              backgroundColor: theme.colors.white,
+              foregroundColor: theme.colors.black,
+            ),
+          ),
           authProvider: authProvider,
           width: width,
           style: style,
@@ -307,7 +340,18 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
         );
       case ProductType.work:
         return JobForm(
-          theme: theme,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: theme.colors.green,
+              primary: theme.colors.green,
+              secondary: theme.colors.green,
+            ),
+            scaffoldBackgroundColor: theme.colors.white,
+            appBarTheme: AppBarTheme(
+              backgroundColor: theme.colors.white,
+              foregroundColor: theme.colors.black,
+            ),
+          ),
           authProvider: authProvider,
           width: width,
           style: style,

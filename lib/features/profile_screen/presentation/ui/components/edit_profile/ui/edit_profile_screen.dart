@@ -82,7 +82,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           showTopSnackBar(
             context: context,
             title: 'Данные успешно сохранены',
-            titleColor: theme.colors.greenLight,
+            titleColor: theme.colors.green,
           );
         }
         if (state is DeleteAccountError) {
@@ -117,7 +117,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 title: Text(
                   'Настройки Личной Информации',
                   style: TextStyle(
-                    color: theme.colors.colorText1,
+                    color: theme.colors.black,
                     fontWeight: FontWeight.w600,
                     fontSize: 18,
                   ),
@@ -141,13 +141,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       if (image == null && widget.userData.photo == '')
                         CircleAvatar(
                           radius: 80,
-                          backgroundColor: theme.colors.colorText3.withOpacity(
-                            0.3,
-                          ),
+                          backgroundColor: theme.colors.black.withOpacity(0.3),
                           child: Icon(
                             Icons.person,
                             size: 80,
-                            color: theme.colors.colorText3,
+                            color: theme.colors.black,
                           ),
                         ),
                       if (image == null && widget.userData.photo != '')
@@ -165,7 +163,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 (context, url, error) => Icon(
                                   Icons.person,
                                   size: 64,
-                                  color: theme.colors.colorText3,
+                                  color: theme.colors.black,
                                 ),
                           ),
                         ),
@@ -185,7 +183,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           S.of(context).editPhoto,
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            color: theme.colors.colorText3,
+                            color: theme.colors.black,
                           ),
                         ),
                       ),
@@ -297,7 +295,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Text(
                           S.of(context).deleteAccount,
                           style: TextStyle(
-                            color: theme.colors.primary.withOpacity(0.5),
+                            color: theme.colors.green.withOpacity(0.5),
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
@@ -310,7 +308,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             if (isLoading)
               ColoredBox(
-                color: theme.colors.backgroundColorContainer.withOpacity(0.5),
+                color: theme.colors.backgroundWidget.withOpacity(0.5),
                 child: const Center(
                   child: CircularProgressIndicator.adaptive(),
                 ),

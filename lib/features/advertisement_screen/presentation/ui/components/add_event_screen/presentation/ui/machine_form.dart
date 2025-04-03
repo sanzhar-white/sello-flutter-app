@@ -8,6 +8,7 @@ import 'package:selo/components/show_top_snack_bar.dart';
 import 'package:selo/components/text_field_fidget.dart';
 import 'package:selo/components/product_detail_screen.dart';
 import 'package:selo/core/extensions.dart';
+import 'package:selo/core/theme/theme_provider.dart';
 import 'package:selo/features/advertisement_screen/data/models/categories.dart';
 import 'package:selo/features/advertisement_screen/presentation/state/bloc/advertisement_screen_bloc.dart';
 import 'package:selo/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/components/image_placeholder.dart';
@@ -107,6 +108,7 @@ class _MachineFormState extends State<MachineForm> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = AppThemeProvider.of(context).themeMode;
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).newAd)),
       body: SingleChildScrollView(
@@ -125,6 +127,7 @@ class _MachineFormState extends State<MachineForm> {
               SizedBox(height: 30),
               Container(
                 decoration: BoxDecoration(
+                  color: theme.colors.backgroundWidget,
                   borderRadius: BorderRadius.circular(1),
                   image: DecorationImage(
                     image: AssetImage('assets/to_add/machine.png'),
@@ -142,7 +145,7 @@ class _MachineFormState extends State<MachineForm> {
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 0),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: theme.colors.backgroundWidget,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
@@ -161,14 +164,14 @@ class _MachineFormState extends State<MachineForm> {
                               decoration: BoxDecoration(
                                 color:
                                     widget.isMachine
-                                        ? Colors.green
+                                        ? theme.colors.green
                                         : Colors.transparent,
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
                                   color:
                                       widget.isMachine
-                                          ? Colors.green
-                                          : Colors.grey,
+                                          ? theme.colors.green
+                                          : theme.colors.backgroundWidget,
                                   width: 2,
                                 ),
                               ),
@@ -201,14 +204,14 @@ class _MachineFormState extends State<MachineForm> {
                               decoration: BoxDecoration(
                                 color:
                                     !widget.isMachine
-                                        ? Colors.red
+                                        ? theme.colors.green
                                         : Colors.transparent,
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
                                   color:
                                       !widget.isMachine
-                                          ? Colors.red
-                                          : Colors.grey,
+                                          ? theme.colors.green
+                                          : theme.colors.backgroundWidget,
                                   width: 2,
                                 ),
                               ),
@@ -245,6 +248,7 @@ class _MachineFormState extends State<MachineForm> {
                         }
                         return null;
                       },
+                      fillColor: theme.colors.backgroundWidget,
                     ),
                   ),
                   _FormField(
@@ -315,7 +319,7 @@ class _MachineFormState extends State<MachineForm> {
                       width: double.infinity,
                       padding: EdgeInsets.symmetric(horizontal: 0),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: theme.colors.backgroundWidget,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
@@ -334,14 +338,14 @@ class _MachineFormState extends State<MachineForm> {
                                 decoration: BoxDecoration(
                                   color:
                                       widget.isNewState
-                                          ? Colors.green
+                                          ? theme.colors.green
                                           : Colors.transparent,
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     color:
                                         widget.isNewState
-                                            ? Colors.green
-                                            : Colors.grey,
+                                            ? theme.colors.green
+                                            : theme.colors.backgroundWidget,
                                     width: 2,
                                   ),
                                 ),
@@ -374,14 +378,14 @@ class _MachineFormState extends State<MachineForm> {
                                 decoration: BoxDecoration(
                                   color:
                                       !widget.isNewState
-                                          ? Colors.red
+                                          ? theme.colors.green
                                           : Colors.transparent,
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     color:
                                         !widget.isNewState
-                                            ? Colors.red
-                                            : Colors.grey,
+                                            ? theme.colors.green
+                                            : theme.colors.backgroundWidget,
                                     width: 2,
                                   ),
                                 ),
@@ -692,6 +696,7 @@ class _ImagePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = AppThemeProvider.of(context).themeMode;
     return Stack(
       children: [
         ClipRRect(
@@ -711,7 +716,7 @@ class _ImagePreview extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.6),
+                color: theme.colors.backgroundWidget,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),

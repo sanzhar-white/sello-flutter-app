@@ -89,7 +89,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                       Text(
                                         '${events.length}',
                                         style: TextStyle(
-                                          color: theme.colors.primary,
+                                          color: theme.colors.green,
                                           fontSize: 13,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -141,7 +141,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                       Text(
                                         'На ${dateYMdFromString(context, vm.selectedDate.toString())} объявлений нет',
                                         style: TextStyle(
-                                          color: theme.colors.colorText3,
+                                          color: theme.colors.black,
                                         ),
                                       ),
                                     ],

@@ -13,7 +13,7 @@ class ImagePlaceholder extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: theme.colors.colorText3.withOpacity(0.2),
+          color: theme.colors.black.withOpacity(0.2),
           borderRadius: const BorderRadius.all(Radius.circular(16)),
         ),
         child: Center(

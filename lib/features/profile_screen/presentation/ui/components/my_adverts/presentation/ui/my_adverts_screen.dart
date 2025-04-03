@@ -47,7 +47,7 @@ class _MyAdvertsScreenState extends State<MyAdvertsScreen> {
                       ),
                       Text(
                         'У вас пока нет объявлений',
-                        style: TextStyle(color: theme.colors.colorText2),
+                        style: TextStyle(color: theme.colors.black),
                       ),
                     ],
                   ),

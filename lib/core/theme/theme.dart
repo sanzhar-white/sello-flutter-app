@@ -11,8 +11,8 @@ void darkStatusAndNavigationBar() {
       // statusBarBrightness: Brightness.dark,
       statusBarColor: Colors.transparent,
       // statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: AppColors.kDarkBackgroundColor,
-      systemNavigationBarDividerColor: AppColors.kDarkBackgroundColor,
+      systemNavigationBarColor: AppColors.black,
+      systemNavigationBarDividerColor: AppColors.black,
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
@@ -24,8 +24,8 @@ void lightStatusAndNavigationBar() {
       // statusBarBrightness: Brightness.dark,
       statusBarColor: Colors.transparent,
       // statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: AppColors.kBackgroundColor,
-      systemNavigationBarDividerColor: AppColors.kBackgroundColor,
+      systemNavigationBarColor: AppColors.white,
+      systemNavigationBarDividerColor: AppColors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );

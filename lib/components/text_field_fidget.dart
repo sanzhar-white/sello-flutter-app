@@ -89,7 +89,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       inputFormatters: widget.inputFormatters,
       textAlign: widget.textAlign ?? TextAlign.start,
       autofocus: widget.autofocus,
-      cursorColor: theme.colors.primary,
+      cursorColor: theme.colors.green,
       minLines: widget.minLines ?? 1,
       maxLines: widget.maxLines ?? 3,
       textInputAction: widget.textInputAction,
@@ -112,7 +112,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           widget.style ??
           TextStyle(
             fontSize: 20,
-            color: theme.colors.colorText2,
+            color: theme.colors.black,
             fontWeight: FontWeight.w700,
           ),
       decoration: InputDecoration(
@@ -126,11 +126,11 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         hintStyle: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w400,
-          color: widget.hintColor ?? theme.colors.colorText3.withOpacity(0.6),
+          color: widget.hintColor ?? theme.colors.black.withOpacity(0.6),
         ),
         labelStyle: TextStyle(
           fontSize: 18,
-          color: theme.colors.colorText3.withOpacity(0.8),
+          color: theme.colors.black.withOpacity(0.8),
           fontWeight: FontWeight.w700,
         ),
         border: InputBorder.none,
@@ -150,7 +150,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           borderRadius: BorderRadius.all(Radius.circular(14)),
           borderSide: BorderSide.none,
         ),
-        fillColor: theme.colors.colorText3.withOpacity(0.15),
+        fillColor: theme.colors.black.withOpacity(0.15),
         filled: true,
       ),
     );

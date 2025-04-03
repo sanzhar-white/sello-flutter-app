@@ -12,7 +12,7 @@ showModalBottomSheetWrap({
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
     ),
-    backgroundColor: theme.themeMode.colors.backgroundBottomSheet,
+    backgroundColor: theme.themeMode.colors.white,
     builder: (context) {
       return Padding(
         padding: EdgeInsets.only(

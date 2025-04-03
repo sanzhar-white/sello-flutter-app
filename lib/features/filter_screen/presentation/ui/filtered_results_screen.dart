@@ -40,7 +40,7 @@ class FilteredResultsScreen extends StatelessWidget {
                   prefixIcon: Icon(Icons.search),
                   suffixIcon: Icon(Icons.tune),
                   filled: true,
-                  fillColor: theme.colors.colorText3.withOpacity(0.1),
+                  fillColor: theme.colors.black.withOpacity(0.1),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,

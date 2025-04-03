@@ -204,7 +204,7 @@ class _ImageSliderDemoState extends State<ImageSliderDemo> {
                           ),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: theme.colors.primary.withOpacity(
+                            color: theme.colors.green.withOpacity(
                               _current == entry.key ? 0.9 : 0.4,
                             ),
                           ),
@@ -221,7 +221,7 @@ class _ImageSliderDemoState extends State<ImageSliderDemo> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: theme.colors.colorText2,
+                    color: theme.colors.black,
                   ),
                 ),
               ),
@@ -260,7 +260,7 @@ class _MachineDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 20),
@@ -278,7 +278,7 @@ class _MachineDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 12),
@@ -295,7 +295,7 @@ class _MachineDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 12),
@@ -310,13 +310,13 @@ class _MachineDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 12),
           Text(
             product.description ?? '',
-            style: TextStyle(fontSize: 16, color: theme.colors.colorText2),
+            style: TextStyle(fontSize: 16, color: theme.colors.black),
           ),
           const SizedBox(height: 100),
         ],
@@ -341,7 +341,7 @@ class _InfoRow extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(fontSize: 16, color: theme.colors.colorText2),
+            style: TextStyle(fontSize: 16, color: theme.colors.black),
           ),
           const SizedBox(width: 8),
           Expanded(
@@ -349,7 +349,7 @@ class _InfoRow extends StatelessWidget {
               value,
               style: TextStyle(
                 fontSize: 16,
-                color: theme.colors.colorText1,
+                color: theme.colors.black,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -387,7 +387,7 @@ class _MaterialDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 20),
@@ -402,7 +402,7 @@ class _MaterialDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 12),
@@ -419,7 +419,7 @@ class _MaterialDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 12),
@@ -435,13 +435,13 @@ class _MaterialDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 12),
           Text(
             product.description ?? '',
-            style: TextStyle(fontSize: 16, color: theme.colors.colorText2),
+            style: TextStyle(fontSize: 16, color: theme.colors.black),
           ),
           const SizedBox(height: 100),
         ],
@@ -477,7 +477,7 @@ class _JobDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 20),
@@ -488,7 +488,7 @@ class _JobDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 12),
@@ -505,7 +505,7 @@ class _JobDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 12),
@@ -524,13 +524,13 @@ class _JobDetailContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: theme.colors.colorText1,
+              color: theme.colors.black,
             ),
           ),
           const SizedBox(height: 12),
           Text(
             product.description ?? '',
-            style: TextStyle(fontSize: 16, color: theme.colors.colorText2),
+            style: TextStyle(fontSize: 16, color: theme.colors.black),
           ),
           const SizedBox(height: 100),
         ],

@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           hintText: 'Поиск в Алматы',
                           prefixIcon: Icon(Icons.search),
                           filled: true,
-                          fillColor: theme.colors.colorText3.withOpacity(0.1),
+                          fillColor: theme.colors.black.withOpacity(0.1),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: BorderSide.none,
@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Container(
                         padding: EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: theme.colors.colorText3.withOpacity(0.1),
+                          color: theme.colors.black.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Icon(Icons.tune),
@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           body: RefreshIndicator(
-            color: theme.colors.primary,
+            color: theme.colors.green,
             onRefresh: () async {
               context.read<HomeScreenBloc>().add(
                 GetAllKokparEvents(

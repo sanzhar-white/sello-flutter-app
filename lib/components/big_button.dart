@@ -29,8 +29,8 @@ class BigButton extends StatelessWidget {
           width: double.infinity,
           height: 60,
           decoration: BoxDecoration(
-            border: Border.all(color: borderColor ?? theme.colors.primary),
-            color: isActive ? theme.colors.primary : theme.colors.white,
+            border: Border.all(color: borderColor ?? theme.colors.green),
+            color: isActive ? theme.colors.green : theme.colors.white,
             borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
           child: Center(
@@ -39,7 +39,7 @@ class BigButton extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: isActive ? theme.colors.white : theme.colors.primary,
+                color: isActive ? theme.colors.white : theme.colors.green,
               ),
             ),
           ),

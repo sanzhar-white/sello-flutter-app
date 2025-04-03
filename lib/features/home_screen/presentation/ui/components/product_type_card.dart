@@ -27,7 +27,7 @@ class ProductTypeCard extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             decoration: BoxDecoration(
-              color: theme.colors.colorText3.withOpacity(0.1),
+              color: theme.colors.black.withOpacity(0.1),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
             child: Row(
@@ -43,7 +43,7 @@ class ProductTypeCard extends StatelessWidget {
         Text(
           text,
           style: TextStyle(
-            color: theme.colors.colorText2,
+            color: theme.colors.black,
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),

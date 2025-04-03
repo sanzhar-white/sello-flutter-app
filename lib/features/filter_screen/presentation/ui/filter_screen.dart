@@ -59,7 +59,7 @@ class _FilterScreenState extends State<FilterScreen> {
             },
             child: Text(
               'Сбросить',
-              style: TextStyle(color: theme.colors.primary),
+              style: TextStyle(color: theme.colors.green),
             ),
           ),
         ],
@@ -74,7 +74,7 @@ class _FilterScreenState extends State<FilterScreen> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: theme.colors.colorText1,
+                color: theme.colors.black,
               ),
             ),
           ),
@@ -98,13 +98,10 @@ class _FilterScreenState extends State<FilterScreen> {
                         },
                         backgroundColor:
                             isSelected
-                                ? theme.colors.primary
-                                : theme.colors.colorText3.withOpacity(0.1),
+                                ? theme.colors.green
+                                : theme.colors.black.withOpacity(0.1),
                         labelStyle: TextStyle(
-                          color:
-                              isSelected
-                                  ? Colors.white
-                                  : theme.colors.colorText1,
+                          color: isSelected ? Colors.white : theme.colors.black,
                         ),
                       ),
                     );
@@ -121,7 +118,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: theme.colors.colorText1,
+                    color: theme.colors.black,
                   ),
                 ),
                 SizedBox(height: 8),
@@ -136,7 +133,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: theme.colors.colorText1,
+                    color: theme.colors.black,
                   ),
                 ),
                 SizedBox(height: 8),
@@ -151,7 +148,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: theme.colors.colorText1,
+                    color: theme.colors.black,
                   ),
                 ),
                 SizedBox(height: 8),
@@ -163,7 +160,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         decoration: InputDecoration(
                           hintText: 'От',
                           filled: true,
-                          fillColor: theme.colors.colorText3.withOpacity(0.1),
+                          fillColor: theme.colors.black.withOpacity(0.1),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: BorderSide.none,
@@ -179,7 +176,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         decoration: InputDecoration(
                           hintText: 'До',
                           filled: true,
-                          fillColor: theme.colors.colorText3.withOpacity(0.1),
+                          fillColor: theme.colors.black.withOpacity(0.1),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: BorderSide.none,
@@ -213,7 +210,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.colors.primary,
+                  backgroundColor: theme.colors.green,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -242,7 +239,7 @@ class _FilterScreenState extends State<FilterScreen> {
     final theme = AppThemeProvider.of(context).themeMode;
     return Container(
       decoration: BoxDecoration(
-        color: theme.colors.colorText3.withOpacity(0.1),
+        color: theme.colors.black.withOpacity(0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: DropdownButtonFormField<String>(

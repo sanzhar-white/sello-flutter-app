@@ -48,12 +48,12 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           daysOfWeekStyle: DaysOfWeekStyle(
             weekdayStyle: TextStyle(
               fontWeight: FontWeight.w500,
-              color: theme.colors.colorText3,
+              color: theme.colors.black,
               fontSize: 12,
             ),
             weekendStyle: TextStyle(
               fontWeight: FontWeight.w500,
-              color: theme.colors.red,
+              color: theme.colors.green,
               fontSize: 12,
             ),
           ),
@@ -69,29 +69,29 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           selectedDayPredicate: (day) => isSameDay(selectedDate, day),
           eventLoader: widget.eventLoader,
           calendarStyle: CalendarStyle(
-            defaultTextStyle: TextStyle(color: theme.colors.colorText1),
+            defaultTextStyle: TextStyle(color: theme.colors.black),
             todayDecoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: theme.colors.primary,
+              color: theme.colors.black,
             ),
             selectedDecoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: theme.colors.primary.withOpacity(0.4),
+              color: theme.colors.green.withOpacity(0.4),
             ),
           ),
           headerStyle: HeaderStyle(
             titleTextStyle: TextStyle(
               fontSize: 18,
-              color: theme.colors.colorText2,
+              color: theme.colors.black,
               fontWeight: FontWeight.w700,
             ),
             leftChevronIcon: Icon(
               Icons.chevron_left,
-              color: theme.colors.colorText2,
+              color: theme.colors.black,
             ),
             rightChevronIcon: Icon(
               Icons.chevron_right,
-              color: theme.colors.colorText2,
+              color: theme.colors.black,
             ),
             formatButtonVisible: false,
             titleCentered: true,

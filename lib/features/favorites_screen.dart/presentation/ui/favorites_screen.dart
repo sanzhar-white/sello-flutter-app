@@ -57,7 +57,7 @@ class FavoritesEvents extends StatelessWidget {
             Expanded(
               child: Text(
                 S.of(context).featuredEventsWillBeDisplayedHere,
-                style: TextStyle(color: theme.colors.colorText2, fontSize: 16),
+                style: TextStyle(color: theme.colors.black, fontSize: 16),
               ),
             ),
           ],
@@ -91,7 +91,7 @@ class FavoritesAdvertsEvents extends StatelessWidget {
             Expanded(
               child: Text(
                 S.of(context).featuredAdsWillBeDisplayedHere,
-                style: TextStyle(color: theme.colors.colorText2, fontSize: 16),
+                style: TextStyle(color: theme.colors.black, fontSize: 16),
               ),
             ),
           ],

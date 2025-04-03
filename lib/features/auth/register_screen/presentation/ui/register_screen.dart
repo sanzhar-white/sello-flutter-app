@@ -98,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: regionController,
                   hintText: regionsKZ?.name ?? S.of(context).region,
                   readOnly: true,
-                  hintColor: theme.colors.colorText2,
+                  hintColor: theme.colors.black,
                   validator: (value) {
                     return null;
                   },
@@ -117,7 +117,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                   suffixIcon: Icon(
                     Icons.keyboard_arrow_down,
-                    color: theme.colors.colorText3,
+                    color: theme.colors.black,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -125,7 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: cityController,
                   hintText: city?.name ?? S.of(context).city,
                   readOnly: true,
-                  hintColor: theme.colors.colorText2,
+                  hintColor: theme.colors.black,
                   validator: (value) {
                     return null;
                   },
@@ -150,7 +150,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                   suffixIcon: Icon(
                     Icons.keyboard_arrow_down,
-                    color: theme.colors.colorText3,
+                    color: theme.colors.black,
                   ),
                 ),
               ],
@@ -200,7 +200,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 Text(
                   S.of(context).alreadyRegistered,
-                  style: TextStyle(color: theme.colors.colorText3),
+                  style: TextStyle(color: theme.colors.black),
                 ),
                 GestureDetector(
                   onTap: () => Navigator.of(context).pop(),
@@ -227,10 +227,7 @@ class HintText extends StatelessWidget {
     final theme = AppThemeProvider.of(context).themeMode;
     return Text(
       text,
-      style: TextStyle(
-        fontWeight: FontWeight.w500,
-        color: theme.colors.colorText2,
-      ),
+      style: TextStyle(fontWeight: FontWeight.w500, color: theme.colors.black),
     );
   }
 }
@@ -264,7 +261,7 @@ class SelectRegion extends StatelessWidget {
                 const Spacer(),
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(Icons.close, color: theme.colors.colorText3),
+                  icon: Icon(Icons.close, color: theme.colors.black),
                 ),
               ],
             ),
@@ -280,12 +277,12 @@ class SelectRegion extends StatelessWidget {
                       Text(
                         e.name,
                         style: TextStyle(
-                          color: theme.colors.colorText2,
+                          color: theme.colors.black,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Divider(color: theme.colors.colorText3, height: 24),
+                      Divider(color: theme.colors.black, height: 24),
                     ],
                   ),
                 ),
@@ -302,12 +299,12 @@ class SelectRegion extends StatelessWidget {
                       Text(
                         e.name,
                         style: TextStyle(
-                          color: theme.colors.colorText2,
+                          color: theme.colors.black,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Divider(color: theme.colors.colorText3, height: 24),
+                      Divider(color: theme.colors.black, height: 24),
                     ],
                   ),
                 ),

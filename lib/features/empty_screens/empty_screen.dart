@@ -32,7 +32,7 @@ class EmptyScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.w600,
-                    color: theme.colors.primary,
+                    color: theme.colors.green,
                   ),
                 ),
                 SizedBox(height: 12),
@@ -41,7 +41,7 @@ class EmptyScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: theme.colors.colorText2,
+                    color: theme.colors.black,
                   ),
                 ),
               ],

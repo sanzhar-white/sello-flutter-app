@@ -55,10 +55,10 @@ class MyApp extends StatelessWidget {
                 locale: vm.locale,
                 theme: ThemeData(
                   appBarTheme: AppBarTheme(
-                    foregroundColor: vm.themeMode.colors.colorText3,
+                    foregroundColor: vm.themeMode.colors.black,
                     centerTitle: false,
                     titleTextStyle: TextStyle(
-                      color: vm.themeMode.colors.colorText1,
+                      color: vm.themeMode.colors.black,
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                     ),

@@ -15,8 +15,8 @@ class ShimmerPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppThemeProvider.of(context).themeMode;
-    Color baseColor = theme.colors.colorText3.withOpacity(0.2);
-    Color highlightColor = theme.colors.colorText3.withOpacity(0.05);
+    Color baseColor = theme.colors.black.withOpacity(0.2);
+    Color highlightColor = theme.colors.black.withOpacity(0.05);
 
     return isEnabled
         ? Shimmer.fromColors(

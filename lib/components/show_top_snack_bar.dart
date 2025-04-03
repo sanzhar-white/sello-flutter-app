@@ -7,8 +7,8 @@ showTopSnackBar({
   String? title,
   String? message,
   int? duration = 2,
-  Color? messageColor = AppColors.redColor,
-  Color? titleColor = AppColors.redColor,
+  Color? messageColor = AppColors.green,
+  Color? titleColor = AppColors.green,
 }) {
   // final theme = AppThemeProvider.of(context).themeMode;
   Flushbar(

@@ -178,15 +178,14 @@ class _OTPScreenState extends State<OTPScreen> {
                     child: Text(
                       S.of(context).resendCode,
                       style: TextStyle(
-                        color:
-                            _start == 0 ? Colors.blue : theme.colors.colorText3,
+                        color: _start == 0 ? Colors.blue : theme.colors.black,
                       ),
                     ),
                   ),
                   const SizedBox(width: 16),
                   Text(
                     _start.toString(),
-                    style: TextStyle(color: theme.colors.colorText3),
+                    style: TextStyle(color: theme.colors.black),
                   ),
                 ],
               ),
@@ -242,7 +241,7 @@ class _OTPScreenState extends State<OTPScreen> {
         ),
         if (isLoading)
           ColoredBox(
-            color: theme.colors.backgroundColorContainer.withOpacity(0.5),
+            color: theme.colors.backgroundWidget.withOpacity(0.5),
             child: const Center(child: CircularProgressIndicator.adaptive()),
           ),
       ],

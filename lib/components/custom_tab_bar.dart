@@ -27,14 +27,14 @@ class CustomTabBar extends StatelessWidget {
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: theme.themeMode.colors.primary.withOpacity(0.2),
+            color: theme.themeMode.colors.green.withOpacity(0.2),
           ),
-          color: theme.themeMode.colors.primary,
+          color: theme.themeMode.colors.green,
         ),
-        indicatorColor: theme.themeMode.colors.colorText1,
+        indicatorColor: theme.themeMode.colors.black,
         indicatorSize: TabBarIndicatorSize.tab,
         labelColor: theme.themeMode.colors.white,
-        unselectedLabelColor: theme.themeMode.colors.colorText3,
+        unselectedLabelColor: theme.themeMode.colors.black,
         unselectedLabelStyle: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,

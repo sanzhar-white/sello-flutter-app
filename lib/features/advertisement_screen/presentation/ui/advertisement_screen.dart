@@ -22,7 +22,7 @@ class AdvertisementScreen extends StatelessWidget {
             Text(
               S.of(context).submitAd,
               style: TextStyle(
-                color: theme.colors.colorText1,
+                color: theme.colors.black,
                 fontWeight: FontWeight.w700,
                 fontSize: 22,
               ),
@@ -103,21 +103,21 @@ class _AdvertisementCategoryCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(12)),
-          color: theme.colors.colorText3.withOpacity(0.13),
+          color: theme.colors.backgroundWidget2,
         ),
         child: Row(
           children: [
             CircleAvatar(
               child: Image.asset(iconUrl),
               radius: 30,
-              backgroundColor: theme.colors.greyLight,
+              backgroundColor: theme.colors.backgroundWidget2,
             ),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
                 title,
                 style: TextStyle(
-                  color: theme.colors.colorText1,
+                  color: theme.colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                 ),

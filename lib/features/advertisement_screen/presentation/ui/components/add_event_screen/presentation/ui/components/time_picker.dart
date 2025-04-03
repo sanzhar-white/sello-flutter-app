@@ -38,7 +38,7 @@ class ShowBottomSheetTimePicker extends StatelessWidget {
               textTheme: CupertinoTextThemeData(
                 dateTimePickerTextStyle: TextStyle(
                   fontSize: 20,
-                  color: theme.colors.colorText1,
+                  color: theme.colors.black,
                   fontWeight: FontWeight.w800,
                 ),
               ),

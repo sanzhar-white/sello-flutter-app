@@ -18,27 +18,31 @@ class _MainAppBottomBarState extends State<MainAppBottomBar> {
     final size = MediaQuery.sizeOf(context).width;
     return Container(
       width: size,
-      height: 70,
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+      height: 90,
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _NavBarItem(
             iconUrl: 'assets/svg_icons/bottom_nav_bar/home_icon.svg',
             index: 0,
+            title: 'главная',
           ),
           _NavBarItem(
             iconUrl: 'assets/svg_icons/bottom_nav_bar/favorit_icon.svg',
             index: 1,
+            title: 'избранное',
           ),
           _NavBarItem(
             iconUrl: 'assets/svg_icons/bottom_nav_bar/add_icon.svg',
             index: 2,
+            title: 'добавить',
           ),
           _NavBarItem(
             iconUrl: 'assets/svg_icons/bottom_nav_bar/person_icon.svg',
             index: 3,
+            title: 'профиль',
           ),
         ],
       ),
@@ -47,10 +51,15 @@ class _MainAppBottomBarState extends State<MainAppBottomBar> {
 }
 
 class _NavBarItem extends StatelessWidget {
-  const _NavBarItem({required this.index, required this.iconUrl});
+  const _NavBarItem({
+    required this.index,
+    required this.iconUrl,
+    required this.title,
+  });
 
   final String iconUrl;
   final int index;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -71,20 +80,18 @@ class _NavBarItem extends StatelessWidget {
                 SvgPicture.asset(
                   iconUrl,
                   width: 22,
-                  color: isActive ? theme.colors.black : AppColors.colorIcon,
+                  color: isActive ? AppColors.green : theme.colors.black,
                 ),
                 const SizedBox(height: 4),
-                // Text(
-                //   title,
-                //   style: TextStyle(
-                //     fontSize: 11,
-                //     color: isActive
-                //         ? theme.colors.primary
-                //         : theme.colors.colorText3,
-                //   ),
-                //   overflow: TextOverflow.ellipsis,
-                //   textAlign: TextAlign.center,
-                // )
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: isActive ? AppColors.green : theme.colors.black,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
           );

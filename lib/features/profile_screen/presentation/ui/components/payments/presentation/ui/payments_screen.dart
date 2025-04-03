@@ -30,7 +30,7 @@ class PaymentsCard extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
       decoration: BoxDecoration(
-        color: theme.colors.colorText3.withOpacity(0.1),
+        color: theme.colors.black.withOpacity(0.1),
         borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),
       child: Row(
@@ -42,7 +42,7 @@ class PaymentsCard extends StatelessWidget {
               Text(
                 '12.06.2024 / 14:00',
                 style: TextStyle(
-                  color: theme.colors.primary,
+                  color: theme.colors.green,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
@@ -50,7 +50,7 @@ class PaymentsCard extends StatelessWidget {
               Text(
                 'Omnivision.kz',
                 style: TextStyle(
-                  color: theme.colors.colorText3,
+                  color: theme.colors.black,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
@@ -62,7 +62,7 @@ class PaymentsCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w800,
-              color: theme.colors.colorText2,
+              color: theme.colors.black,
             ),
           ),
         ],

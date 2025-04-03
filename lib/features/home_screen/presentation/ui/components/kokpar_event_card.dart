@@ -70,7 +70,7 @@ class KokparEventCard extends StatelessWidget {
             height: 250,
             margin: const EdgeInsets.symmetric(vertical: 4),
             decoration: BoxDecoration(
-              color: theme.colors.backgroundBottomSheet,
+              color: theme.colors.white,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(

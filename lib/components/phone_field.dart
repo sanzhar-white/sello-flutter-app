@@ -32,7 +32,7 @@ class PhoneFieldWidget extends StatelessWidget {
           borderRadius: BorderRadius.all(const Radius.circular(14.0)),
         ),
         filled: true,
-        fillColor: theme.colors.colorText3.withOpacity(0.1),
+        fillColor: theme.colors.black.withOpacity(0.1),
       ),
       invalidNumberMessage: 'Не верно указан номер телефона',
       initialCountryCode: 'KZ',

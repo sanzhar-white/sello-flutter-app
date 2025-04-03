@@ -62,7 +62,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                   Text(
                     'Номер',
                     style: TextStyle(
-                      color: theme.colors.colorText2,
+                      color: theme.colors.black,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -164,7 +164,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
         ),
         if (isLoading)
           ColoredBox(
-            color: theme.colors.backgroundColorContainer.withOpacity(0.5),
+            color: theme.colors.backgroundWidget.withOpacity(0.5),
             child: const Center(child: CircularProgressIndicator.adaptive()),
           ),
       ],
