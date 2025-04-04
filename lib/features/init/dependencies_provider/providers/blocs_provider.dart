@@ -30,7 +30,9 @@ class BlocsProvider extends StatelessWidget {
               )..add(Init()),
         ),
         BlocProvider<HomeScreenBloc>(
-          create: (context) => HomeScreenBloc(context.read<HomeScreenRepo>()),
+          create:
+              (context) =>
+                  HomeScreenBloc(repository: context.read<HomeScreenRepo>()),
         ),
         BlocProvider<FavoritesScreenBloc>(
           create:

@@ -13,6 +13,8 @@ import 'package:selo/features/home_screen/presentation/ui/components/event_card.
 import 'package:selo/features/home_screen/presentation/ui/components/notification_screen.dart';
 import 'package:selo/features/home_screen/presentation/ui/components/mini_card.dart';
 import 'package:selo/features/home_screen/presentation/ui/components/banners_widget.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/search/search_bar_widget.dart';
+import 'package:selo/features/home_screen/presentation/ui/search/search_results_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,6 +25,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController searchController = TextEditingController();
+  Map<String, dynamic> activeFilters = {};
+  String searchQuery = '';
 
   @override
   void initState() {
@@ -92,6 +96,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _onSearchChanged(String query) {
+    setState(() {
+      searchQuery = query;
+    });
+    _applySearchAndFilters();
+  }
+
+  void _applySearchAndFilters() {
+    final authProvider = context.read<MyAuthProvider>();
+    context.read<HomeScreenBloc>().add(
+      GetAllKokparEvents(
+        phoneNumber: authProvider.userData?.phoneNumber ?? '+77757777779',
+        searchQuery: searchQuery,
+        filters: activeFilters,
+      ),
+    );
+  }
+
   @override
   void dispose() {
     searchController.dispose();
@@ -112,33 +134,117 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             title: Column(
               children: [
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap:
-                          () => navigateTo(
-                            context: context,
-                            rootNavigator: true,
-                            screen: const CalendarScreenFeature(),
+                BlocBuilder<HomeScreenBloc, HomeScreenState>(
+                  builder: (context, state) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              if (searchController.text.isNotEmpty ||
+                                  activeFilters.isNotEmpty) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => SearchResultsScreen(
+                                          searchQuery: searchController.text,
+                                          results:
+                                              state is HomeScreenData
+                                                  ? state.events
+                                                  : [],
+                                          onApplyFilters: (filters) {
+                                            setState(() {
+                                              activeFilters = filters;
+                                            });
+                                            _applySearchAndFilters();
+                                          },
+                                          activeFilters: activeFilters,
+                                        ),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: theme.colors.backgroundWidget,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                    ),
+                                    child: Icon(
+                                      Icons.search,
+                                      color: theme.colors.gray,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: TextField(
+                                      controller: searchController,
+                                      onChanged: _onSearchChanged,
+                                      decoration: InputDecoration(
+                                        hintText: 'Поиск в Алматы',
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.symmetric(
+                                          vertical: 8,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                      child: const Icon(
-                        Icons.calendar_month_outlined,
-                        size: 32,
-                      ),
-                    ),
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        navigateTo(
-                          context: context,
-                          rootNavigator: true,
-                          screen: NotificationScreen(),
-                        );
-                      },
-                      child: Icon(Icons.notifications_outlined, size: 32),
-                    ),
-                    SizedBox(width: 20),
-                  ],
+                        ),
+                        SizedBox(width: 12),
+                        IconButton(
+                          icon: Icon(
+                            Icons.tune,
+                            color:
+                                activeFilters.isNotEmpty
+                                    ? theme.colors.green
+                                    : theme.colors.black,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => SearchResultsScreen(
+                                      searchQuery: searchController.text,
+                                      results:
+                                          state is HomeScreenData
+                                              ? state.events
+                                              : [],
+                                      onApplyFilters: (filters) {
+                                        setState(() {
+                                          activeFilters = filters;
+                                        });
+                                        _applySearchAndFilters();
+                                      },
+                                      activeFilters: activeFilters,
+                                    ),
+                              ),
+                            );
+                          },
+                        ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     navigateTo(
+                        //       context: context,
+                        //       rootNavigator: true,
+                        //       screen: NotificationScreen(),
+                        //     );
+                        //   },
+                        //   child: Icon(Icons.notifications_outlined, size: 32),
+                        // ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
