@@ -42,6 +42,25 @@ class MiniCard extends StatelessWidget {
     );
   }
 
+  String _formatPrice(num price) {
+    return '${price.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]} ')} ₸';
+  }
+
+  String _categoryByType(ProductType productType) {
+    switch (productType) {
+      case ProductType.machine:
+        return "Спецтехника";
+      case ProductType.raw_material:
+        return "Сырьё";
+      case ProductType.job:
+        return "Работа";
+      case ProductType.fertiliser:
+        return "Удобрение";
+      default:
+        return "Неизвестная категория";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = AppThemeProvider.of(context).themeMode;
@@ -65,17 +84,9 @@ class MiniCard extends StatelessWidget {
                 screen: ProductDetailScreen(product: product),
               ),
           child: Container(
-            width: width ?? 170,
-            height: 250,
-            margin: const EdgeInsets.symmetric(vertical: 4),
-            decoration: BoxDecoration(
-              color: theme.colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
+            decoration: BoxDecoration(color: theme.colors.white),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Image Section
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
                   child: SizedBox(
@@ -102,52 +113,89 @@ class MiniCard extends StatelessWidget {
                             ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: theme.colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        _categoryByType(product.productType),
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: theme.colors.gray,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        _formatPrice(product.price),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: theme.colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "${city}\n${region?.name ?? ''}",
+                        style: TextStyle(
+                          color: theme.colors.black,
+                          fontSize: 12,
+                        ),
+                      ),
 
-                // Details Section
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: theme.colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "${city}\n${region?.name ?? ''}",
-                          style: TextStyle(
-                            color: theme.colors.black,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const Spacer(),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed:
-                                () => _launchPhoneDialer(
-                                  product.authorPhoneNumber,
-                                ),
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(double.infinity, 30),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: const Text("Позвонить"),
-                          ),
-                        ),
-                      ],
-                    ),
+                      SizedBox(width: double.infinity),
+                    ],
                   ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed:
+                            () => _launchPhoneDialer(product.authorPhoneNumber),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: theme.colors.green,
+                          foregroundColor: theme.colors.white,
+                          minimumSize: const Size(double.infinity, 40),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Text("Позвонить"),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: theme.colors.gray.withOpacity(0.2),
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.copy_outlined,
+                          color: theme.colors.gray,
+                        ),
+                        onPressed: () {
+                          // TODO: Implement copy functionality
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -155,8 +203,8 @@ class MiniCard extends StatelessWidget {
         ),
         if (!isPlaceholder)
           Positioned(
-            right: 0,
-            top: 0,
+            right: 12,
+            top: 12,
             child: FavoriteAdvertsButtonFeature(product: product),
           ),
       ],

@@ -44,7 +44,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       case ProductType.fertiliser:
       case ProductType.raw_material:
         return _MaterialDetailContent(product: widget.product);
-      case ProductType.work:
+      case ProductType.job:
         return _JobDetailContent(product: widget.product);
       default:
         return const SizedBox.shrink();

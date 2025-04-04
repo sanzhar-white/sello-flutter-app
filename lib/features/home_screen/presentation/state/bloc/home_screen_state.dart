@@ -1,25 +1,38 @@
 part of 'home_screen_bloc.dart';
 
-@immutable
-sealed class HomeScreenState {}
+abstract class HomeScreenState extends Equatable {
+  const HomeScreenState();
 
-final class HomeScreenInitial extends HomeScreenState {}
+  @override
+  List<Object?> get props => [];
+}
 
-final class HomeScreenLoading extends HomeScreenState {
+class HomeScreenInitial extends HomeScreenState {}
+
+class HomeScreenLoading extends HomeScreenState {
   final bool isLoading;
 
-  HomeScreenLoading({this.isLoading = false});
+  const HomeScreenLoading({required this.isLoading});
+
+  @override
+  List<Object?> get props => [isLoading];
 }
 
-final class HomeScreenData extends HomeScreenState {
+class HomeScreenData extends HomeScreenState {
   final List<ProductDto> events;
+  final List<String> favoriteEvents;
 
-  HomeScreenData({
-    required this.events,
-    required List<ProductDto> favoriteEvents,
-  });
+  const HomeScreenData({required this.events, this.favoriteEvents = const []});
+
+  @override
+  List<Object?> get props => [events, favoriteEvents];
 }
 
-final class HomeScreenSuccess extends HomeScreenState {}
+class HomeScreenError extends HomeScreenState {
+  final String message;
 
-final class HomeScreenError extends HomeScreenState {}
+  const HomeScreenError({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}

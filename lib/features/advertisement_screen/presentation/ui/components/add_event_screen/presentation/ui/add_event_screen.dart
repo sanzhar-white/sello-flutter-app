@@ -206,7 +206,7 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
           type_amount: isKilogrammAmount,
           amount: int.tryParse(amountController.text.trim()) ?? 0,
         );
-      case ProductType.work:
+      case ProductType.job:
         return baseDto.copyWith(
           subTitle: nameCompany.text.trim(),
           price: double.tryParse(priceController.text.trim()) ?? 0.0,
@@ -340,7 +340,7 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
           onPreviewPressed: _onPreviewPressed,
           onPublishPressed: _onPublishPressed,
         );
-      case ProductType.work:
+      case ProductType.job:
         return JobForm(
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
@@ -460,7 +460,7 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
           contactFace.text,
           phoneNumber.text,
         ];
-      case ProductType.work:
+      case ProductType.job:
         return [
           titleController.text,
           descriptionController.text,

@@ -74,7 +74,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                       context: context,
                       rootNavigator: true,
                       screen: AddEventScreenFeature(
-                        productType: ProductType.work,
+                        productType: ProductType.job,
                       ),
                     ),
               ),

@@ -13,6 +13,7 @@ import 'package:selo/features/home_screen/presentation/ui/components/event_card.
 import 'package:selo/features/home_screen/presentation/ui/components/notification_screen.dart';
 import 'package:selo/features/home_screen/presentation/ui/components/mini_card.dart';
 import 'package:selo/features/home_screen/presentation/ui/components/banners_widget.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/search/search_bar_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,6 +24,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController searchController = TextEditingController();
+  Map<String, dynamic> activeFilters = {};
+  String searchQuery = '';
 
   @override
   void initState() {
@@ -92,6 +95,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _onSearchChanged(String query) {
+    setState(() {
+      searchQuery = query;
+    });
+    _applySearchAndFilters();
+  }
+
+  void _applySearchAndFilters() {
+    final authProvider = context.read<MyAuthProvider>();
+    context.read<HomeScreenBloc>().add(
+      GetAllKokparEvents(
+        phoneNumber: authProvider.userData?.phoneNumber ?? '+77757777779',
+        searchQuery: searchQuery,
+        filters: activeFilters,
+      ),
+    );
+  }
+
   @override
   void dispose() {
     searchController.dispose();
@@ -108,6 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Stack(
       children: [
         Scaffold(
+          backgroundColor: theme.colors.white,
           appBar: AppBar(
             title: Column(
               children: [
@@ -140,6 +162,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ],
+            ),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(56),
+              child: BlocBuilder<HomeScreenBloc, HomeScreenState>(
+                builder: (context, state) {
+                  return SearchBarWidget(
+                    searchController: searchController,
+                    onSearchChanged: _onSearchChanged,
+                    activeFilters: activeFilters,
+                    results: state is HomeScreenData ? state.events : [],
+                  );
+                },
+              ),
             ),
           ),
           body: RefreshIndicator(
@@ -269,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 10,
                                       mainAxisSpacing: 10,
-                                      childAspectRatio: 0.8,
+                                      childAspectRatio: 0.6,
                                     ),
                                 itemCount: 6,
                                 itemBuilder:
@@ -283,9 +318,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
-                                      crossAxisSpacing: 10,
+                                      crossAxisSpacing: 20,
                                       mainAxisSpacing: 10,
-                                      childAspectRatio: 0.8,
+                                      childAspectRatio: 0.59,
                                     ),
                                 itemCount: state.events.length,
                                 itemBuilder:

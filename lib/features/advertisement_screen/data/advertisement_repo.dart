@@ -23,7 +23,7 @@ class AdvertisementRepo {
         case ProductType.raw_material:
           list.rawMaterialList.add(event);
           break;
-        case ProductType.work:
+        case ProductType.job:
           list.workList.add(event);
           break;
         case ProductType.fertiliser:
@@ -46,7 +46,7 @@ class AdvertisementRepo {
         case ProductType.raw_material:
           list.rawMaterialList.add(event);
           break;
-        case ProductType.work:
+        case ProductType.job:
           list.workList.add(event);
           break;
         case ProductType.fertiliser:
