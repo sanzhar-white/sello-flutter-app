@@ -1,21 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:selo/core/constants.dart';
-import 'package:selo/features/advertisement_screen/data/models/kokpar_events.dart';
-import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 class CalendarScreenRepo {
   final fire = FirebaseFirestore.instance;
 
   Future<List<CalendarScreenResponse>> getKokparEventsByDate() async {
     List<CalendarScreenResponse> list = [];
-    final querySnapshot =
-        await fire.collection(FireCollections.kokparEvents).get();
+    final querySnapshot = await fire.collection(FireCollections.products).get();
 
     for (var element in querySnapshot.docs) {
       list.add(
         CalendarScreenResponse(
           date: element.id,
-          events: KokparEventsList.fromMap(element.data()),
+          events: ProductList(products: [ProductDto.fromMap(element.data())]),
         ),
       );
     }
@@ -23,21 +21,19 @@ class CalendarScreenRepo {
     return list;
   }
 
-  Future<List<KokparEventDto>> getFavoritesEvents(
-    String userPhoneNumber,
-  ) async {
-    List<KokparEventDto> list = [];
+  Future<List<ProductDto>> getFavoritesEvents(String userPhoneNumber) async {
+    List<ProductDto> list = [];
     final querySnapshot =
         await fire
-            .collection(FireCollections.userEventFavorites)
+            .collection(FireCollections.userAdvertFavorites)
             .doc(userPhoneNumber)
             .get();
 
     final data = querySnapshot.data();
 
     if (data != null) {
-      final res = KokparEventsList.fromMap(data);
-      list = res.kokparEventsList;
+      final products = data['list'] as List<dynamic>;
+      list = products.map((e) => ProductDto.fromMap(e)).toList();
     }
 
     return list;
@@ -46,7 +42,13 @@ class CalendarScreenRepo {
 
 class CalendarScreenResponse {
   final String date;
-  final KokparEventsList events;
+  final ProductList events;
 
   CalendarScreenResponse({required this.date, required this.events});
+}
+
+class ProductList {
+  final List<ProductDto> products;
+
+  ProductList({required this.products});
 }

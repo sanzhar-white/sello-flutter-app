@@ -17,9 +17,6 @@ class ProductDto {
   final bool canAgree;
   final ProductType productType;
 
-  final String? subTitle;
-  final String? categoryId;
-  final String? subCategoryId;
   final String? description;
   final String? contact;
 
@@ -41,13 +38,10 @@ class ProductDto {
     required this.images,
     required this.authorPhoneNumber,
     this.contact,
-    this.subTitle,
     required this.city,
     required this.createdDate,
     required this.region,
     required this.isFavorite,
-    this.categoryId,
-    this.subCategoryId,
     required this.canAgree,
     this.state,
     this.year,
@@ -94,13 +88,10 @@ class ProductDto {
       images: images ?? this.images,
       authorPhoneNumber: authorPhoneNumber ?? this.authorPhoneNumber,
       contact: contact ?? this.contact,
-      subTitle: subTitle ?? this.subTitle,
       city: city ?? this.city,
       createdDate: createdDate ?? this.createdDate,
       region: region ?? this.region,
       isFavorite: isFavorite ?? this.isFavorite,
-      categoryId: categoryId ?? this.categoryId,
-      subCategoryId: subCategoryId ?? this.subCategoryId,
       canAgree: canAgree ?? this.canAgree,
       state: state ?? this.state,
       year: year ?? this.year,
@@ -123,13 +114,10 @@ class ProductDto {
       'images': images,
       'authorPhoneNumber': authorPhoneNumber,
       'contact': contact,
-      'subTitle': subTitle,
       'city': city,
       'createdDate': createdDate,
       'region': region,
       'isFavorite': isFavorite,
-      'categoryId': categoryId,
-      'subCategoryId': subCategoryId,
       'canAgree': canAgree,
       'state': state,
       'year': year,
@@ -152,13 +140,10 @@ class ProductDto {
       images: List<String>.from(map['images'] as List<dynamic>),
       authorPhoneNumber: map['authorPhoneNumber'] as String,
       contact: map['contact'] as String?,
-      subTitle: map['subTitle'] as String?,
       city: map['city'] as String,
       createdDate: map['createdDate'] as String,
       region: map['region'] as String,
       isFavorite: map['isFavorite'] as bool,
-      categoryId: map['categoryId'] as String?,
-      subCategoryId: map['subCategoryId'] as String?,
       canAgree: map['canAgree'] as bool,
       state: map['state'] as String?,
       year: map['year'] as int?,
@@ -178,7 +163,7 @@ class ProductDto {
 
   @override
   String toString() {
-    return 'ProductDto(id: $id, title: $title, description: $description, price: $price, images: $images, authorPhoneNumber: $authorPhoneNumber, subTitle: $subTitle, city: $city, createdDate: $createdDate, region: $region, isFavorite: $isFavorite, categoryId: $categoryId, subCategoryId: $subCategoryId, canAgree: $canAgree, state: $state, year: $year, isNewState: $isNewState, isMachine: $isMachine, type_price: $type_price, type_amount: $type_amount, amount: $amount)';
+    return 'ProductDto(id: $id, title: $title, description: $description, price: $price, images: $images, authorPhoneNumber: $authorPhoneNumber, city: $city, createdDate: $createdDate, region: $region, isFavorite: $isFavorite, canAgree: $canAgree, state: $state, year: $year, isNewState: $isNewState, isMachine: $isMachine, type_price: $type_price, type_amount: $type_amount, amount: $amount)';
   }
 
   @override
@@ -192,13 +177,10 @@ class ProductDto {
         other.price == price &&
         listEquals(other.images, images) &&
         other.authorPhoneNumber == authorPhoneNumber &&
-        other.subTitle == subTitle &&
         other.city == city &&
         other.createdDate == createdDate &&
         other.region == region &&
         other.isFavorite == isFavorite &&
-        other.categoryId == categoryId &&
-        other.subCategoryId == subCategoryId &&
         other.canAgree == canAgree &&
         other.state == state &&
         other.year == year &&
@@ -218,13 +200,10 @@ class ProductDto {
         price.hashCode ^
         images.hashCode ^
         authorPhoneNumber.hashCode ^
-        subTitle.hashCode ^
         city.hashCode ^
         createdDate.hashCode ^
         region.hashCode ^
         isFavorite.hashCode ^
-        categoryId.hashCode ^
-        subCategoryId.hashCode ^
         canAgree.hashCode ^
         state.hashCode ^
         year.hashCode ^

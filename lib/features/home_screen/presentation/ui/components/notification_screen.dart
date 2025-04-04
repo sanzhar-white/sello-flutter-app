@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selo/features/home_screen/presentation/state/bloc/home_screen_bloc.dart';
-import 'package:selo/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/mini_card.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -20,7 +20,7 @@ class NotificationScreen extends StatelessWidget {
             return ListView.builder(
               padding: EdgeInsets.symmetric(horizontal: 20),
               itemCount: 5,
-              itemBuilder: (_, index) => KokparEventCard.placeholder(),
+              itemBuilder: (_, index) => MiniCard.placeholder(),
             );
           }
           if (state is HomeScreenData) {
@@ -28,10 +28,13 @@ class NotificationScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20),
               itemCount: state.events.length,
               itemBuilder: (_, index) {
-                DateTime date = DateTime.parse(state.events[index].date);
+                final product = state.events[index];
+                final createdDate = DateTime.parse(product.createdDate);
+                final now = DateTime.now();
 
-                if (date.difference(DateTime.now()).inDays >= 1) {
-                  return KokparEventCard(kokparEventDto: state.events[index]);
+                // Показываем события, созданные более 1 дня назад
+                if (now.difference(createdDate).inDays >= 1) {
+                  return MiniCard(product: product);
                 }
                 return SizedBox();
               },

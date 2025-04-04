@@ -5,8 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:selo/components/custom_tab_bar.dart';
 import 'package:selo/core/theme/theme_provider.dart';
 import 'package:selo/features/favorite_adverts_button/data/favorite_adverts_button_repo.dart';
-import 'package:selo/features/favorite_batton/data/favorite_button_repo.dart';
-import 'package:selo/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/mini_card.dart';
 import 'package:selo/components/product_card.dart';
 import 'package:selo/generated/l10n.dart';
 
@@ -18,21 +17,15 @@ class FavoritesScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(title: Text(S.of(context).favorites)),
         body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: CustomTabBar(
-                tabsString: [S.of(context).events, S.of(context).ads],
-              ),
+            SizedBox(height: 100),
+            Text(
+              "Ваше Избранное",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             SizedBox(height: 20),
-            Expanded(
-              child: TabBarView(
-                children: [FavoritesEvents(), FavoritesAdvertsEvents()],
-              ),
-            ),
+            Expanded(child: FavoritesAdvertsEvents()),
           ],
         ),
       ),
@@ -47,7 +40,7 @@ class FavoritesEvents extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = AppThemeProvider.of(context).themeMode;
 
-    final repo = context.watch<FavoriteButtonRepo>();
+    final repo = context.watch<FavoriteAdvertsButtonRepo>();
     final allFavorites = repo.favorites;
 
     return allFavorites.isEmpty
@@ -68,7 +61,7 @@ class FavoritesEvents extends StatelessWidget {
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: KokparEventCard(kokparEventDto: allFavorites[index]),
+              child: MiniCard(product: allFavorites[index]),
             );
           },
         );
@@ -98,16 +91,15 @@ class FavoritesAdvertsEvents extends StatelessWidget {
         )
         : GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1, // Два элемента в строке
+            crossAxisCount: 1,
             mainAxisSpacing: 16,
             crossAxisSpacing: 16,
-            childAspectRatio: 0.5, // Пропорция сторон (ширина к высоте)
+            childAspectRatio: 0.5,
           ),
           padding: EdgeInsets.all(16),
           itemCount: allFavorites.length,
           itemBuilder: (context, index) {
             final product = allFavorites[index];
-
             return ProductCard(product: product);
           },
         );

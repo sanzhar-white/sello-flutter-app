@@ -481,7 +481,7 @@ class _JobDetailContent extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          _InfoRow(title: 'Компания:', value: product.subTitle ?? ''),
+          _InfoRow(title: 'Компания:', value: product.contact ?? ''),
           const SizedBox(height: 24),
           Text(
             'О Продавце',

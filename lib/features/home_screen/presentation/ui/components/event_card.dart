@@ -24,7 +24,7 @@ class EventCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.only(left: 10, top: 8),
         decoration: BoxDecoration(
-          color: theme.colors.black.withOpacity(0.1),
+          color: theme.colors.backgroundWidget,
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         child: Stack(

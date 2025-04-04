@@ -46,6 +46,7 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
   late final TextEditingController amountController;
   late final TextEditingController maxPriceController;
   late final TextEditingController nameCompany;
+  late final TextEditingController yearController;
 
   // Идентификатор объявления
   final int id = generateId();
@@ -54,7 +55,6 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   // Состояние формы
-  int selectedYear = 2000;
   List<XFile> images = [];
   Category? region;
   Category? city;
@@ -127,6 +127,7 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
     stateController = TextEditingController();
     contactFace = TextEditingController();
     nameCompany = TextEditingController();
+    yearController = TextEditingController();
   }
 
   @override
@@ -145,6 +146,7 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
     amountController.dispose();
     maxPriceController.dispose();
     nameCompany.dispose();
+    yearController.dispose();
   }
 
   bool _validateForm(List<String?> checkList) {
@@ -185,7 +187,7 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
     switch (widget.productType) {
       case ProductType.machine:
         return baseDto.copyWith(
-          year: selectedYear,
+          year: int.tryParse(yearController.text.trim()) ?? 0,
           isNewState: isNewState,
           isMachine: isMachine,
           type_price: isKilogrammPrice,
@@ -247,12 +249,12 @@ class _CreateAdvertisementScreenState extends State<CreateAdvertisementScreen> {
           priceController: priceController,
           contactFace: contactFace,
           phoneNumber: phoneNumber,
+          yearController: yearController,
           images: images,
           region: region,
           city: city,
           isMachine: isMachine,
           isNewState: isNewState,
-          selectedYear: selectedYear,
           isKilogrammAmount: isKilogrammAmount,
           onKilogrammAmountChanged:
               (value) => setState(() => isKilogrammAmount = value),

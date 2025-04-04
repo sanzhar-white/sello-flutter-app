@@ -6,6 +6,7 @@ import 'package:selo/components/big_button.dart';
 import 'package:selo/components/show_modal_bottom_sheet_wrap.dart';
 import 'package:selo/components/show_top_snack_bar.dart';
 import 'package:selo/components/text_field_fidget.dart';
+import 'package:selo/core/theme/theme_provider.dart';
 import 'package:selo/core/extensions.dart';
 import 'package:selo/features/advertisement_screen/data/models/categories.dart';
 import 'package:selo/features/advertisement_screen/presentation/state/bloc/advertisement_screen_bloc.dart';
@@ -68,6 +69,7 @@ class JobForm extends StatefulWidget {
 class _JobFormState extends State<JobForm> {
   @override
   Widget build(BuildContext context) {
+    final theme = AppThemeProvider.of(context).themeMode;
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).newAd)),
       body: SingleChildScrollView(
@@ -142,7 +144,7 @@ class _JobFormState extends State<JobForm> {
                               Expanded(
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[300],
+                                    color: theme.colors.backgroundWidget,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Row(
@@ -182,11 +184,11 @@ class _JobFormState extends State<JobForm> {
                                         child: Container(
                                           alignment: Alignment.center,
                                           child: Text(
-                                            'Т',
+                                            '₸',
                                             style: TextStyle(
                                               fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              color: theme.colors.black,
                                             ),
                                           ),
                                         ),
@@ -199,7 +201,7 @@ class _JobFormState extends State<JobForm> {
                               Expanded(
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[300],
+                                    color: theme.colors.backgroundWidget,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Row(
@@ -239,11 +241,11 @@ class _JobFormState extends State<JobForm> {
                                         child: Container(
                                           alignment: Alignment.center,
                                           child: Text(
-                                            'Т',
+                                            '₸',
                                             style: TextStyle(
                                               fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              color: theme.colors.black,
                                             ),
                                           ),
                                         ),
@@ -419,7 +421,7 @@ class _JobFormState extends State<JobForm> {
                             const Positioned.fill(
                               child: Center(
                                 child: CircularProgressIndicator.adaptive(
-                                  backgroundColor: Colors.white,
+                                  backgroundColor: Colors.grey,
                                 ),
                               ),
                             ),

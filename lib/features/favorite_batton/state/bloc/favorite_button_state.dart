@@ -5,7 +5,11 @@ sealed class FavoriteButtonState {}
 
 final class FavoriteButtonInitial extends FavoriteButtonState {}
 
-final class FavoriteButtonData extends FavoriteButtonState {}
+final class FavoriteButtonData extends FavoriteButtonState {
+  final List<ProductDto> events;
+
+  FavoriteButtonData({required this.events});
+}
 
 final class FavoriteButtonSuccess extends FavoriteButtonState {}
 

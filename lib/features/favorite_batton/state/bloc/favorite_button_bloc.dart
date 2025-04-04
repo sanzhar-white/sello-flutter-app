@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:selo/features/favorite_batton/data/favorite_button_repo.dart';
-import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 part 'favorite_button_event.dart';
 part 'favorite_button_state.dart';
@@ -13,8 +13,8 @@ class FavoriteButtonBloc
     on<GetFavoritesEvents>((event, emit) async {
       try {
         emit(FavoriteButtonLoading());
-        await repo.getFavoritesEvents(event.userPhoneNumber);
-        emit(FavoriteButtonData());
+        final events = await repo.getFavoritesEvents(event.userPhoneNumber);
+        emit(FavoriteButtonData(events: events));
       } on Exception catch (e) {
         debugPrint(e.toString());
         emit(FavoriteButtonError());
@@ -27,10 +27,10 @@ class FavoriteButtonBloc
           event: event.event,
           userPhoneNumber: event.userPhoneNumber,
         );
-        await repo.getFavoritesEvents(event.userPhoneNumber);
+        final events = await repo.getFavoritesEvents(event.userPhoneNumber);
         // add(GetFavoritesEvents(userPhoneNumber: event.userPhoneNumber));
         emit(FavoriteButtonSuccess());
-        emit(FavoriteButtonData());
+        emit(FavoriteButtonData(events: events));
       } on Exception catch (e) {
         debugPrint(e.toString());
         emit(FavoriteButtonError());
@@ -44,11 +44,11 @@ class FavoriteButtonBloc
           event: event.event,
           userPhoneNumber: event.userPhoneNumber,
         );
-        await repo.getFavoritesEvents(event.userPhoneNumber);
+        final events = await repo.getFavoritesEvents(event.userPhoneNumber);
 
         print(event.event.id);
         emit(FavoriteButtonSuccess());
-        emit(FavoriteButtonData());
+        emit(FavoriteButtonData(events: events));
       } on Exception catch (e) {
         debugPrint(e.toString());
         emit(FavoriteButtonError());

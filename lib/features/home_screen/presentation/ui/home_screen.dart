@@ -8,13 +8,11 @@ import 'package:selo/features/calendar_screen/presentation/ui/feature.dart';
 import 'package:selo/features/empty_screens/empty_screen.dart';
 import 'package:selo/features/favorite_adverts_button/state/bloc/favorite_adverts_button_bloc.dart';
 import 'package:selo/features/favorite_batton/state/bloc/favorite_button_bloc.dart';
-import 'package:selo/features/filter_screen/presentation/ui/filter_screen.dart';
 import 'package:selo/features/home_screen/presentation/state/bloc/home_screen_bloc.dart';
 import 'package:selo/features/home_screen/presentation/ui/components/event_card.dart';
 import 'package:selo/features/home_screen/presentation/ui/components/notification_screen.dart';
-import 'package:selo/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/mini_card.dart';
 import 'package:selo/features/home_screen/presentation/ui/components/banners_widget.dart';
-import 'package:selo/features/kokpar_screen.dart/presentation/ui/feature.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,6 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    _loadInitialData();
+    super.initState();
+  }
+
+  void _loadInitialData() {
     final authProvider = context.read<MyAuthProvider>();
 
     context.read<FavoriteButtonBloc>().add(
@@ -41,13 +44,52 @@ class _HomeScreenState extends State<HomeScreen> {
         userPhoneNumber: authProvider.userData?.phoneNumber ?? '+77757777779',
       ),
     );
+
     context.read<HomeScreenBloc>().add(
       GetAllKokparEvents(
         phoneNumber: authProvider.userData?.phoneNumber ?? '+77757777779',
       ),
     );
+  }
 
-    super.initState();
+  Future<void> _refreshData() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final authProvider = context.read<MyAuthProvider>();
+
+      await Future.wait<void>([
+        Future(() {
+          context.read<FavoriteButtonBloc>().add(
+            GetFavoritesEvents(
+              userPhoneNumber:
+                  authProvider.userData?.phoneNumber ?? '+77757777779',
+            ),
+          );
+        }),
+        Future(() {
+          context.read<FavoriteAdvertsButtonBloc>().add(
+            GetFavoritesAdvertsEvents(
+              userPhoneNumber:
+                  authProvider.userData?.phoneNumber ?? '+77757777779',
+            ),
+          );
+        }),
+        Future(() {
+          context.read<HomeScreenBloc>().add(
+            GetAllKokparEvents(
+              phoneNumber: authProvider.userData?.phoneNumber ?? '+77757777779',
+            ),
+          );
+        }),
+      ]);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -67,73 +109,34 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Scaffold(
           appBar: AppBar(
-            toolbarHeight: 120,
             title: Column(
               children: [
-                // Row(
-                //   children: [
-                //     GestureDetector(
-                //       onTap:
-                //           () => navigateTo(
-                //             context: context,
-                //             rootNavigator: true,
-                //             screen: const CalendarScreenFeature(),
-                //           ),
-                //       child: const Icon(
-                //         Icons.calendar_month_outlined,
-                //         size: 32,
-                //       ),
-                //     ),
-                //     Spacer(),
-                //     GestureDetector(
-                //       onTap: () {
-                //         navigateTo(
-                //           context: context,
-                //           rootNavigator: true,
-                //           screen: NotificationScreen(),
-                //         );
-                //       },
-                //       child: Icon(Icons.notifications_outlined, size: 32),
-                //     ),
-                //     SizedBox(width: 20),
-                //   ],
-                // ),
                 Row(
                   children: [
-                    Expanded(
-                      child: TextField(
-                        controller: searchController,
-                        decoration: InputDecoration(
-                          hintText: 'Поиск в Алматы',
-                          prefixIcon: Icon(Icons.search),
-                          filled: true,
-                          fillColor: theme.colors.black.withOpacity(0.1),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide.none,
+                    GestureDetector(
+                      onTap:
+                          () => navigateTo(
+                            context: context,
+                            rootNavigator: true,
+                            screen: const CalendarScreenFeature(),
                           ),
-                        ),
+                      child: const Icon(
+                        Icons.calendar_month_outlined,
+                        size: 32,
                       ),
                     ),
-                    SizedBox(width: 12),
+                    Spacer(),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FilterScreen(),
-                          ),
+                        navigateTo(
+                          context: context,
+                          rootNavigator: true,
+                          screen: NotificationScreen(),
                         );
                       },
-                      child: Container(
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: theme.colors.black.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Icon(Icons.tune),
-                      ),
+                      child: Icon(Icons.notifications_outlined, size: 32),
                     ),
+                    SizedBox(width: 20),
                   ],
                 ),
               ],
@@ -141,13 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           body: RefreshIndicator(
             color: theme.colors.green,
-            onRefresh: () async {
-              context.read<HomeScreenBloc>().add(
-                GetAllKokparEvents(
-                  phoneNumber: authProvider.userData!.phoneNumber,
-                ),
-              );
-            },
+            onRefresh: _refreshData,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -192,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     () => navigateTo(
                                       context: context,
                                       rootNavigator: true,
-                                      screen: const KokparScreenFeature(),
+                                      screen: const Scaffold(),
                                     ),
                               ),
                               EventCard(
@@ -218,37 +215,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisSpacing: width * 0.4,
                             physics: const NeverScrollableScrollPhysics(),
                             children: [
-                              // Row(
-                              //   mainAxisAlignment:
-                              //       MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     ProductTypeCard(
-                              //       text: 'Жылқы',
-                              //       imageUrl: 'assets/svg_images/jylky.svg',
-                              //       onTap:
-                              //           () => navigateTo(
-                              //             context: context,
-                              //             rootNavigator: true,
-                              //             screen: const HorseScreenFeature(
-                              //               productType: ProductType.horse,
-                              //             ),
-                              //           ),
-                              //     ),
-                              //     ProductTypeCard(
-                              //       text: 'Экипировка',
-                              //       imageUrl:
-                              //           'assets/svg_images/ekipirovka.svg',
-                              //       onTap:
-                              //           () => navigateTo(
-                              //             context: context,
-                              //             rootNavigator: true,
-                              //             screen: const HorseScreenFeature(
-                              //               productType: ProductType.product,
-                              //             ),
-                              //           ),
-                              //     ),
-                              //   ],
-                              // ),
                               EventCard(
                                 text: 'Сырьё',
                                 imageUrl: 'assets/categories/raw.png',
@@ -303,13 +269,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 10,
                                       mainAxisSpacing: 10,
-                                      childAspectRatio:
-                                          0.8, // Adjust this for desired card size
+                                      childAspectRatio: 0.8,
                                     ),
-                                itemCount: 6, // Number of placeholder items
+                                itemCount: 6,
                                 itemBuilder:
-                                    (context, index) =>
-                                        KokparEventCard.placeholder(),
+                                    (context, index) => MiniCard.placeholder(),
                               );
                             }
                             if (state is HomeScreenData) {
@@ -321,14 +285,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 10,
                                       mainAxisSpacing: 10,
-                                      childAspectRatio:
-                                          0.8, // Adjust this for desired card size
+                                      childAspectRatio: 0.8,
                                     ),
                                 itemCount: state.events.length,
                                 itemBuilder:
-                                    (context, index) => KokparEventCard(
-                                      kokparEventDto: state.events[index],
-                                    ),
+                                    (context, index) =>
+                                        MiniCard(product: state.events[index]),
                               );
                             }
 

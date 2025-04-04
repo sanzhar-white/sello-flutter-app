@@ -150,7 +150,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           borderRadius: BorderRadius.all(Radius.circular(14)),
           borderSide: BorderSide.none,
         ),
-        fillColor: theme.colors.black.withOpacity(0.15),
+        fillColor: theme.colors.backgroundWidget,
         filled: true,
       ),
     );

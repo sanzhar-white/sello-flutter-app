@@ -6,7 +6,7 @@ sealed class FavoritesScreenState {}
 final class FavoritesScreenInitial extends FavoritesScreenState {}
 
 final class FavoritesScreenData extends FavoritesScreenState {
-  final List<KokparEventDto> events;
+  final List<ProductDto> events;
 
   FavoritesScreenData({required this.events});
 }

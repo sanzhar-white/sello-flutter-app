@@ -10,7 +10,7 @@ final class CalendarScreenData extends CalendarScreenState {
 
   CalendarScreenData({
     required this.data,
-    required List<KokparEventDto> favoriteEvents,
+    required List<ProductDto> favoriteEvents,
   });
 }
 

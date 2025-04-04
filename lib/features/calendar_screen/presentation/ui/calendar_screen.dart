@@ -11,8 +11,8 @@ import 'package:selo/core/theme/theme_provider.dart';
 import 'package:selo/features/calendar_screen/data/calendar_screen_repo.dart';
 import 'package:selo/features/calendar_screen/presentation/state/bloc/calendar_screen_bloc.dart';
 import 'package:selo/features/calendar_screen/presentation/ui/calendar_screen_vm.dart';
-import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
-import 'package:selo/features/home_screen/presentation/ui/components/kokpar_event_card.dart';
+import 'package:selo/features/home_screen/presentation/ui/components/mini_card.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -25,10 +25,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
   bool isLoading = false;
 
   eventLoader(DateTime date, List<CalendarScreenResponse> data) {
-    List<KokparEventDto> events = [];
+    List<ProductDto> events = [];
     for (var item in data) {
       if (item.date == date.toString().split('Z')[0]) {
-        events.addAll(item.events.kokparEventsList);
+        events.addAll(item.events.products);
       }
     }
 
@@ -111,15 +111,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                     padding: const EdgeInsets.all(20),
                                     child: Column(
                                       children: [
-                                        ...state
-                                            .data[index]
-                                            .events
-                                            .kokparEventsList
-                                            .map(
-                                              (e) => KokparEventCard(
-                                                kokparEventDto: e,
-                                              ),
-                                            ),
+                                        ...state.data[index].events.products
+                                            .map((e) => MiniCard(product: e)),
                                       ],
                                     ),
                                   );

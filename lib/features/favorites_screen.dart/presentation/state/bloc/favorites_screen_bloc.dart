@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 import 'package:selo/features/favorites_screen.dart/data/favorites_repo.dart';
 
 part 'favorites_screen_event.dart';

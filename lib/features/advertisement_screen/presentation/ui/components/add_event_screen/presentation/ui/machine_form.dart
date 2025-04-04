@@ -9,6 +9,7 @@ import 'package:selo/components/text_field_fidget.dart';
 import 'package:selo/components/product_detail_screen.dart';
 import 'package:selo/core/extensions.dart';
 import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/core/enums.dart';
 import 'package:selo/features/advertisement_screen/data/models/categories.dart';
 import 'package:selo/features/advertisement_screen/presentation/state/bloc/advertisement_screen_bloc.dart';
 import 'package:selo/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/components/image_placeholder.dart';
@@ -29,6 +30,7 @@ class MachineForm extends StatefulWidget {
   TextEditingController priceController;
   TextEditingController contactFace;
   TextEditingController phoneNumber;
+  TextEditingController yearController;
   List<XFile> images;
   Category? region;
   Category? city;
@@ -39,8 +41,9 @@ class MachineForm extends StatefulWidget {
   Function(XFile) onImageAdded;
   VoidCallback onPreviewPressed;
   VoidCallback onPublishPressed;
+  ProductDto? productDto;
+  ProductType? productType;
 
-  int selectedYear;
   bool isNewState;
   bool isMachine;
 
@@ -57,12 +60,12 @@ class MachineForm extends StatefulWidget {
     required this.priceController,
     required this.contactFace,
     required this.phoneNumber,
+    required this.yearController,
     required this.images,
     required this.region,
     required this.city,
     required this.isMachine,
     required this.isNewState,
-    required this.selectedYear,
     required this.isKilogrammAmount,
     required this.onKilogrammAmountChanged,
     required this.onRegionChanged,
@@ -70,6 +73,8 @@ class MachineForm extends StatefulWidget {
     required this.onImageAdded,
     required this.onPreviewPressed,
     required this.onPublishPressed,
+    this.productDto,
+    this.productType,
   });
 
   @override
@@ -77,35 +82,6 @@ class MachineForm extends StatefulWidget {
 }
 
 class _MachineFormState extends State<MachineForm> {
-  Future<void> _selectYear(BuildContext context) async {
-    final DateTime currentDate = DateTime.now();
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate:
-          widget.selectedYear != 0
-              ? DateTime(widget.selectedYear)
-              : currentDate,
-      firstDate: DateTime(1900),
-      lastDate: currentDate,
-      helpText: 'Выберите год выпуска',
-      initialEntryMode: DatePickerEntryMode.input,
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(
-            context,
-          ).copyWith(colorScheme: ColorScheme.light(primary: Colors.blue)),
-          child: child ?? Container(),
-        );
-      },
-    );
-
-    if (pickedDate != null) {
-      setState(() {
-        widget.selectedYear = pickedDate.year;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = AppThemeProvider.of(context).themeMode;
@@ -248,69 +224,24 @@ class _MachineFormState extends State<MachineForm> {
                         }
                         return null;
                       },
-                      fillColor: theme.colors.backgroundWidget,
                     ),
                   ),
                   _FormField(
-                    title: 'Год выпуска',
+                    title: 'Год Выпуска',
                     child: TextFieldWidget(
-                      controller: TextEditingController(
-                        text:
-                            widget.selectedYear != 0
-                                ? widget.selectedYear.toString()
-                                : '',
-                      ),
+                      controller: widget.yearController,
                       style: widget.style,
-                      readOnly: true,
-                      keyboardType: TextInputType.text,
-                      hintText: 'Выберите год выпуска',
+                      keyboardType: TextInputType.number,
+                      hintText: 'Введите дату',
                       validator: (value) {
-                        if (widget.selectedYear == 0) {
-                          return 'Выберите год выпуска';
+                        if (value == null || value.isEmpty) {
+                          return 'Введите дату';
+                        }
+                        if (double.tryParse(value) == null) {
+                          return 'Введите корректную дату';
                         }
                         return null;
                       },
-                      onTap: () async {
-                        try {
-                          final DateTime currentDate = DateTime.now();
-                          final DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate:
-                                widget.selectedYear != 0
-                                    ? DateTime(widget.selectedYear)
-                                    : currentDate,
-                            firstDate: DateTime(1900),
-                            lastDate: currentDate,
-                            helpText: 'Выберите год выпуска',
-                            initialEntryMode: DatePickerEntryMode.input,
-                            builder: (context, child) {
-                              return Theme(
-                                data: Theme.of(context).copyWith(
-                                  colorScheme: ColorScheme.light(
-                                    primary: Colors.blue,
-                                  ),
-                                ),
-                                child: child ?? Container(),
-                              );
-                            },
-                          );
-
-                          if (pickedDate != null) {
-                            setState(() {
-                              widget.selectedYear = pickedDate.year;
-                            });
-                          }
-                        } catch (e) {
-                          showTopSnackBar(
-                            context: context,
-                            title: 'Ошибка при выборе года',
-                          );
-                        }
-                      },
-                      suffixIcon: Icon(
-                        Icons.calendar_today,
-                        color: widget.theme.colorScheme.onSurface,
-                      ),
                     ),
                   ),
                   _FormField(
@@ -608,6 +539,53 @@ class _MachineFormState extends State<MachineForm> {
         ),
       ),
     );
+  }
+
+  Future<void> _onPublishPressed() async {
+    if (widget.images.isEmpty) {
+      showTopSnackBar(context: context, title: 'Выберите фото');
+      return;
+    }
+
+    if (!widget.formKey.currentState!.validate()) {
+      showTopSnackBar(
+        context: context,
+        title: 'Проверьте правильность заполнения полей',
+      );
+      return;
+    }
+
+    try {
+      for (var i = 0; i < 3; i++) {
+        // Максимум 3 попытки
+        try {
+          await Future.delayed(
+            Duration(seconds: i * 2),
+          ); // Экспоненциальная задержка
+          context.read<AdvertisementScreenBloc>().add(
+            AddAdvert(
+              images: widget.images,
+              product: widget.productDto!,
+              userPhoneNumber:
+                  widget.phoneNumber.text.isEmpty
+                      ? widget.authProvider.phoneNumber
+                      : widget.phoneNumber.text,
+              productType: widget.productType!,
+            ),
+          );
+          break; // Если успешно, выходим из цикла
+        } catch (e) {
+          if (i == 2)
+            throw e; // Если все попытки исчерпаны, пробрасываем ошибку
+        }
+      }
+    } catch (e) {
+      showTopSnackBar(
+        context: context,
+        title: 'Ошибка при загрузке',
+        message: e.toString(),
+      );
+    }
   }
 }
 

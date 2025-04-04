@@ -7,16 +7,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:selo/components/custom_divider.dart';
 import 'package:selo/components/utils.dart';
 import 'package:selo/core/theme/theme_provider.dart';
-import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 class PreviewScreen extends StatelessWidget {
-  final KokparEventDto kokparEventDto;
+  final ProductDto product;
   final List<XFile> images;
-  const PreviewScreen({
-    super.key,
-    required this.kokparEventDto,
-    required this.images,
-  });
+  const PreviewScreen({super.key, required this.product, required this.images});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +32,7 @@ class PreviewScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    kokparEventDto.title,
+                    product.title,
                     style: TextStyle(
                       color: theme.colors.green,
                       fontSize: 30,
@@ -44,26 +40,28 @@ class PreviewScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    kokparEventDto.subTitle,
-                    style: TextStyle(color: theme.colors.black, fontSize: 16),
-                  ),
                   Divider(height: 20, color: theme.colors.black),
                   _MetaData(
                     iconUrl: 'assets/svg_icons/tenge_icon.svg',
-                    text: currencyFormat(context, kokparEventDto.prizeFund),
+                    text: currencyFormat(context, product.price),
                   ),
                   _MetaData(
                     iconUrl: 'assets/svg_icons/alarm.svg',
-                    text: dateHMFromString(context, kokparEventDto.date),
+                    text: dateHMFromString(
+                      context,
+                      DateTime.now().toIso8601String(),
+                    ),
                   ),
                   _MetaData(
                     iconUrl: 'assets/svg_icons/calendar_icon.svg',
-                    text: dateYMMMdFromString(context, kokparEventDto.date),
+                    text: dateYMMMdFromString(
+                      context,
+                      DateTime.now().toIso8601String(),
+                    ),
                   ),
                   _MetaData(
                     iconUrl: 'assets/svg_icons/geo.svg',
-                    text: "${kokparEventDto.region}, ${kokparEventDto.city}",
+                    text: "${product.region}, ${product.city}",
                   ),
                   const SizedBox(height: 20),
                   Text(
@@ -76,7 +74,7 @@ class PreviewScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    kokparEventDto.description,
+                    product.description ?? '',
                     style: TextStyle(color: theme.colors.black),
                   ),
                   SizedBox(height: 100),

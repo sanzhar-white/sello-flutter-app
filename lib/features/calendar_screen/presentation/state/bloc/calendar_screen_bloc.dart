@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:selo/features/calendar_screen/data/calendar_screen_repo.dart';
-import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 
 part 'calendar_screen_event.dart';
 part 'calendar_screen_state.dart';

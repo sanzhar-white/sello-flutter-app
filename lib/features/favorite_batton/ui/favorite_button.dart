@@ -4,12 +4,12 @@ import 'package:selo/core/theme/theme_provider.dart';
 import 'package:selo/features/auth/auth_provider/auth_provider.dart';
 import 'package:selo/features/favorite_batton/data/favorite_button_repo.dart';
 import 'package:selo/features/favorite_batton/state/bloc/favorite_button_bloc.dart';
-import 'package:selo/features/home_screen/data/models/kokpar_event_dto.dart';
+import 'package:selo/features/home_screen/data/models/product_dto.dart';
 import 'package:collection/collection.dart';
 import 'package:selo/services/notifications.dart';
 
 class FavoriteButton extends StatelessWidget {
-  final KokparEventDto event;
+  final ProductDto event;
   const FavoriteButton({super.key, required this.event});
 
   @override
@@ -24,7 +24,7 @@ class FavoriteButton extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        DateTime date = DateTime.parse(event.date);
+        DateTime date = DateTime.parse(event.createdDate);
         like == null
             ? {
               context.read<FavoriteButtonBloc>().add(

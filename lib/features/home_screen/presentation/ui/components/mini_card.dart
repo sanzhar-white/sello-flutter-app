@@ -29,7 +29,6 @@ class MiniCard extends StatelessWidget {
         id: '',
         title: 'Длинное название объявления для проверки',
         authorPhoneNumber: '+77757777779',
-        subTitle: 'Дополнительное описание',
         city: '2024-07-20 19:34:00.000',
         createdDate: DateTime.now().toString(),
         region: 'Зертас ауылы',

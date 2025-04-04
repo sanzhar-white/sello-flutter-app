@@ -7,6 +7,7 @@ import 'package:selo/components/show_modal_bottom_sheet_wrap.dart';
 import 'package:selo/components/show_top_snack_bar.dart';
 import 'package:selo/components/text_field_fidget.dart';
 import 'package:selo/core/extensions.dart';
+import 'package:selo/core/theme/theme_provider.dart';
 import 'package:selo/features/advertisement_screen/data/models/categories.dart';
 import 'package:selo/features/advertisement_screen/presentation/state/bloc/advertisement_screen_bloc.dart';
 import 'package:selo/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/components/image_placeholder.dart';
@@ -72,6 +73,7 @@ class MaterialForm extends StatefulWidget {
 class _MaterialFormState extends State<MaterialForm> {
   @override
   Widget build(BuildContext context) {
+    final theme = AppThemeProvider.of(context).themeMode;
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).newAd)),
       body: SingleChildScrollView(
@@ -142,7 +144,7 @@ class _MaterialFormState extends State<MaterialForm> {
                         SizedBox(width: 15),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: theme.colors.backgroundWidget,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
@@ -152,13 +154,13 @@ class _MaterialFormState extends State<MaterialForm> {
                                     () => widget.onKilogrammAmountChanged(true),
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 10,
+                                    horizontal: 25,
+                                    vertical: 15,
                                   ),
                                   decoration: BoxDecoration(
                                     color:
                                         widget.isKilogrammAmount
-                                            ? Colors.blue
+                                            ? theme.colors.green
                                             : Colors.transparent,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -169,7 +171,7 @@ class _MaterialFormState extends State<MaterialForm> {
                                           widget.isKilogrammAmount
                                               ? Colors.white
                                               : Colors.black,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                 ),
@@ -180,13 +182,13 @@ class _MaterialFormState extends State<MaterialForm> {
                                         widget.onKilogrammAmountChanged(false),
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 10,
+                                    horizontal: 25,
+                                    vertical: 15,
                                   ),
                                   decoration: BoxDecoration(
                                     color:
                                         !widget.isKilogrammAmount
-                                            ? Colors.blue
+                                            ? theme.colors.green
                                             : Colors.transparent,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -195,9 +197,9 @@ class _MaterialFormState extends State<MaterialForm> {
                                     style: TextStyle(
                                       color:
                                           !widget.isKilogrammAmount
-                                              ? Colors.white
-                                              : Colors.black,
-                                      fontWeight: FontWeight.bold,
+                                              ? theme.colors.white
+                                              : theme.colors.black,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                 ),
@@ -232,7 +234,7 @@ class _MaterialFormState extends State<MaterialForm> {
                         SizedBox(width: 15),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: theme.colors.backgroundWidget,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
@@ -242,13 +244,13 @@ class _MaterialFormState extends State<MaterialForm> {
                                     () => widget.onKilogrammPriceChanged(true),
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 10,
+                                    horizontal: 25,
+                                    vertical: 15,
                                   ),
                                   decoration: BoxDecoration(
                                     color:
                                         widget.isKilogrammPrice
-                                            ? Colors.blue
+                                            ? theme.colors.green
                                             : Colors.transparent,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -257,9 +259,9 @@ class _MaterialFormState extends State<MaterialForm> {
                                     style: TextStyle(
                                       color:
                                           widget.isKilogrammPrice
-                                              ? Colors.white
-                                              : Colors.black,
-                                      fontWeight: FontWeight.bold,
+                                              ? theme.colors.white
+                                              : theme.colors.black,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                 ),
@@ -269,13 +271,13 @@ class _MaterialFormState extends State<MaterialForm> {
                                     () => widget.onKilogrammPriceChanged(false),
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 10,
+                                    horizontal: 25,
+                                    vertical: 15,
                                   ),
                                   decoration: BoxDecoration(
                                     color:
                                         !widget.isKilogrammPrice
-                                            ? Colors.blue
+                                            ? theme.colors.green
                                             : Colors.transparent,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -284,9 +286,9 @@ class _MaterialFormState extends State<MaterialForm> {
                                     style: TextStyle(
                                       color:
                                           !widget.isKilogrammPrice
-                                              ? Colors.white
-                                              : Colors.black,
-                                      fontWeight: FontWeight.bold,
+                                              ? theme.colors.white
+                                              : theme.colors.black,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                 ),

@@ -12,11 +12,11 @@ final class HomeScreenLoading extends HomeScreenState {
 }
 
 final class HomeScreenData extends HomeScreenState {
-  final List<KokparEventDto> events;
+  final List<ProductDto> events;
 
   HomeScreenData({
     required this.events,
-    required List<KokparEventDto> favoriteEvents,
+    required List<ProductDto> favoriteEvents,
   });
 }
 

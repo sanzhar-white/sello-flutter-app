@@ -10,18 +10,15 @@ final class GetFavoritesEvents extends FavoriteButtonEvent {
 }
 
 final class RemoveFromFavorites extends FavoriteButtonEvent {
-  final KokparEventDto event;
+  final ProductDto event;
   final String userPhoneNumber;
 
-  RemoveFromFavorites({
-    required this.userPhoneNumber,
-    required this.event,
-  });
+  RemoveFromFavorites({required this.userPhoneNumber, required this.event});
 }
 
 final class AddToFavoritesEvent extends FavoriteButtonEvent {
   final String userPhoneNumber;
-  final KokparEventDto event;
+  final ProductDto event;
 
   AddToFavoritesEvent({required this.userPhoneNumber, required this.event});
 }
