@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:selo/components/utils.dart';
+import 'package:selo/components/shimmer.dart';
 import 'package:selo/core/theme/theme_provider.dart';
 import 'package:selo/features/auth/register_screen/data/models/region.dart';
 import 'package:selo/features/favorite_adverts_button/ui/feature.dart';
@@ -76,135 +77,142 @@ class MiniCard extends StatelessWidget {
 
     return Stack(
       children: [
-        GestureDetector(
-          onTap:
-              () => navigateTo(
-                context: context,
-                rootNavigator: true,
-                screen: ProductDetailScreen(product: product),
+        ShimmerPlaceholder(
+          isEnabled: isPlaceholder,
+          child: GestureDetector(
+            onTap:
+                () => navigateTo(
+                  context: context,
+                  rootNavigator: true,
+                  screen: ProductDetailScreen(product: product),
+                ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: theme.colors.white,
+                borderRadius: BorderRadius.circular(12),
               ),
-          child: Container(
-            decoration: BoxDecoration(color: theme.colors.white),
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  child: SizedBox(
-                    height: 120,
-                    width: double.infinity,
-                    child:
-                        product.images.isNotEmpty
-                            ? CachedNetworkImage(
-                              imageUrl: product.images.last,
-                              fit: BoxFit.cover,
-                              placeholder:
-                                  (context, url) => const Center(
-                                    child: CircularProgressIndicator.adaptive(),
-                                  ),
-                              errorWidget:
-                                  (context, url, error) => Image.asset(
-                                    'assets/png_images/recomd_image.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                            )
-                            : Image.asset(
-                              'assets/png_images/recomd_image.png',
-                              fit: BoxFit.cover,
-                            ),
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    child: SizedBox(
+                      height: 120,
+                      width: double.infinity,
+                      child:
+                          product.images.isNotEmpty
+                              ? CachedNetworkImage(
+                                imageUrl: product.images.last,
+                                fit: BoxFit.cover,
+                                placeholder:
+                                    (context, url) => const Center(
+                                      child:
+                                          CircularProgressIndicator.adaptive(),
+                                    ),
+                                errorWidget:
+                                    (context, url, error) => Image.asset(
+                                      'assets/png_images/recomd_image.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                              )
+                              : Image.asset(
+                                'assets/png_images/recomd_image.png',
+                                fit: BoxFit.cover,
+                              ),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.title,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: theme.colors.black,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        _categoryByType(product.productType),
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: theme.colors.gray,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        _formatPrice(product.price),
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: theme.colors.black,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        "${city}\n${region?.name ?? ''}",
-                        style: TextStyle(
-                          color: theme.colors.black,
-                          fontSize: 12,
-                        ),
-                      ),
-
-                      SizedBox(width: double.infinity),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed:
-                            () => _launchPhoneDialer(product.authorPhoneNumber),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: theme.colors.green,
-                          foregroundColor: theme.colors.white,
-                          minimumSize: const Size(double.infinity, 40),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.title,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: theme.colors.black,
                           ),
                         ),
-                        child: const Text("Позвонить"),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: theme.colors.gray.withOpacity(0.2),
+                        const SizedBox(height: 4),
+                        Text(
+                          _categoryByType(product.productType),
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: theme.colors.gray,
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.copy_outlined,
-                          color: theme.colors.gray,
+                        const SizedBox(height: 4),
+                        Text(
+                          _formatPrice(product.price),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: theme.colors.black,
+                          ),
                         ),
-                        onPressed: () {
-                          // TODO: Implement copy functionality
-                        },
-                      ),
+                        const SizedBox(height: 4),
+                        Text(
+                          "${city}, ${region?.name ?? ''}",
+                          style: TextStyle(
+                            color: theme.colors.black,
+                            fontSize: 12,
+                          ),
+                        ),
+
+                        SizedBox(width: double.infinity),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed:
+                              () =>
+                                  _launchPhoneDialer(product.authorPhoneNumber),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: theme.colors.green,
+                            foregroundColor: theme.colors.white,
+                            minimumSize: const Size(double.infinity, 40),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: const Text("Позвонить"),
+                        ),
+                      ),
+                      // Container(
+                      //   width: 40,
+                      //   height: 40,
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(
+                      //       color: theme.colors.gray.withOpacity(0.2),
+                      //     ),
+                      //     borderRadius: BorderRadius.circular(8),
+                      //   ),
+                      //   child: IconButton(
+                      //     icon: Icon(
+                      //       Icons.copy_outlined,
+                      //       color: theme.colors.gray,
+                      //     ),
+                      //     onPressed: () {
+                      //       // TODO: Implement copy functionality
+                      //     },
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
         if (!isPlaceholder)
           Positioned(
-            right: 12,
-            top: 12,
+            right: 5,
+            top: 5,
             child: FavoriteAdvertsButtonFeature(product: product),
           ),
       ],

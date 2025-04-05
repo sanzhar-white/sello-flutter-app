@@ -64,18 +64,15 @@ class HomeScreenRepo implements HomeScreenRepository {
     final ref = await fire.collection(FireCollections.products).get();
     final data = ref.docs.map((e) => e.data()).toList();
 
-    for (var element in data) {
-      eventsList.add(adv.ProductList.fromMap(element));
-    }
-
-    for (var element in eventsList) {
-      events.addAll([
+    data.forEach((element) => eventsList.add(adv.ProductList.fromMap(element)));
+    eventsList.forEach(
+      (element) => events.addAll([
         ...element.machineList,
         ...element.rawMaterialList,
         ...element.workList,
         ...element.fertiliserList,
-      ]);
-    }
+      ]),
+    );
 
     return events;
   }

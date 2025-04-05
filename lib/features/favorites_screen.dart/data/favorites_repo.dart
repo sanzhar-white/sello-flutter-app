@@ -9,7 +9,7 @@ class FavoritesRepo {
     List<ProductDto> list = [];
     final querySnapshot =
         await fire
-            .collection(FireCollections.userEventFavorites)
+            .collection(FireCollections.userAdvertFavorites)
             .doc(userPhoneNumber)
             .get();
 

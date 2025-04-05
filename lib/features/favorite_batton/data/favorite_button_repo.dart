@@ -21,7 +21,7 @@ class FavoriteButtonRepo extends ChangeNotifier {
     required ProductDto event,
     required String userPhoneNumber,
   }) async {
-    final ref = fire.collection(FireCollections.userEventFavorites);
+    final ref = fire.collection(FireCollections.userAdvertFavorites);
     final data = await ref.doc(userPhoneNumber).get();
     final res = data.data();
     if (res != null) {
@@ -52,7 +52,7 @@ class FavoriteButtonRepo extends ChangeNotifier {
     required ProductDto event,
     required String userPhoneNumber,
   }) async {
-    final ref = fire.collection(FireCollections.userEventFavorites);
+    final ref = fire.collection(FireCollections.userAdvertFavorites);
     final data = await ref.doc(userPhoneNumber).get();
     final res = data.data();
     if (res != null) {
@@ -75,7 +75,7 @@ class FavoriteButtonRepo extends ChangeNotifier {
     List<ProductDto> list = [];
     final querySnapshot =
         await fire
-            .collection(FireCollections.userEventFavorites)
+            .collection(FireCollections.userAdvertFavorites)
             .doc(userPhoneNumber)
             .get();
 

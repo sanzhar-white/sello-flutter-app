@@ -254,7 +254,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
           (context) => StatefulBuilder(
             builder:
                 (context, setState) => Container(
-                  height: MediaQuery.of(context).size.height * 0.9,
+                  height: MediaQuery.of(context).size.height * 0.7,
                   decoration: BoxDecoration(
                     color: theme.colors.white,
                     borderRadius: BorderRadius.vertical(

@@ -48,7 +48,6 @@ class _FavoriteAdvertsButtonState extends State<FavoriteAdvertsButton> {
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          border: Border.all(color: theme.colors.black),
           color: theme.colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(50)),
         ),

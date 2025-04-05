@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:selo/components/big_button.dart';
@@ -345,6 +346,7 @@ class _MachineFormState extends State<MachineForm> {
                       controller: widget.priceController,
                       style: widget.style,
                       keyboardType: TextInputType.number,
+                      inputFormatters: [ThousandsFormatter()],
                       hintText: 'Введите цену',
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -712,6 +714,34 @@ class _ImagePreview extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+class ThousandsFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    if (newValue.text.isEmpty) {
+      return newValue;
+    }
+
+    final cleanValue = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
+    if (cleanValue.isEmpty) {
+      return newValue.copyWith(text: '');
+    }
+
+    final number = int.parse(cleanValue);
+    final formatted = number.toString().replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]} ',
+    );
+
+    return TextEditingValue(
+      text: formatted,
+      selection: TextSelection.collapsed(offset: formatted.length),
     );
   }
 }

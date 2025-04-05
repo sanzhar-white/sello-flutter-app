@@ -4,16 +4,13 @@ import 'package:selo/components/is_loading.dart';
 import 'package:selo/components/utils.dart';
 import 'package:selo/core/theme/theme_provider.dart';
 import 'package:selo/features/auth/auth_provider/auth_provider.dart';
-import 'package:selo/features/calendar_screen/presentation/ui/feature.dart';
 import 'package:selo/features/empty_screens/empty_screen.dart';
 import 'package:selo/features/favorite_adverts_button/state/bloc/favorite_adverts_button_bloc.dart';
 import 'package:selo/features/favorite_batton/state/bloc/favorite_button_bloc.dart';
 import 'package:selo/features/home_screen/presentation/state/bloc/home_screen_bloc.dart';
 import 'package:selo/features/home_screen/presentation/ui/components/event_card.dart';
-import 'package:selo/features/home_screen/presentation/ui/components/notification_screen.dart';
 import 'package:selo/features/home_screen/presentation/ui/components/mini_card.dart';
 import 'package:selo/features/home_screen/presentation/ui/components/banners_widget.dart';
-import 'package:selo/features/home_screen/presentation/ui/components/search/search_bar_widget.dart';
 import 'package:selo/features/home_screen/presentation/ui/search/search_results_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,12 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void _loadInitialData() {
     final authProvider = context.read<MyAuthProvider>();
 
-    context.read<FavoriteButtonBloc>().add(
-      GetFavoritesEvents(
-        userPhoneNumber: authProvider.userData?.phoneNumber ?? '+77757777779',
-      ),
-    );
-
     context.read<FavoriteAdvertsButtonBloc>().add(
       GetFavoritesAdvertsEvents(
         userPhoneNumber: authProvider.userData?.phoneNumber ?? '+77757777779',
@@ -65,14 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
       final authProvider = context.read<MyAuthProvider>();
 
       await Future.wait<void>([
-        Future(() {
-          context.read<FavoriteButtonBloc>().add(
-            GetFavoritesEvents(
-              userPhoneNumber:
-                  authProvider.userData?.phoneNumber ?? '+77757777779',
-            ),
-          );
-        }),
         Future(() {
           context.read<FavoriteAdvertsButtonBloc>().add(
             GetFavoritesAdvertsEvents(
@@ -124,7 +107,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    final authProvider = context.read<MyAuthProvider>();
     final theme = AppThemeProvider.of(context).themeMode;
 
     return Stack(
@@ -132,84 +114,15 @@ class _HomeScreenState extends State<HomeScreen> {
         Scaffold(
           backgroundColor: theme.colors.white,
           appBar: AppBar(
-            title: Column(
-              children: [
-                BlocBuilder<HomeScreenBloc, HomeScreenState>(
-                  builder: (context, state) {
-                    return Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              if (searchController.text.isNotEmpty ||
-                                  activeFilters.isNotEmpty) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) => SearchResultsScreen(
-                                          searchQuery: searchController.text,
-                                          results:
-                                              state is HomeScreenData
-                                                  ? state.events
-                                                  : [],
-                                          onApplyFilters: (filters) {
-                                            setState(() {
-                                              activeFilters = filters;
-                                            });
-                                            _applySearchAndFilters();
-                                          },
-                                          activeFilters: activeFilters,
-                                        ),
-                                  ),
-                                );
-                              }
-                            },
-                            child: Container(
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: theme.colors.backgroundWidget,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                    ),
-                                    child: Icon(
-                                      Icons.search,
-                                      color: theme.colors.gray,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: TextField(
-                                      controller: searchController,
-                                      onChanged: _onSearchChanged,
-                                      decoration: InputDecoration(
-                                        hintText: 'Поиск в Алматы',
-                                        border: InputBorder.none,
-                                        contentPadding: EdgeInsets.symmetric(
-                                          vertical: 8,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 12),
-                        IconButton(
-                          icon: Icon(
-                            Icons.tune,
-                            color:
-                                activeFilters.isNotEmpty
-                                    ? theme.colors.green
-                                    : theme.colors.black,
-                          ),
-                          onPressed: () {
+            title: BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              builder: (context, state) {
+                return Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          if (searchController.text.isNotEmpty ||
+                              activeFilters.isNotEmpty) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -230,23 +143,88 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                               ),
                             );
-                          },
+                          }
+                        },
+                        child: Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: theme.colors.backgroundWidget,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                ),
+                                child: Icon(
+                                  Icons.search,
+                                  color: theme.colors.gray,
+                                ),
+                              ),
+                              Expanded(
+                                child: TextField(
+                                  controller: searchController,
+                                  onChanged: _onSearchChanged,
+                                  decoration: InputDecoration(
+                                    hintText: 'Поиск в Алматы',
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical: 8,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        // GestureDetector(
-                        //   onTap: () {
-                        //     navigateTo(
-                        //       context: context,
-                        //       rootNavigator: true,
-                        //       screen: NotificationScreen(),
-                        //     );
-                        //   },
-                        //   child: Icon(Icons.notifications_outlined, size: 32),
-                        // ),
-                      ],
-                    );
-                  },
-                ),
-              ],
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    IconButton(
+                      icon: Icon(
+                        Icons.tune,
+                        color:
+                            activeFilters.isNotEmpty
+                                ? theme.colors.green
+                                : theme.colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => SearchResultsScreen(
+                                  searchQuery: searchController.text,
+                                  results:
+                                      state is HomeScreenData
+                                          ? state.events
+                                          : [],
+                                  onApplyFilters: (filters) {
+                                    setState(() {
+                                      activeFilters = filters;
+                                    });
+                                    _applySearchAndFilters();
+                                  },
+                                  activeFilters: activeFilters,
+                                ),
+                          ),
+                        );
+                      },
+                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     navigateTo(
+                    //       context: context,
+                    //       rootNavigator: true,
+                    //       screen: NotificationScreen(),
+                    //     );
+                    //   },
+                    //   child: Icon(Icons.notifications_outlined, size: 32),
+                    // ),
+                  ],
+                );
+              },
             ),
           ),
           body: RefreshIndicator(
@@ -255,15 +233,13 @@ class _HomeScreenState extends State<HomeScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-                    child: BannersCarousel(
-                      banners: [
-                        BannerModel(imageUrl: 'assets/banners/banner1.png'),
-                        BannerModel(imageUrl: 'assets/banners/banner1.png'),
-                        BannerModel(imageUrl: 'assets/banners/banner1.png'),
-                      ],
-                    ),
+                  SizedBox(height: 10),
+                  BannersCarousel(
+                    banners: [
+                      BannerModel(imageUrl: 'assets/banners/banner1.png'),
+                      BannerModel(imageUrl: 'assets/banners/banner1.png'),
+                      BannerModel(imageUrl: 'assets/banners/banner1.png'),
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20),
@@ -288,6 +264,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisSpacing: width * 0.05,
                             mainAxisSpacing: width * 0.4,
                             physics: const NeverScrollableScrollPhysics(),
+
+                            /// TODO Image and Screen Navigate
                             children: [
                               EventCard(
                                 text: 'Спец-\nтехника',
@@ -296,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     () => navigateTo(
                                       context: context,
                                       rootNavigator: true,
-                                      screen: const Scaffold(),
+                                      screen: EmptyScreen(),
                                     ),
                               ),
                               EventCard(
@@ -400,7 +378,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         MiniCard(product: state.events[index]),
                               );
                             }
-
                             return const SizedBox.shrink();
                           },
                         ),
