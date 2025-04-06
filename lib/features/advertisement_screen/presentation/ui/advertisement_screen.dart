@@ -44,7 +44,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
               const SizedBox(height: 24),
               _AdvertisementCategoryCard(
                 title: 'Спецтехника',
-                iconUrl: 'assets/to_add/machine_logo.svg',
+                iconUrl: 'assets/profile/delete.svg',
                 onTap:
                     () => navigateTo(
                       context: context,
@@ -56,7 +56,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
               ),
               _AdvertisementCategoryCard(
                 title: 'Сырьё',
-                iconUrl: 'assets/to_add/raw_logo.svg',
+                iconUrl: 'assets/profile/delete.svg',
                 onTap:
                     () => navigateTo(
                       context: context,
@@ -68,7 +68,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
               ),
               _AdvertisementCategoryCard(
                 title: 'Работа',
-                iconUrl: 'assets/to_add/job_logo.svg',
+                iconUrl: 'assets/profile/delete.svg',
                 onTap:
                     () => navigateTo(
                       context: context,
@@ -80,7 +80,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
               ),
               _AdvertisementCategoryCard(
                 title: 'Удобрение/Гирбицид',
-                iconUrl: 'assets/to_add/fer_logo.svg',
+                iconUrl: 'assets/profile/delete.svg',
                 onTap:
                     () => navigateTo(
                       context: context,
@@ -123,17 +123,13 @@ class _AdvertisementCategoryCard extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
               height: 50,
               width: 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: theme.colors.backgroundWidget2,
               ),
-              child:
-                  iconUrl.endsWith('.svg')
-                      ? SvgPicture.asset(iconUrl, fit: BoxFit.cover)
-                      : Image.asset(iconUrl, fit: BoxFit.cover),
+              child: buildImageWidget(iconUrl, width: 70, height: 70),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -151,5 +147,18 @@ class _AdvertisementCategoryCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Widget buildImageWidget(
+  String imageUrl, {
+  double? height,
+  double? width,
+  BoxFit fit = BoxFit.contain,
+}) {
+  if (imageUrl.toLowerCase().endsWith('.svg')) {
+    return SvgPicture.asset(imageUrl, height: height, width: width, fit: fit);
+  } else {
+    return Image.asset(imageUrl, height: height, width: width, fit: fit);
   }
 }

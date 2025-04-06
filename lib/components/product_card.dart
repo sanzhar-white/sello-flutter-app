@@ -1,32 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:selo/core/theme/theme_provider.dart';
+import 'package:selo/core/enums.dart';
 import 'package:selo/features/home_screen/data/models/product_dto.dart';
+import 'package:selo/features/favorite_adverts_button/ui/feature.dart';
+import 'package:selo/features/auth/register_screen/data/models/region.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   final ProductDto product;
   final VoidCallback? onTap;
   final bool isProfileScreen;
   final VoidCallback? deleteAdvert;
+  FavoriteAdvertsButtonFeature? unfavoriteAdvert;
 
-  const ProductCard({
+  bool isFavoriteScreen;
+
+  ProductCard({
     super.key,
     required this.product,
     this.onTap,
     this.isProfileScreen = false,
+    this.isFavoriteScreen = false,
     this.deleteAdvert,
+    this.unfavoriteAdvert,
   });
 
   @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  @override
   Widget build(BuildContext context) {
     final theme = AppThemeProvider.of(context).themeMode;
+    final region = kzRegions.firstWhere(
+      (element) => element.id == widget.product.region,
+    );
+
+    final city =
+        region?.subCategories!
+            .firstWhere((element) => element.id == widget.product.city)
+            ?.name ??
+        '';
+    String _categoryByType(ProductType productType) {
+      switch (productType) {
+        case ProductType.machine:
+          return "Спецтехника";
+        case ProductType.raw_material:
+          return "Сырьё";
+        case ProductType.job:
+          return "Работа";
+        case ProductType.fertiliser:
+          return "Удобрение";
+        default:
+          return "Неизвестная категория";
+      }
+    }
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: theme.colors.white,
+        borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(0.1),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -35,8 +71,8 @@ class ProductCard extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: onTap,
+          borderRadius: BorderRadius.circular(10),
+          onTap: widget.onTap,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,23 +83,25 @@ class ProductCard extends StatelessWidget {
                       top: Radius.circular(16),
                     ),
                     child: Image.network(
-                      product.images.isNotEmpty ? product.images.first : '',
+                      widget.product.images.isNotEmpty
+                          ? widget.product.images.first
+                          : '',
                       height: 140,
                       width: double.infinity,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
-                          height: 140,
-                          color: Colors.grey[200],
+                          height: 300,
+                          color: theme.colors.gray,
                           child: Icon(
                             Icons.image_not_supported,
-                            color: Colors.grey[400],
+                            color: theme.colors.gray,
                           ),
                         );
                       },
                     ),
                   ),
-                  if (isProfileScreen)
+                  if (widget.isProfileScreen)
                     Positioned(
                       top: 8,
                       right: 8,
@@ -84,12 +122,20 @@ class ProductCard extends StatelessWidget {
                             Icons.delete_outline,
                             color: Colors.red,
                           ),
-                          onPressed: deleteAdvert,
+                          onPressed: widget.deleteAdvert,
                           iconSize: 20,
                           padding: const EdgeInsets.all(8),
                           constraints: const BoxConstraints(),
                         ),
                       ),
+                    ),
+                  if (widget.isFavoriteScreen)
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child:
+                          widget.unfavoriteAdvert ??
+                          FavoriteAdvertsButtonFeature(product: widget.product),
                     ),
                 ],
               ),
@@ -98,10 +144,19 @@ class ProductCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 8),
                     Text(
-                      product.title,
-                      style: const TextStyle(
+                      'Название:',
+                      style: TextStyle(
                         fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: theme.colors.gray,
+                      ),
+                    ),
+                    Text(
+                      widget.product.title,
+                      style: const TextStyle(
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
                       ),
@@ -110,30 +165,67 @@ class ProductCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '${product.price} ₸',
+                      'Стоимость:',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: theme.colors.gray,
+                      ),
+                    ),
+                    Text(
+                      '${widget.product.price} ₸',
+                      style: TextStyle(
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.green[700],
+                        color: theme.colors.green,
                       ),
                     ),
                     const SizedBox(height: 8),
+                    Text(
+                      'Категория',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: theme.colors.gray,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${_categoryByType(widget.product.productType)}',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Место:',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: theme.colors.gray,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
                     Row(
                       children: [
                         Icon(
                           Icons.location_on,
-                          size: 14,
+                          size: 20,
                           color: Colors.grey[600],
                         ),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            product.region,
+                            "${city}, ${region?.name ?? ''}",
                             style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[600],
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: theme.colors.gray,
                             ),
-                            maxLines: 1,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),

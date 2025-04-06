@@ -23,7 +23,7 @@ dependencies:
   flutter_localization: ^0.3.1
   cupertino_icons: ^1.0.8
   flutter_bloc: ^9.1.0
-  flutter_svg: ^2.0.17
+  flutter_svg: ^2.0.7
   intl_phone_field: ^3.2.0
   firebase_analytics: ^11.4.4
   firebase_auth: ^5.5.1
@@ -63,11 +63,11 @@ flutter:
 
   assets:
     - assets/svg_icons/bottom_nav_bar/
+    - assets/add_advert/
     - assets/banners/
     - assets/categories/
     - assets/svg_icons/
     - assets/svg_images/
     - assets/png_images/
     - assets/app_logo.png
-    - assets/to_add/
     - assets/profile/

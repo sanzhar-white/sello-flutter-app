@@ -6,10 +6,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:selo/components/big_button.dart';
 import 'package:selo/components/show_modal_bottom_sheet_wrap.dart';
 import 'package:selo/components/show_top_snack_bar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:selo/components/text_field_fidget.dart';
-import 'package:selo/core/extensions.dart';
 import 'package:selo/core/theme/theme_provider.dart';
-import 'package:selo/features/advertisement_screen/data/models/categories.dart';
 import 'package:selo/features/advertisement_screen/presentation/state/bloc/advertisement_screen_bloc.dart';
 import 'package:selo/features/advertisement_screen/presentation/ui/components/add_event_screen/presentation/ui/components/image_placeholder.dart';
 import 'package:selo/features/auth/register_screen/data/models/region.dart';
@@ -94,13 +93,12 @@ class _MaterialFormState extends State<MaterialForm> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(1),
-                  image: DecorationImage(
-                    image: AssetImage('assets/to_add/raw_fer.png'),
-                    fit: BoxFit.fitWidth,
-                  ),
                 ),
                 height: 70,
                 width: double.infinity,
+                child: buildImageWidget(
+                  'assets/add_advert/raw_materials_fer_banner.svg',
+                ),
               ),
               SizedBox(height: 30),
               Column(
@@ -617,5 +615,18 @@ class ThousandsFormatter extends TextInputFormatter {
       text: formatted,
       selection: TextSelection.collapsed(offset: formatted.length),
     );
+  }
+}
+
+Widget buildImageWidget(
+  String imageUrl, {
+  double? height,
+  double? width,
+  BoxFit fit = BoxFit.contain,
+}) {
+  if (imageUrl.toLowerCase().endsWith('.svg')) {
+    return SvgPicture.asset(imageUrl, height: height, width: width, fit: fit);
+  } else {
+    return Image.asset(imageUrl, height: height, width: width, fit: fit);
   }
 }

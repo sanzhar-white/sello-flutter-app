@@ -77,23 +77,23 @@ class MiniCard extends StatelessWidget {
 
     return Stack(
       children: [
-        ShimmerPlaceholder(
-          isEnabled: isPlaceholder,
-          child: GestureDetector(
-            onTap:
-                () => navigateTo(
-                  context: context,
-                  rootNavigator: true,
-                  screen: ProductDetailScreen(product: product),
-                ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: theme.colors.white,
-                borderRadius: BorderRadius.circular(12),
+        GestureDetector(
+          onTap:
+              () => navigateTo(
+                context: context,
+                rootNavigator: true,
+                screen: ProductDetailScreen(product: product),
               ),
-              child: Column(
-                children: [
-                  ClipRRect(
+          child: Container(
+            decoration: BoxDecoration(
+              color: theme.colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              children: [
+                ShimmerPlaceholder(
+                  isEnabled: isPlaceholder,
+                  child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
                     child: SizedBox(
                       height: 120,
@@ -104,38 +104,42 @@ class MiniCard extends StatelessWidget {
                                 imageUrl: product.images.last,
                                 fit: BoxFit.cover,
                                 placeholder:
-                                    (context, url) => const Center(
-                                      child:
-                                          CircularProgressIndicator.adaptive(),
-                                    ),
+                                    (context, url) =>
+                                        Container(color: Colors.grey[200]),
                                 errorWidget:
                                     (context, url, error) => Image.asset(
                                       'assets/png_images/recomd_image.png',
                                       fit: BoxFit.cover,
                                     ),
                               )
-                              : Image.asset(
-                                'assets/png_images/recomd_image.png',
-                                fit: BoxFit.cover,
-                              ),
+                              : Container(color: Colors.grey[200]),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.title,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: theme.colors.black,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ShimmerPlaceholder(
+                        isEnabled: isPlaceholder,
+                        child: Container(
+                          width: double.infinity,
+                          child: Text(
+                            product.title,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: theme.colors.black,
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
+                      ),
+                      const SizedBox(height: 4),
+                      ShimmerPlaceholder(
+                        isEnabled: isPlaceholder,
+                        child: Text(
                           _categoryByType(product.productType),
                           style: TextStyle(
                             fontSize: 12,
@@ -143,8 +147,11 @@ class MiniCard extends StatelessWidget {
                             color: theme.colors.gray,
                           ),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
+                      ),
+                      const SizedBox(height: 4),
+                      ShimmerPlaceholder(
+                        isEnabled: isPlaceholder,
+                        child: Text(
                           _formatPrice(product.price),
                           style: TextStyle(
                             fontSize: 18,
@@ -152,60 +159,39 @@ class MiniCard extends StatelessWidget {
                             color: theme.colors.black,
                           ),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
+                      ),
+                      const SizedBox(height: 4),
+                      ShimmerPlaceholder(
+                        isEnabled: isPlaceholder,
+                        child: Text(
                           "${city}, ${region?.name ?? ''}",
                           style: TextStyle(
                             color: theme.colors.black,
                             fontSize: 12,
                           ),
                         ),
-
-                        SizedBox(width: double.infinity),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed:
-                              () =>
-                                  _launchPhoneDialer(product.authorPhoneNumber),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: theme.colors.green,
-                            foregroundColor: theme.colors.white,
-                            minimumSize: const Size(double.infinity, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: const Text("Позвонить"),
-                        ),
                       ),
-                      // Container(
-                      //   width: 40,
-                      //   height: 40,
-                      //   decoration: BoxDecoration(
-                      //     border: Border.all(
-                      //       color: theme.colors.gray.withOpacity(0.2),
-                      //     ),
-                      //     borderRadius: BorderRadius.circular(8),
-                      //   ),
-                      //   child: IconButton(
-                      //     icon: Icon(
-                      //       Icons.copy_outlined,
-                      //       color: theme.colors.gray,
-                      //     ),
-                      //     onPressed: () {
-                      //       // TODO: Implement copy functionality
-                      //     },
-                      //   ),
-                      // ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                if (!isPlaceholder)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed:
+                          () => _launchPhoneDialer(product.authorPhoneNumber),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.colors.green,
+                        foregroundColor: theme.colors.white,
+                        minimumSize: const Size(double.infinity, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text("Позвонить"),
+                    ),
+                  ),
+              ],
             ),
           ),
         ),

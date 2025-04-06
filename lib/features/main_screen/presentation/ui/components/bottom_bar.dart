@@ -18,7 +18,7 @@ class _MainAppBottomBarState extends State<MainAppBottomBar> {
     final size = MediaQuery.sizeOf(context).width;
     return Container(
       width: size,
-      height: 90,
+      height: 70,
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: const Row(

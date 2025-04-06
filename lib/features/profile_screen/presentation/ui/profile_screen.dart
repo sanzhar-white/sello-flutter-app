@@ -38,60 +38,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
           appBar: AppBar(
             title: Text(S.of(context).profile),
             backgroundColor: theme.colors.white,
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheetWrap(
+                    context: context,
+                    child: _SelectLanguage(),
+                  );
+                },
+                child: Container(
+                  width: 100,
+                  height: 20,
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: theme.colors.backgroundWidget,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      buildImageWidget(
+                        "assets/profile/language.svg",
+                        height: 24,
+                        width: 24,
+                      ),
+                      const SizedBox(width: 8),
+                      const Text(
+                        "РУС",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
+
           body: Padding(
             padding: EdgeInsets.all(20),
             child: Column(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        showModalBottomSheetWrap(
-                          context: context,
-                          child: _SelectLanguage(),
-                        );
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 40,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: theme.colors.backgroundWidget,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment
-                                  .spaceEvenly, // Центрируем содержимое
-                          children: [
-                            Image.asset(
-                              'assets/profile/language.png',
-                              fit: BoxFit.cover,
-                              width: 32, // Ограничиваем размер изображения
-                              height: 24,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ), // Отступ между иконкой и текстом
-                            Text(
-                              "РУС",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: double.infinity),
-                  ],
-                ),
                 authProvider.userData?.photo != '' &&
                         authProvider.userData != null
                     ? ClipOval(
@@ -156,7 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         rootNavigator: true,
                         screen: const MyAdvertsScreenFeature(),
                       ),
-                  iconUrl: 'assets/profile/my.png',
+                  iconUrl: 'assets/profile/my_advert.svg',
                   text: S.of(context).myAds,
                 ),
 
@@ -181,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 MyListTile(
                   text: S.of(context).logout,
-                  iconUrl: 'assets/profile/leave.png',
+                  iconUrl: 'assets/profile/leave.svg',
                   onTap: () async {
                     try {
                       setState(() {
@@ -297,9 +287,7 @@ class MyListTile extends StatelessWidget {
           ),
           child:
               iconUrl != null
-                  ? (iconUrl!.endsWith('.svg')
-                      ? SvgPicture.asset(iconUrl!, fit: BoxFit.cover)
-                      : Image.asset(iconUrl!, fit: BoxFit.cover))
+                  ? buildImageWidget(iconUrl!, height: 24, width: 24)
                   : (iconData != null
                       ? Icon(iconData, color: theme.colors.black)
                       : const SizedBox()), // Пустой виджет, если нет иконки
@@ -375,5 +363,18 @@ class _SelectLanguage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Widget buildImageWidget(
+  String imageUrl, {
+  double? height,
+  double? width,
+  BoxFit fit = BoxFit.contain,
+}) {
+  if (imageUrl.toLowerCase().endsWith('.svg')) {
+    return SvgPicture.asset(imageUrl, height: height, width: width, fit: fit);
+  } else {
+    return Image.asset(imageUrl, height: height, width: width, fit: fit);
   }
 }

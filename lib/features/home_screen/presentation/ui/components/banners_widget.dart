@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:selo/components/shimmer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class BannersCarousel extends StatefulWidget {
   final List<BannerModel> banners;
   final Duration autoPlayInterval;
+  final bool isPlaceholder;
 
   const BannersCarousel({
     Key? key,
     required this.banners,
     this.autoPlayInterval = const Duration(seconds: 10),
+    this.isPlaceholder = false,
   }) : super(key: key);
 
   @override
@@ -21,27 +24,32 @@ class _BannersCarouselState extends State<BannersCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CarouselSlider(
-          items:
-              widget.banners.map((banner) => _buildBannerItem(banner)).toList(),
-          options: CarouselOptions(
-            aspectRatio: 10 / 6, // Force 4:3 aspect ratio
-            viewportFraction: 0.9,
-            autoPlay: true,
-            autoPlayInterval: widget.autoPlayInterval,
-            enlargeCenterPage: true,
-            onPageChanged: (index, reason) {
-              setState(() {
-                _current = index;
-              });
-            },
+    return ShimmerPlaceholder(
+      isEnabled: widget.isPlaceholder,
+      child: Column(
+        children: [
+          CarouselSlider(
+            items:
+                widget.banners
+                    .map((banner) => _buildBannerItem(banner))
+                    .toList(),
+            options: CarouselOptions(
+              aspectRatio: 10 / 6, // Force 4:3 aspect ratio
+              viewportFraction: 0.9,
+              autoPlay: true,
+              autoPlayInterval: widget.autoPlayInterval,
+              enlargeCenterPage: true,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  _current = index;
+                });
+              },
+            ),
           ),
-        ),
-        // Indicator dots
-        _buildIndicatorDots(),
-      ],
+          // Indicator dots
+          _buildIndicatorDots(),
+        ],
+      ),
     );
   }
 
@@ -50,13 +58,8 @@ class _BannersCarouselState extends State<BannersCarousel> {
       onTap: () => banner.onTap?.call(),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 5.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(
-            image: _getImageProvider(banner.imageUrl),
-            fit: BoxFit.cover, // Ensures image covers the entire 4:3 area
-          ),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+        child: buildImageWidget(banner.imageUrl),
       ),
     );
   }
@@ -91,43 +94,6 @@ class _BannersCarouselState extends State<BannersCarousel> {
           }).toList(),
     );
   }
-
-  // Function to determine image provider (network or asset)
-  ImageProvider _getImageProvider(String url) {
-    try {
-      if (url.endsWith('.svg')) {
-        // Special handling for SVG images
-        if (url.startsWith('http') || url.startsWith('https')) {
-          return NetworkImage(url); // Network SVG
-        } else if (url.startsWith('file:')) {
-          return FileImage(File(url.substring(5))); // Local file SVG
-        } else {
-          // Asset SVG
-          return AssetImage(url);
-        }
-      }
-
-      if (url.startsWith('http') || url.startsWith('https')) {
-        return NetworkImage(url);
-      } else if (url.startsWith('asset:')) {
-        // Support for explicit asset notation
-        return AssetImage(url.substring(6));
-      } else if (url.startsWith('file:')) {
-        // Support for local file images
-        return FileImage(File(url.substring(5)));
-      } else if (url.contains('/')) {
-        // Assume it's an asset path if it contains a path separator
-        return AssetImage(url);
-      } else {
-        // Fallback to a default or error image
-        return const AssetImage('assets/placeholder.png');
-      }
-    } catch (e) {
-      // Fallback in case of any unexpected errors
-      print('Error loading image: $e');
-      return const AssetImage('assets/placeholder.png');
-    }
-  }
 }
 
 // Model to represent a banner with more flexibility
@@ -143,4 +109,17 @@ class BannerModel {
     this.title,
     this.description,
   });
+}
+
+Widget buildImageWidget(
+  String imageUrl, {
+  double? height,
+  double? width,
+  BoxFit fit = BoxFit.contain,
+}) {
+  if (imageUrl.toLowerCase().endsWith('.svg')) {
+    return SvgPicture.asset(imageUrl, height: height, width: width, fit: fit);
+  } else {
+    return Image.asset(imageUrl, height: height, width: width, fit: fit);
+  }
 }
