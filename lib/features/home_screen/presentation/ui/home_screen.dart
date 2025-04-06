@@ -254,13 +254,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: BannersCarousel(
                             banners: [
                               BannerModel(
-                                imageUrl: 'assets/banners/banner1.svg',
+                                imageUrl: 'assets/banners/banner1.png',
                               ),
                               BannerModel(
-                                imageUrl: 'assets/banners/banner1.svg',
+                                imageUrl: 'assets/banners/banner1.png',
                               ),
                               BannerModel(
-                                imageUrl: 'assets/banners/banner1.svg',
+                                imageUrl: 'assets/banners/banner1.png',
                               ),
                             ],
                             isPlaceholder: true,
@@ -292,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     EventCard(
                                       text: 'Спец-\nтехника',
-                                      imageUrl: 'assets/categories/machine.svg',
+                                      imageUrl: 'assets/categories/machine.png',
                                       onTap:
                                           () => navigateTo(
                                             context: context,
@@ -303,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     EventCard(
                                       text: 'Работа',
-                                      imageUrl: 'assets/categories/job.svg',
+                                      imageUrl: 'assets/categories/job.png',
                                       isPlaceholder: true,
                                       onTap: () {
                                         navigateTo(
@@ -328,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     EventCard(
                                       text: 'Сырьё',
                                       imageUrl:
-                                          'assets/categories/raw_materials.svg',
+                                          'assets/categories/raw_material.png',
                                       isPlaceholder: true,
                                       onTap: () {
                                         navigateTo(
@@ -341,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     EventCard(
                                       text: 'Гербицид/\nУдобрение',
                                       imageUrl:
-                                          'assets/categories/fertiliser.svg',
+                                          'assets/categories/fertiliser.png',
                                       isPlaceholder: true,
                                       onTap: () {
                                         navigateTo(
@@ -546,13 +546,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: BannersCarousel(
                             banners: [
                               BannerModel(
-                                imageUrl: 'assets/banners/banner1.svg',
+                                imageUrl: 'assets/banners/banner1.png',
                               ),
                               BannerModel(
-                                imageUrl: 'assets/banners/banner1.svg',
+                                imageUrl: 'assets/banners/banner1.png',
                               ),
                               BannerModel(
-                                imageUrl: 'assets/banners/banner1.svg',
+                                imageUrl: 'assets/banners/banner1.png',
                               ),
                             ],
                           ),
@@ -583,7 +583,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: EventCard(
                                         text: 'Спец-техника',
                                         imageUrl:
-                                            'assets/categories/machine.svg',
+                                            'assets/categories/machine.png',
                                         onTap: () {
                                           navigateTo(
                                             context: context,
@@ -599,7 +599,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       child: EventCard(
                                         text: 'Работа',
-                                        imageUrl: 'assets/categories/job.svg',
+                                        imageUrl: 'assets/categories/job.png',
                                         onTap: () {
                                           navigateTo(
                                             context: context,
@@ -623,7 +623,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: EventCard(
                                         text: 'Сырьё',
                                         imageUrl:
-                                            'assets/categories/raw_materials.svg',
+                                            'assets/categories/raw_material.png',
                                         onTap: () {
                                           navigateTo(
                                             context: context,
@@ -640,7 +640,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: EventCard(
                                         text: 'Гербицид/\nУдобрение',
                                         imageUrl:
-                                            'assets/categories/fertiliser.svg',
+                                            'assets/categories/fertiliser.png',
                                         onTap: () {
                                           navigateTo(
                                             context: context,
@@ -680,8 +680,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 2,
-                                            crossAxisSpacing: 20,
-                                            mainAxisSpacing: 10,
+                                            crossAxisSpacing: 15,
+                                            mainAxisSpacing: 00,
                                             childAspectRatio: 0.58,
                                           ),
                                       itemCount: state.events.length,

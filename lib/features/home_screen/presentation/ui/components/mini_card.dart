@@ -6,7 +6,13 @@ import 'package:selo/core/theme/theme_provider.dart';
 import 'package:selo/features/auth/register_screen/data/models/region.dart';
 import 'package:selo/features/favorite_adverts_button/ui/feature.dart';
 import 'package:selo/features/home_screen/data/models/product_dto.dart';
+import 'package:selo/features/auth/auth_provider/auth_provider.dart';
+import 'package:selo/features/favorite_adverts_button/data/favorite_adverts_button_repo.dart';
+import 'package:selo/features/favorite_adverts_button/state/bloc/favorite_adverts_button_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:collection/collection.dart';
 import 'package:selo/core/enums.dart';
 import 'package:selo/components/product_detail_screen.dart';
@@ -164,7 +170,7 @@ class MiniCard extends StatelessWidget {
                       ShimmerPlaceholder(
                         isEnabled: isPlaceholder,
                         child: Text(
-                          "${city}, ${region?.name ?? ''}",
+                          "${city},\n${trimText(region?.name ?? '')}",
                           style: TextStyle(
                             color: theme.colors.black,
                             fontSize: 12,
@@ -177,30 +183,37 @@ class MiniCard extends StatelessWidget {
                 if (!isPlaceholder)
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed:
-                          () => _launchPhoneDialer(product.authorPhoneNumber),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: theme.colors.green,
-                        foregroundColor: theme.colors.white,
-                        minimumSize: const Size(double.infinity, 40),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                    child: Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment
+                              .spaceBetween, // Чтобы кнопки не слипались
+                      children: [
+                        ElevatedButton(
+                          onPressed:
+                              () =>
+                                  _launchPhoneDialer(product.authorPhoneNumber),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: theme.colors.green,
+                            foregroundColor: theme.colors.white,
+                            minimumSize: const Size(
+                              90,
+                              40,
+                            ), // Можно задать фиксированный размер
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: const Text("Позвонить"),
                         ),
-                      ),
-                      child: const Text("Позвонить"),
+                        const SizedBox(width: 8), // Отступ между кнопками
+                        FavoriteAdvertsButton(product: product),
+                      ],
                     ),
                   ),
               ],
             ),
           ),
         ),
-        if (!isPlaceholder)
-          Positioned(
-            right: 5,
-            top: 5,
-            child: FavoriteAdvertsButtonFeature(product: product),
-          ),
       ],
     );
   }
@@ -212,5 +225,72 @@ void _launchPhoneDialer(String phoneNumber) async {
     await launchUrl(phoneUri);
   } else {
     print('Не удалось запустить приложение для звонка');
+  }
+}
+
+String trimText(String text, [int maxLength = 20]) {
+  return text.length <= maxLength ? text : '${text.substring(0, maxLength)}...';
+}
+
+class FavoriteAdvertsButton extends StatefulWidget {
+  final ProductDto product;
+  const FavoriteAdvertsButton({super.key, required this.product});
+
+  @override
+  State<FavoriteAdvertsButton> createState() => _FavoriteAdvertsButtonState();
+}
+
+class _FavoriteAdvertsButtonState extends State<FavoriteAdvertsButton> {
+  bool isFavorite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = AppThemeProvider.of(context).themeMode;
+    final authProvider = context.read<MyAuthProvider>();
+    final repo = context.watch<FavoriteAdvertsButtonRepo>();
+    final allFavorites = repo.favorites;
+    final like = allFavorites.firstWhereOrNull(
+      (element) => element.id == widget.product.id,
+    );
+
+    return GestureDetector(
+      onTap: () {
+        like == null
+            ? context.read<FavoriteAdvertsButtonBloc>().add(
+              AddToFavoritesAdvertsEvent(
+                userPhoneNumber: authProvider.userData!.phoneNumber,
+                product: widget.product,
+              ),
+            )
+            : context.read<FavoriteAdvertsButtonBloc>().add(
+              RemoveFromFavoritesAdverts(
+                userPhoneNumber: authProvider.userData!.phoneNumber,
+                product: widget.product,
+              ),
+            );
+      },
+      child: Container(
+        margin: const EdgeInsets.all(0),
+        width: 50,
+        height: 40,
+        decoration: BoxDecoration(
+          color: theme.colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2), // Цвет тени
+              offset: Offset(0, 1), // Смещение тени (по оси X и Y)
+              blurRadius: 6, // Размытие тени
+              spreadRadius: 0, // Распространение тени
+            ),
+          ],
+        ),
+        child: Icon(
+          like != null ? Icons.favorite : Icons.favorite_outline,
+          size: 30,
+          color: like != null ? theme.colors.green : theme.colors.black,
+        ),
+      ),
+    );
   }
 }

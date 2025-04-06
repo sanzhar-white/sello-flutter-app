@@ -97,7 +97,7 @@ class _MaterialFormState extends State<MaterialForm> {
                 height: 70,
                 width: double.infinity,
                 child: buildImageWidget(
-                  'assets/add_advert/raw_materials_fer_banner.svg',
+                  'assets/add_advert/raw_materials_fer_banner.png',
                 ),
               ),
               SizedBox(height: 30),
@@ -384,7 +384,7 @@ class _MaterialFormState extends State<MaterialForm> {
                       controller: widget.phoneNumber,
                       style: widget.style,
                       keyboardType: TextInputType.phone,
-                      hintText: '+7 700000000',
+                      hintText: '${widget.authProvider.phoneNumber}',
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Введите номер телефона';

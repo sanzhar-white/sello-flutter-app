@@ -44,7 +44,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
               const SizedBox(height: 24),
               _AdvertisementCategoryCard(
                 title: 'Спецтехника',
-                iconUrl: 'assets/profile/delete.svg',
+                iconUrl: 'assets/add_advert/machine_logo.png',
                 onTap:
                     () => navigateTo(
                       context: context,
@@ -56,7 +56,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
               ),
               _AdvertisementCategoryCard(
                 title: 'Сырьё',
-                iconUrl: 'assets/profile/delete.svg',
+                iconUrl: 'assets/add_advert/raw_logo.png',
                 onTap:
                     () => navigateTo(
                       context: context,
@@ -68,7 +68,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
               ),
               _AdvertisementCategoryCard(
                 title: 'Работа',
-                iconUrl: 'assets/profile/delete.svg',
+                iconUrl: 'assets/add_advert/job_logo.png',
                 onTap:
                     () => navigateTo(
                       context: context,
@@ -80,7 +80,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
               ),
               _AdvertisementCategoryCard(
                 title: 'Удобрение/Гирбицид',
-                iconUrl: 'assets/profile/delete.svg',
+                iconUrl: 'assets/add_advert/fer_logo.png',
                 onTap:
                     () => navigateTo(
                       context: context,

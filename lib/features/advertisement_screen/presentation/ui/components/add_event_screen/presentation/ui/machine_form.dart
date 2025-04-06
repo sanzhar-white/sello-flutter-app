@@ -106,7 +106,7 @@ class _MachineFormState extends State<MachineForm> {
                 ),
                 height: 70,
                 width: double.infinity,
-                child: buildImageWidget('assets/add_advert/machine_banner.svg'),
+                child: buildImageWidget('assets/add_advert/machine_banner.png'),
               ),
               SizedBox(height: 30),
               Column(
@@ -452,7 +452,7 @@ class _MachineFormState extends State<MachineForm> {
                       controller: widget.phoneNumber,
                       style: widget.style,
                       keyboardType: TextInputType.phone,
-                      hintText: '+7 700000000',
+                      hintText: '${widget.authProvider.phoneNumber}',
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Введите номер телефона';

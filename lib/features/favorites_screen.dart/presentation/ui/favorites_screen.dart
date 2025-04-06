@@ -60,7 +60,7 @@ class FavoritesAdvertsEvents extends StatelessWidget {
             crossAxisCount: 1,
             mainAxisSpacing: 12,
             crossAxisSpacing: 0,
-            childAspectRatio: 0.9,
+            childAspectRatio: 1,
           ),
           padding: EdgeInsets.all(16),
           itemCount: allFavorites.length,

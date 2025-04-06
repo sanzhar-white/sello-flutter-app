@@ -104,7 +104,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               () => launchUrlString(
                                 "tel://${widget.product.authorPhoneNumber}",
                               ),
-                          label: 'Позвонить в WhatsApp',
+                          label: 'Позвонить',
                         ),
                       )
                   : SizedBox.shrink(),
